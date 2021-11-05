@@ -14,6 +14,7 @@ import { queryClient } from '@sb-ui/query';
 import {
   createLesson,
   getLesson,
+  postShareLesson,
   putLesson,
 } from '@sb-ui/utils/api/v1/teacher';
 import {
@@ -25,9 +26,19 @@ import { TEACHER_LESSON_BASE_KEY } from '@sb-ui/utils/queries';
 
 const MAX_NAME_LENGTH = 255;
 
-export const useLessonEdit = ({ lessonId, updateLessonStatusMutation }) => {
+export const useLessonEdit = ({ lessonId }) => {
   const { t, i18n } = useTranslation('teacher');
   const [isEditLesson] = useState(lessonId !== 'new');
+
+  const { mutate: shareLesson } = useMutation(postShareLesson, {
+    onSuccess: () => {
+      setStorageLesson({
+        status: Statuses.PUBLIC,
+        id: lessonId,
+      });
+      queryClient.invalidateQueries(TEACHER_LESSON_BASE_KEY);
+    },
+  });
 
   const { language } = i18n;
   const isCurrentlyEditing = useMemo(() => lessonId !== 'new', [lessonId]);
@@ -150,12 +161,11 @@ export const useLessonEdit = ({ lessonId, updateLessonStatusMutation }) => {
     updateLessonMutation,
   ]);
 
-  const handlePublish = useCallback(async () => {
-    updateLessonStatusMutation.mutate({
+  const handleShare = useCallback(async () => {
+    shareLesson({
       id: lessonId,
-      status: Statuses.PUBLIC,
     });
-  }, [lessonId, updateLessonStatusMutation]);
+  }, [lessonId, shareLesson]);
 
   const handleInputTitle = useCallback((e) => {
     const newText = e.target.value;
@@ -245,7 +255,7 @@ export const useLessonEdit = ({ lessonId, updateLessonStatusMutation }) => {
   return {
     isCurrentlyEditing,
     name,
-    handlePublish,
+    handleShare,
     handleSave,
     handleInputTitle,
     handleNextLine,

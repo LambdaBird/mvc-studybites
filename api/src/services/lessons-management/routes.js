@@ -11,11 +11,18 @@ import getAllStudents from './controllers/getAllStudents';
 import studentsOptions from './controllers/studentsOptions';
 import updateStatus from './controllers/updateStatus';
 import statusOptions from './controllers/statusOptions';
+import shareLesson from './controllers/shareLesson';
 
 export async function router(instance) {
   instance.get('/lessons', getLessons.options, getLessons.handler);
   instance.post('/lessons', createLesson.options, createLesson.handler);
   instance.options('/lessons', lessonsOptions.options, lessonsOptions.handler);
+
+  instance.post(
+    '/lessons/:lessonId/share-lesson',
+    shareLesson.options,
+    shareLesson.handler,
+  );
 
   instance.patch(
     '/lessons/:lessonId/update-status',

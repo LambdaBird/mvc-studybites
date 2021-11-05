@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 import Header from '@sb-ui/components/molecules/Header';
-import { useLessonStatus } from '@sb-ui/hooks/useLessonStatus';
 import { useLessonEdit } from '@sb-ui/pages/Teacher/LessonEdit/useLessonEdit';
 import { sbPostfix } from '@sb-ui/utils/constants';
 import EditorJs from '@sb-ui/utils/editorjs/EditorJsContainer';
@@ -15,14 +14,11 @@ import * as S from './LessonEdit.styled';
 const LessonEdit = () => {
   const { t } = useTranslation('teacher');
   const { id: lessonId } = useParams();
-  const { updateLessonStatusMutation } = useLessonStatus({
-    id: lessonId,
-  });
 
   const {
     isCurrentlyEditing,
     name,
-    handlePublish,
+    handleShare,
     handleSave,
     handleInputTitle,
     handleNextLine,
@@ -34,7 +30,7 @@ const LessonEdit = () => {
     isEditorDisabled,
     isRenderEditor,
     editorJsProps,
-  } = useLessonEdit({ lessonId, updateLessonStatusMutation });
+  } = useLessonEdit({ lessonId });
 
   return (
     <>
@@ -57,7 +53,7 @@ const LessonEdit = () => {
           </Button>
         </div>
         <div>
-          <Button disabled={!isCurrentlyEditing} onClick={handlePublish}>
+          <Button disabled={!isCurrentlyEditing} onClick={handleShare}>
             {t('lesson_edit.buttons.share')}
           </Button>
         </div>

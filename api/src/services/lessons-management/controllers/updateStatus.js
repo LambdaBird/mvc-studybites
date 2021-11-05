@@ -1,4 +1,4 @@
-import { resources } from '../../../config';
+import { resources, roles, userServiceErrors as errors } from '../../../config';
 
 export const options = {
   schema: {
@@ -18,9 +18,6 @@ export const options = {
       200: {
         type: 'object',
         properties: {
-          publicId: {
-            type: 'string',
-          },
           status: {
             type: 'string',
             enum: resources.LESSON.status,
@@ -32,20 +29,44 @@ export const options = {
       '5xx': { $ref: '5xx#' },
     },
   },
+  async onRequest(req) {
+    await this.auth({ req });
+  },
+  async preHandler({ user: { id: userId }, params: { lessonId: resourceId } }) {
+    await this.access({
+      userId,
+      resourceId,
+      resourceType: resources.LESSON.name,
+      roleId: roles.MAINTAINER.id,
+    });
+  },
 };
 
-async function handler({ body: { status }, params: { lessonId } }) {
+async function handler({ body: { status }, params: { lessonId } }, reply) {
   const {
-    models: { Lesson },
+    models: { Course, Lesson },
   } = this;
 
-  await Lesson.updateLessonStatus({ lessonId, status: 'Public' });
-  const { publicId } = await Lesson.generateLessonLearnId({
-    lessonEditId: lessonId,
-  });
+  const allLessonCourses = await Course.getAllCoursesByLessonId({ lessonId });
+
+  if (status === 'Draft' || status === 'Archived') {
+    const nonDraftAndArchivedCourses = allLessonCourses.filter(
+      (lessonCourse) => lessonCourse.status !== status,
+    );
+    if (nonDraftAndArchivedCourses.length > 0) {
+      return reply.status(400).send({
+        statusCode: 400,
+        message: errors.USER_ERR_COURSES_RESTRICTED,
+        payload: {
+          courses: nonDraftAndArchivedCourses,
+          status,
+        },
+      });
+    }
+  }
+  await Lesson.updateLessonStatus({ lessonId, status });
   return {
     status,
-    publicId,
   };
 }
 

@@ -72,10 +72,10 @@ const options = {
     } = this;
     const { resources, roles } = this.config.globals;
     const lesson = await Lesson.findByPublicId({ lessonPublicId });
-
+    const resourceId = lesson.id || lessonPublicId;
     await this.access({
       userId,
-      resourceId: lesson.id,
+      resourceId,
       resourceType: resources.LESSON.name,
       roleId: roles.STUDENT.id,
       status: resources.LESSON.learnStatus,
@@ -184,7 +184,7 @@ async function handler({
     models: { Result, LessonBlockStructure, Block, Lesson },
   } = this;
   const lesson = await Lesson.findByPublicId({ lessonPublicId });
-  const lessonId = lesson.id;
+  const lessonId = lesson?.id || lessonPublicId;
   /**
    * get allowed action type
    */

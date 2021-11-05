@@ -5,7 +5,7 @@ import { useMutation } from 'react-query';
 import { useHistory, useParams } from 'react-router-dom';
 
 import { LearnPage } from '@sb-ui/pages/User';
-import { enrollLesson } from '@sb-ui/utils/api/v1/lessons';
+import { forceEnrollLesson } from '@sb-ui/utils/api/v1/lessons';
 import { postCreateAccount } from '@sb-ui/utils/api/v1/user';
 import { getJWTAccessToken, setJWT } from '@sb-ui/utils/jwt';
 import { HOME } from '@sb-ui/utils/paths';
@@ -23,7 +23,7 @@ const LearnPageWrapper = () => {
     },
   });
 
-  const { mutate: enrollToLesson, isError } = useMutation(enrollLesson, {
+  const { mutate: enrollToLesson, isError } = useMutation(forceEnrollLesson, {
     onSuccess: () => {
       setEnrolled(true);
     },

@@ -75,3 +75,11 @@ export const patchLessonStatus = async (params) => {
   );
   return data;
 };
+
+export const postShareLesson = async (params) => {
+  const { data } = await api.post(
+    `${PATH}/lessons/${params.id}/share-lesson`,
+    params,
+  );
+  return data;
+};
