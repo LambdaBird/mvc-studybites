@@ -58,7 +58,6 @@ async function handler({ params: { lessonEditId } }) {
 
   const lesson = await Lesson.findByEditId({ lessonEditId });
   const lessonId = lesson.id;
-
   const { count: studentsCount } = await UserRole.getResourceStudentsCount({
     resourceId: lessonId,
     resourceType: resources.LESSON.name,

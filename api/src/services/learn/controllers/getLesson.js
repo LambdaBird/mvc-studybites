@@ -36,8 +36,7 @@ const options = {
     const {
       models: { Lesson },
     } = this;
-    const lesson = await Lesson.findByPublicId({ lessonPublicId });
-    const resourceId = lesson.id || lessonPublicId;
+    const { id: resourceId } = await Lesson.findByPublicId({ lessonPublicId });
     await this.access({
       userId,
       resourceId,
@@ -66,8 +65,7 @@ async function handler({ user: { id: userId }, params: { lessonPublicId } }) {
   const {
     models: { Lesson, Result, LessonBlockStructure },
   } = this;
-  const foundedLesson = await Lesson.findByPublicId({ lessonPublicId });
-  const lessonId = foundedLesson.id || lessonPublicId;
+  const { id: lessonId } = await Lesson.findByPublicId({ lessonPublicId });
   /**
    * get lesson
    */

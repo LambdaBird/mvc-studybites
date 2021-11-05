@@ -75,7 +75,7 @@ async function handler({
       let lessonData;
 
       if (lesson) {
-        lessonData = await Lesson.updateLesson({
+        lessonData = await Lesson.updateLessonByEditId({
           trx,
           lessonEditId: lessonId,
           lesson,
@@ -83,8 +83,8 @@ async function handler({
       } else {
         lessonData = await Lesson.query(trx)
           .first()
-          .where({ editId: lessonId })
-          .findById(lessonId);
+          .where({ edit_id: lessonId })
+          .returning('*');
       }
 
       if (keywords) {

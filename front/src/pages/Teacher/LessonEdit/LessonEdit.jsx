@@ -59,7 +59,7 @@ const LessonEdit = () => {
         </div>
       </Header>
       <S.Page>
-        <LessonList lessons={lessons} publicId={publicId} />
+        <LessonList lessons={lessons} publicId={isPublic && publicId} />
 
         <S.InputTitle
           ref={inputTitle}

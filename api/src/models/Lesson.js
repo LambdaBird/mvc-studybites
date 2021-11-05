@@ -179,25 +179,15 @@ class Lesson extends BaseModel {
   }
 
   static findByPublicId({ lessonPublicId }) {
-    return this.query()
-      .first()
-      .where({
-        public_id: lessonPublicId,
-      })
-      .throwIfNotFound({
-        error: new NotFoundError(errors.LESSON_ERR_LESSON_NOT_FOUND),
-      });
+    return this.query().first().where({
+      public_id: lessonPublicId,
+    });
   }
 
   static findByEditId({ lessonEditId }) {
-    return this.query()
-      .first()
-      .where({
-        edit_id: lessonEditId,
-      })
-      .throwIfNotFound({
-        error: new NotFoundError(errors.LESSON_ERR_LESSON_NOT_FOUND),
-      });
+    return this.query().first().where({
+      edit_id: lessonEditId,
+    });
   }
 
   static findById({ lessonId }) {
@@ -430,7 +420,11 @@ class Lesson extends BaseModel {
     return query;
   }
 
-  static updateLesson({ trx, lessonEditId, lesson }) {
+  static updateLesson({ trx, lessonId, lesson }) {
+    return this.query(trx).findById(lessonId).patch(lesson).returning('*');
+  }
+
+  static updateLessonByEditId({ trx, lessonEditId, lesson }) {
     return this.query(trx)
       .first()
       .where({ edit_id: lessonEditId })

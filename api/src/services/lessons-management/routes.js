@@ -54,12 +54,12 @@ export async function router(instance) {
   );
 
   instance.get(
-    '/lessons/:lessonId/students',
+    '/lessons/:lessonEditId/students',
     getStudentsByLesson.options,
     getStudentsByLesson.handler,
   );
   instance.options(
-    '/lessons/:lessonId/students',
+    '/lessons/:lessonEditId/students',
     lessonStudentsOptions.options,
     lessonStudentsOptions.handler,
   );

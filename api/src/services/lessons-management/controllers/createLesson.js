@@ -36,7 +36,9 @@ const options = {
           lesson: {
             type: 'object',
             properties: {
+              id: { type: 'number' },
               editId: { type: 'string' },
+              publicId: { type: 'string' },
               name: { type: 'string' },
               description: { type: ['string', 'null'] },
               image: { type: ['string', 'null'] },
