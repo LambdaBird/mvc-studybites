@@ -14,20 +14,24 @@ export async function router(instance) {
   instance.get('/lessons', getLessons.options, getLessons.handler);
   instance.options('/lessons', lessonsOptions.options, lessonsOptions.handler);
 
-  instance.get('/lessons/:lessonId', getLesson.options, getLesson.handler);
+  instance.get(
+    '/lessons/:lessonPublicId',
+    getLesson.options,
+    getLesson.handler,
+  );
   instance.options(
-    '/lessons/:lessonId',
+    '/lessons/:lessonPublicId',
     lessonOptions.options,
     lessonOptions.handler,
   );
 
   instance.post(
-    '/lessons/:lessonId/reply',
+    '/lessons/:lessonPublicId/reply',
     learnLesson.options,
     learnLesson.handler,
   );
   instance.options(
-    '/lessons/:lessonId/reply',
+    '/lessons/:lessonPublicId/reply',
     learnOptions.options,
     learnOptions.handler,
   );

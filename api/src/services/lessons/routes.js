@@ -13,12 +13,12 @@ export async function router(instance) {
   instance.options('/:lessonId', lessonOptions.options, lessonOptions.handler);
 
   instance.post(
-    '/:lessonId/enroll',
+    '/:lessonPublicId/enroll',
     enrollLesson.options,
     enrollLesson.handler,
   );
   instance.options(
-    '/:lessonId/enroll',
+    '/:lessonPublicId/enroll',
     enrollOptions.options,
     enrollOptions.handler,
   );

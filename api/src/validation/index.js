@@ -15,12 +15,24 @@ import {
   courseIdParam,
   keywordSearch,
   passwordResetIdParam,
+  lessonEditIdParam,
+  lessonPublicIdParam,
 } from './schemas';
 import errorHandler from './errorHandler';
 import { NotFoundError } from './errors';
 
 export default fp((instance, opts, next) => {
   instance.decorate('config', config);
+
+  instance.addSchema({
+    $id: 'paramsLessonEditId',
+    ...lessonEditIdParam,
+  });
+
+  instance.addSchema({
+    $id: 'paramsLessonPublicId',
+    ...lessonPublicIdParam,
+  });
 
   instance.addSchema({
     $id: 'paramsLessonId',

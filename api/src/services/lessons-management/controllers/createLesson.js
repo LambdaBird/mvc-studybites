@@ -1,3 +1,5 @@
+import { v4 } from 'uuid';
+
 const options = {
   schema: {
     body: {
@@ -34,7 +36,7 @@ const options = {
           lesson: {
             type: 'object',
             properties: {
-              id: { type: 'number' },
+              editId: { type: 'string' },
               name: { type: 'string' },
               description: { type: ['string', 'null'] },
               image: { type: ['string', 'null'] },
@@ -58,23 +60,11 @@ const options = {
       '5xx': { $ref: '5xx#' },
     },
   },
-  async onRequest(req) {
-    await this.auth({ req });
-  },
-  async preHandler({ user: { id: userId } }) {
-    await this.access({
-      userId,
-      roleId: this.config.globals.roles.TEACHER.id,
-    });
-  },
 };
 
-async function handler({
-  body: { lesson, blocks, keywords },
-  user: { id: userId },
-}) {
+async function handler({ body: { lesson, blocks, keywords } }) {
   const {
-    models: { Lesson, UserRole, Block, LessonBlockStructure, Keyword },
+    models: { Lesson, Block, LessonBlockStructure, Keyword },
     config: {
       globals: { resources },
     },
@@ -82,8 +72,10 @@ async function handler({
 
   try {
     const data = await Lesson.transaction(async (trx) => {
-      const lessonData = await Lesson.createLesson({ trx, lesson });
-      await UserRole.addMaintainer({ trx, userId, resourceId: lessonData.id });
+      const lessonData = await Lesson.createLesson({
+        trx,
+        lesson: { ...lesson, editId: v4() },
+      });
 
       if (keywords) {
         await Keyword.createMany({

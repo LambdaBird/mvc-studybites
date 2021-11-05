@@ -29,7 +29,7 @@ export async function router(instance) {
     statusOptions.handler,
   );
 
-  instance.get('/lessons/:lessonId', getLesson.options, getLesson.handler);
+  instance.get('/lessons/:lessonEditId', getLesson.options, getLesson.handler);
   instance.put(
     '/lessons/:lessonId',
     updateLesson.options,

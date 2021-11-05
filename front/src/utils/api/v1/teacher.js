@@ -8,7 +8,10 @@ export const createLesson = async (values) => {
 };
 
 export const putLesson = async (params) => {
-  const { data } = await api.put(`${PATH}/lessons/${params.lesson.id}`, params);
+  const { data } = await api.put(
+    `${PATH}/lessons/${params.lesson.editId}`,
+    params,
+  );
   return data;
 };
 

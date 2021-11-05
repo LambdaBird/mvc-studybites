@@ -11,7 +11,7 @@ const variables = {
   'lesson-block-description-color': 'rgba(0, 0, 0, 0.45)',
   'lesson-block-bricks-word-background': '#d9d9d9',
   'lesson-block-bricks-word-underline': '#bfbfbf',
-  'body-background-color': '#f5f5f5',
+  'body-background-color': 'white',
   'avatar-first-color': '#ffd8bf',
   'avatar-second-color': '#fa541c',
   'button-send-background': '#f0f0f0',

@@ -1,6 +1,6 @@
 const options = {
   schema: {
-    params: { $ref: 'paramsLessonId#' },
+    params: { $ref: 'paramsLessonPublicId#' },
     response: {
       200: {
         type: 'object',
@@ -18,22 +18,28 @@ const options = {
   },
 };
 
-async function handler({ user: { id: userId }, params: { lessonId } }) {
+async function handler({ user: { id: userId }, params: { lessonPublicId } }) {
   const {
     config: {
       lessonService: { lessonServiceMessages: messages },
       globals: { resources },
     },
-    models: { UserRole },
+    models: { UserRole, Lesson },
   } = this;
 
-  await UserRole.enrollToResource({
-    userId,
-    resourceId: lessonId,
-    resourceType: resources.LESSON.name,
-    resourceStatuses: resources.LESSON.enrollStatuses,
-  });
-
+  const lesson = await Lesson.findByPublicId({ lessonPublicId });
+  try {
+    await UserRole.enrollToResource({
+      userId,
+      resourceId: lesson.id,
+      resourceType: resources.LESSON.name,
+      resourceStatuses: resources.LESSON.enrollStatuses,
+    });
+  } catch (e) {
+    if (e.message !== 'errors.fail_enroll') {
+      throw e;
+    }
+  }
   return { message: messages.LESSON_MSG_SUCCESS_ENROLL };
 }
 

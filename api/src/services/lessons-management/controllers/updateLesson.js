@@ -57,19 +57,6 @@ const options = {
       '5xx': { $ref: '5xx#' },
     },
   },
-  async onRequest(req) {
-    await this.auth({ req });
-  },
-  async preHandler({ user: { id: userId }, params: { lessonId: resourceId } }) {
-    const { resources, roles } = this.config.globals;
-
-    await this.access({
-      userId,
-      resourceId,
-      resourceType: resources.LESSON.name,
-      roleId: roles.MAINTAINER.id,
-    });
-  },
 };
 
 async function handler({
@@ -88,9 +75,16 @@ async function handler({
       let lessonData;
 
       if (lesson) {
-        lessonData = await Lesson.updateLesson({ trx, lessonId, lesson });
+        lessonData = await Lesson.updateLesson({
+          trx,
+          lessonEditId: lessonId,
+          lesson,
+        });
       } else {
-        lessonData = await Lesson.query(trx).findById(lessonId);
+        lessonData = await Lesson.query(trx)
+          .first()
+          .where({ editId: lessonId })
+          .findById(lessonId);
       }
 
       if (keywords) {
@@ -142,11 +136,11 @@ async function handler({
 
         await LessonBlockStructure.query(trx)
           .delete()
-          .where({ lesson_id: lessonId });
+          .where({ lesson_id: lessonData.id });
         await LessonBlockStructure.insertBlocks({
           trx,
           blocks,
-          lessonId,
+          lessonId: lessonData.id,
         });
       }
 

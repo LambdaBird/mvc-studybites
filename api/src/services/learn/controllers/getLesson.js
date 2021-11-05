@@ -1,6 +1,6 @@
 const options = {
   schema: {
-    params: { $ref: 'paramsLessonId#' },
+    params: { $ref: 'paramsLessonPublicId#' },
     response: {
       200: {
         type: 'object',
@@ -9,20 +9,11 @@ const options = {
           lesson: {
             type: 'object',
             properties: {
-              id: { type: 'number' },
               name: { type: 'string' },
               description: { type: ['string', 'null'] },
               status: { type: 'string' },
               createdAt: { type: 'string' },
               updatedAt: { type: 'string' },
-              author: {
-                type: 'object',
-                properties: {
-                  id: { type: 'number' },
-                  firstName: { type: 'string' },
-                  lastName: { type: 'string' },
-                },
-              },
               interactiveTotal: { type: 'number' },
               interactivePassed: { type: 'number' },
               blocks: { type: 'array' },
@@ -40,12 +31,15 @@ const options = {
   async onRequest(req) {
     await this.auth({ req });
   },
-  async preHandler({ user: { id: userId }, params: { lessonId: resourceId } }) {
+  async preHandler({ user: { id: userId }, params: { lessonPublicId } }) {
     const { resources, roles } = this.config.globals;
-
+    const {
+      models: { Lesson },
+    } = this;
+    const lesson = await Lesson.findByPublicId({ lessonPublicId });
     await this.access({
       userId,
-      resourceId,
+      resourceId: lesson.id,
       resourceType: resources.LESSON.name,
       roleId: roles.STUDENT.id,
     });
@@ -67,10 +61,11 @@ const mapResultToBlock = ({ blocks, dictionary }) => {
   });
 };
 
-async function handler({ user: { id: userId }, params: { lessonId } }) {
+async function handler({ user: { id: userId }, params: { lessonPublicId } }) {
   const {
     models: { Lesson, Result, LessonBlockStructure },
   } = this;
+  const { id: lessonId } = await Lesson.findByPublicId({ lessonPublicId });
   /**
    * get lesson
    */

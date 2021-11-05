@@ -51,7 +51,7 @@ const getNavigatorLanguage = () =>
 
 i18n.use(initReactI18next).init({
   resources,
-  lng: getStorageLanguage() || getNavigatorLanguage(),
+  lng: DEFAULT_KEY || getStorageLanguage() || getNavigatorLanguage(),
   ns: [
     'admin',
     'sign_in',
