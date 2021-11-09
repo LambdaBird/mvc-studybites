@@ -2,7 +2,6 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from 'react-query';
 import { useHistory, useLocation } from 'react-router-dom';
-import { FilterOutlined, UserOutlined } from '@ant-design/icons';
 
 import AuthorSelect from '@sb-ui/components/molecules/AuthorSelect';
 import FilterMobile from '@sb-ui/components/molecules/FilterMobile';
@@ -10,6 +9,7 @@ import KeywordsFilter from '@sb-ui/components/molecules/KeywordsFilter';
 import useMobile from '@sb-ui/hooks/useMobile';
 import { PAGE_SIZE } from '@sb-ui/pages/User/Lessons/ResourcesList/constants';
 import * as S from '@sb-ui/pages/User/Lessons/ResourcesList/ResourcesList.styled';
+import { FilterOutlined, UserOutlined } from '@sb-ui/resources/icons';
 import emptyImg from '@sb-ui/resources/img/empty.svg';
 import { fetchKeywords } from '@sb-ui/utils/api/v1/keywords';
 import { getLessons } from '@sb-ui/utils/api/v1/lessons';

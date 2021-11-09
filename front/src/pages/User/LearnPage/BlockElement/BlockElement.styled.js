@@ -1,7 +1,7 @@
 import { Row } from 'antd';
 import styled from 'styled-components';
-import { CheckCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
 
+import { CheckCircleTwoTone, CloseCircleTwoTone } from '@sb-ui/resources/icons';
 import variables from '@sb-ui/theme/variables';
 
 export const BlockElementWrapperWhite = styled(Row)`

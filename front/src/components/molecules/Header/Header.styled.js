@@ -1,6 +1,7 @@
 import { Avatar, Row } from 'antd';
 import styled from 'styled-components';
-import { MoreOutlined } from '@ant-design/icons';
+
+import { MoreOutlined } from '@sb-ui/resources/icons';
 
 export const HEADER_HEIGHT = 56;
 

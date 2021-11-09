@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { SearchOutlined } from '@ant-design/icons';
 
 import { useDebounce } from '@sb-ui/hooks/useDebounce';
+import { SearchOutlined } from '@sb-ui/resources/icons';
 
 import { DebouncedSearchDefaultProps, DebouncedSearchPropTypes } from './types';
 import * as S from './DebouncedSearch.styled';

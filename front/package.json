@@ -4,8 +4,8 @@
   "license": "Apache-2.0",
   "proxy": "http://api:3017",
   "scripts": {
-    "start": "yarn install && craco start",
-    "build": "yarn install && craco build",
+    "start": "NODE_ENV=development yarn install && craco start",
+    "build": "GENERATE_SOURCEMAP=false craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
     "lint": "eslint \"src/**/*.{js,jsx}\"",
