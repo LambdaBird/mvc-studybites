@@ -9,6 +9,7 @@ export default {
       title: 'Lesson funnel',
       description: 'Let`s find the part of the lesson where people are stuck',
     },
+    no_students: 'Lesson has no students',
     anonymous_user: 'Anonymous user',
   },
   pages: {

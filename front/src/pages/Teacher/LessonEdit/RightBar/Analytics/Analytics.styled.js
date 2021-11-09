@@ -2,13 +2,15 @@ import styled from 'styled-components';
 
 import { HEADER_HEIGHT } from '@sb-ui/components/molecules/Header/Header.styled';
 
+import { RIGHT_BAR_WIDTH } from '../../constants';
+
 export const Wrapper = styled.div`
   position: absolute;
   right: 0;
   top: 0;
   z-index: -1;
   height: 100vh;
-  width: 500px;
+  width: ${RIGHT_BAR_WIDTH}px;
   border-left: 1px solid #f0f0f0;
   transition: all 0.3s ease 0.1s;
   transform: translate3d(${(props) => (props.opened ? '0' : '100%')}, 0, 0);
@@ -27,6 +29,8 @@ export const Title = styled.div`
 export const Content = styled.div`
   padding-left: 1rem;
   padding-right: 1rem;
+  height: calc(100% - 2 * ${HEADER_HEIGHT}px);
+  overflow-y: auto;
 `;
 
 export const FunnelTitle = styled.div`
@@ -44,4 +48,13 @@ export const FunnelTitleHeader = styled.span`
   font-size: 14px;
   line-height: 22px;
   color: black;
+`;
+
+export const FunnelContainerWrapper = styled.div``;
+
+export const NoStudents = styled.div`
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

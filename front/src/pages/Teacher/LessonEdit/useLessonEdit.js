@@ -49,6 +49,7 @@ export const useLessonEdit = () => {
   const [name, setName] = useState('');
   const [dataBlocks, setDataBlocks] = useState(null);
   const [isEditorDisabled, setIsEditorDisabled] = useState(false);
+  const [isShowAnalytics, setIsShowAnalytics] = useState(false);
 
   const inputTitle = useRef(null);
 
@@ -120,6 +121,10 @@ export const useLessonEdit = () => {
       });
     },
   });
+
+  const handleAnalytics = useCallback(() => {
+    setIsShowAnalytics((prev) => !prev);
+  }, []);
 
   const handleSave = useCallback(async () => {
     try {
@@ -263,6 +268,7 @@ export const useLessonEdit = () => {
       handleSave,
       handlePreview,
       handleShare,
+      handleAnalytics,
     },
     lessons,
     publicId,
@@ -270,6 +276,7 @@ export const useLessonEdit = () => {
     inputTitle,
     isEditorDisabled,
     isRenderEditor,
+    isShowAnalytics,
     editorJsProps,
     studentsCount: lessonData?.lesson?.studentsCount,
   };
