@@ -9,6 +9,11 @@ export const getLesson = async ({ queryKey }) => {
   return data;
 };
 
+export const forceEnrollLesson = async (id) => {
+  const { data } = await api.post(`${PATH}/${id}/force-enroll`);
+  return data;
+};
+
 export const enrollLesson = async (id) => {
   const { data } = await api.post(`${PATH}/${id}/enroll`);
   return data;

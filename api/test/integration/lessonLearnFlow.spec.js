@@ -10,10 +10,7 @@ import { math, french, russian } from '../../seeds/testData/lessons';
 
 import { authorizeUser, createLesson, prepareLessonFromSeed } from './utils';
 
-import {
-  lessonServiceErrors as errors,
-  userServiceErrors as userErrors,
-} from '../../src/config';
+import { lessonServiceErrors as errors } from '../../src/config';
 
 describe('Lesson learning flow', () => {
   const testContext = {
@@ -111,7 +108,7 @@ describe('Lesson learning flow', () => {
 
     it('should return error for not enrolled user', async () => {
       const response = await testContext.studentRequest({
-        url: `lessons/${notEnrolledLesson.lesson.id}`,
+        url: `lessons/${notEnrolledLesson.lesson.publicId}`,
         method: 'GET',
       });
 
@@ -125,7 +122,7 @@ describe('Lesson learning flow', () => {
 
     it('should return no blocks for not started lesson', async () => {
       const response = await testContext.studentRequest({
-        url: `lessons/${notStartedLesson.lesson.id}`,
+        url: `lessons/${notStartedLesson.lesson.publicId}`,
         method: 'GET',
       });
 
@@ -136,11 +133,6 @@ describe('Lesson learning flow', () => {
       expect(payload).toHaveProperty('total');
       expect(payload).toHaveProperty('lesson');
       expect(payload).toHaveProperty('isFinal');
-      expect(payload.lesson).toHaveProperty('author');
-      expect(payload.lesson.author).toBeInstanceOf(Object);
-      expect(payload.lesson.author).toHaveProperty('id');
-      expect(payload.lesson.author).toHaveProperty('firstName');
-      expect(payload.lesson.author).toHaveProperty('lastName');
       expect(payload.lesson).toHaveProperty('blocks');
       expect(payload.lesson.blocks).toBeInstanceOf(Array);
       expect(payload.lesson.blocks.length).toBe(0);
@@ -163,7 +155,7 @@ describe('Lesson learning flow', () => {
       });
 
       await testContext.studentRequest({
-        url: `lessons/${notStartedLesson.lesson.id}`,
+        url: `lessons/${notStartedLesson.lesson.publicId}`,
         method: 'GET',
       });
 
@@ -180,7 +172,7 @@ describe('Lesson learning flow', () => {
 
     it('get request should not change state of enrolled lesson', async () => {
       const response = await testContext.studentRequest({
-        url: `lessons/${notStartedLesson.lesson.id}`,
+        url: `lessons/${notStartedLesson.lesson.publicId}`,
         method: 'GET',
       });
 
@@ -201,7 +193,7 @@ describe('Lesson learning flow', () => {
 
     it('should return blocks on start', async () => {
       const response = await testContext.studentRequest({
-        url: `lessons/${lessonToStart.lesson.id}/reply`,
+        url: `lessons/${lessonToStart.lesson.publicId}/reply`,
         body: {
           action: 'start',
         },
@@ -232,7 +224,7 @@ describe('Lesson learning flow', () => {
       });
 
       await testContext.studentRequest({
-        url: `lessons/${notFinishedLesson.lesson.id}/reply`,
+        url: `lessons/${notFinishedLesson.lesson.publicId}/reply`,
         body: {
           action: 'start',
         },
@@ -241,7 +233,7 @@ describe('Lesson learning flow', () => {
 
     it('should return an error if learn flow was not finished yet', async () => {
       const response = await testContext.studentRequest({
-        url: `lessons/${notFinishedLesson.lesson.id}/reply`,
+        url: `lessons/${notFinishedLesson.lesson.publicId}/reply`,
         body: {
           action: 'finish',
         },
@@ -270,7 +262,7 @@ describe('Lesson learning flow', () => {
       });
 
       await testContext.studentRequest({
-        url: `lessons/${lessonToNext.lesson.id}/reply`,
+        url: `lessons/${lessonToNext.lesson.publicId}/reply`,
         body: {
           action: 'start',
         },
@@ -280,7 +272,7 @@ describe('Lesson learning flow', () => {
     it('should return a lesson with a chunk of blocks to the "next"', async () => {
       const { statusCode, payload } = await testContext.studentRequest({
         method: 'GET',
-        url: `lessons/${lessonToNext.lesson.id}`,
+        url: `lessons/${lessonToNext.lesson.publicId}`,
       });
 
       const responseBody = JSON.parse(payload);
@@ -294,11 +286,6 @@ describe('Lesson learning flow', () => {
 
       expect(responseBody).toHaveProperty('lesson');
       expect(responseBody.lesson).toHaveProperty('blocks');
-      expect(responseBody.lesson).toHaveProperty('author');
-      expect(responseBody.lesson.author).toBeInstanceOf(Object);
-      expect(responseBody.lesson.author).toHaveProperty('id');
-      expect(responseBody.lesson.author).toHaveProperty('firstName');
-      expect(responseBody.lesson.author).toHaveProperty('lastName');
 
       expect(responseBody).toHaveProperty('isFinal');
       expect(responseBody.isFinal).toBe(false);
@@ -314,7 +301,7 @@ describe('Lesson learning flow', () => {
 
     it('should return a lesson with blocks to the next interactive block', async () => {
       const response = await testContext.studentRequest({
-        url: `lessons/${lessonToNext.lesson.id}/reply`,
+        url: `lessons/${lessonToNext.lesson.publicId}/reply`,
         body: {
           action: 'next',
           blockId:
@@ -346,7 +333,7 @@ describe('Lesson learning flow', () => {
     it('should return a lesson with a chunk of blocks the "next" to the "quiz" block', async () => {
       const { statusCode, payload } = await testContext.studentRequest({
         method: 'GET',
-        url: `lessons/${lessonToNext.lesson.id}`,
+        url: `lessons/${lessonToNext.lesson.publicId}`,
       });
 
       const responseBody = JSON.parse(payload);
@@ -360,12 +347,6 @@ describe('Lesson learning flow', () => {
 
       expect(responseBody).toHaveProperty('lesson');
       expect(responseBody.lesson).toHaveProperty('blocks');
-      expect(responseBody.lesson).toHaveProperty('author');
-      expect(responseBody.lesson.author).toBeInstanceOf(Object);
-      expect(responseBody.lesson.author).toHaveProperty('id');
-      expect(responseBody.lesson.author).toHaveProperty('firstName');
-      expect(responseBody.lesson.author).toHaveProperty('lastName');
-
       expect(responseBody).toHaveProperty('isFinal');
       expect(responseBody.isFinal).toBe(false);
 
@@ -380,7 +361,7 @@ describe('Lesson learning flow', () => {
 
     it('should not be able to finish this lesson yet', async () => {
       const response = await testContext.studentRequest({
-        url: `lessons/${lessonToNext.lesson.id}/reply`,
+        url: `lessons/${lessonToNext.lesson.publicId}/reply`,
         body: {
           action: 'finish',
         },
@@ -409,14 +390,14 @@ describe('Lesson learning flow', () => {
       });
 
       await testContext.studentRequest({
-        url: `lessons/${lessonToAnswer.lesson.id}/reply`,
+        url: `lessons/${lessonToAnswer.lesson.publicId}/reply`,
         body: {
           action: 'start',
         },
       });
 
       await testContext.studentRequest({
-        url: `lessons/${lessonToAnswer.lesson.id}/reply`,
+        url: `lessons/${lessonToAnswer.lesson.publicId}/reply`,
         body: {
           action: 'next',
           blockId:
@@ -436,7 +417,7 @@ describe('Lesson learning flow', () => {
 
     it('should return a lesson with blocks to the next interactive block, and answer', async () => {
       const response = await testContext.studentRequest({
-        url: `lessons/${lessonToAnswer.lesson.id}/reply`,
+        url: `lessons/${lessonToAnswer.lesson.publicId}/reply`,
         body: {
           action: 'response',
           blockId:
@@ -468,7 +449,7 @@ describe('Lesson learning flow', () => {
     it('should return a lesson with a chunk of blocks from the "quiz" to the last block', async () => {
       const { statusCode, payload } = await testContext.studentRequest({
         method: 'GET',
-        url: `lessons/${lessonToAnswer.lesson.id}`,
+        url: `lessons/${lessonToAnswer.lesson.publicId}`,
       });
 
       const responseBody = JSON.parse(payload);
@@ -482,13 +463,8 @@ describe('Lesson learning flow', () => {
 
       expect(responseBody).toHaveProperty('lesson');
       expect(responseBody.lesson).toHaveProperty('blocks');
-      expect(responseBody.lesson).toHaveProperty('author');
       expect(responseBody.lesson).toHaveProperty('interactiveTotal');
       expect(responseBody.lesson).toHaveProperty('interactivePassed');
-      expect(responseBody.lesson.author).toBeInstanceOf(Object);
-      expect(responseBody.lesson.author).toHaveProperty('id');
-      expect(responseBody.lesson.author).toHaveProperty('firstName');
-      expect(responseBody.lesson.author).toHaveProperty('lastName');
 
       expect(responseBody.lesson.interactiveTotal).toBe(
         french._blocks._indexesOfInteractive.length,
@@ -525,14 +501,14 @@ describe('Lesson learning flow', () => {
       });
 
       await testContext.studentRequest({
-        url: `lessons/${lessonToFinish.lesson.id}/reply`,
+        url: `lessons/${lessonToFinish.lesson.publicId}/reply`,
         body: {
           action: 'start',
         },
       });
 
       await testContext.studentRequest({
-        url: `lessons/${lessonToFinish.lesson.id}/reply`,
+        url: `lessons/${lessonToFinish.lesson.publicId}/reply`,
         body: {
           action: 'next',
           blockId:
@@ -550,7 +526,7 @@ describe('Lesson learning flow', () => {
       });
 
       await testContext.studentRequest({
-        url: `lessons/${lessonToFinish.lesson.id}/reply`,
+        url: `lessons/${lessonToFinish.lesson.publicId}/reply`,
         body: {
           action: 'response',
           blockId:
@@ -570,7 +546,7 @@ describe('Lesson learning flow', () => {
 
     it('should finish and return no blocks', async () => {
       const response = await testContext.studentRequest({
-        url: `lessons/${lessonToFinish.lesson.id}/reply`,
+        url: `lessons/${lessonToFinish.lesson.publicId}/reply`,
         body: {
           action: 'finish',
         },
@@ -601,7 +577,7 @@ describe('Lesson learning flow', () => {
       });
 
       await testContext.studentRequest({
-        url: `lessons/${lessonToAnswer.lesson.id}/reply`,
+        url: `lessons/${lessonToAnswer.lesson.publicId}/reply`,
         body: {
           action: 'start',
         },
@@ -610,7 +586,7 @@ describe('Lesson learning flow', () => {
 
     it('should return an error', async () => {
       const response = await testContext.studentRequest({
-        url: `lessons/${lessonToAnswer.lesson.id}/reply`,
+        url: `lessons/${lessonToAnswer.lesson.publicId}/reply`,
         body: {
           action: 'response',
           blockId:
@@ -650,14 +626,14 @@ describe('Lesson learning flow', () => {
       });
 
       await testContext.studentRequest({
-        url: `lessons/${lessonToAnswer.lesson.id}/reply`,
+        url: `lessons/${lessonToAnswer.lesson.publicId}/reply`,
         body: {
           action: 'start',
         },
       });
 
       await testContext.studentRequest({
-        url: `lessons/${lessonToAnswer.lesson.id}/reply`,
+        url: `lessons/${lessonToAnswer.lesson.publicId}/reply`,
         body: {
           action: 'next',
           blockId:
@@ -676,7 +652,7 @@ describe('Lesson learning flow', () => {
 
       await testContext.teacherRequest({
         method: 'PUT',
-        url: `lessons/${lessonToAnswer.lesson.id}`,
+        url: `lessons/${lessonToAnswer.lesson.publicId}`,
         body: {
           lesson: {
             status: 'Archived',
@@ -685,9 +661,9 @@ describe('Lesson learning flow', () => {
       });
     });
 
-    it('should return an error', async () => {
+    it('should return no error', async () => {
       const response = await testContext.studentRequest({
-        url: `lessons/${lessonToAnswer.lesson.id}/reply`,
+        url: `lessons/${lessonToAnswer.lesson.publicId}/reply`,
         body: {
           action: 'response',
           blockId:
@@ -706,9 +682,15 @@ describe('Lesson learning flow', () => {
 
       const payload = JSON.parse(response.payload);
 
-      expect(response.statusCode).toBe(401);
-      expect(payload.statusCode).toBe(401);
-      expect(payload.message).toBe(userErrors.USER_ERR_UNAUTHORIZED);
+      expect(response.statusCode).toBe(200);
+      expect(payload).toHaveProperty('total');
+      expect(payload).toHaveProperty('isFinal');
+      expect(payload).toHaveProperty('blocks');
+      expect(payload).toHaveProperty('answer');
+      expect(payload).toHaveProperty('reply');
+      expect(payload.blocks).toBeInstanceOf(Array);
+      expect(payload.blocks.length).toBe(1);
+      expect(payload.isFinal).toBe(true);
     });
   });
 
@@ -727,14 +709,14 @@ describe('Lesson learning flow', () => {
       });
 
       await testContext.studentRequest({
-        url: `lessons/${lessonToAnswer.lesson.id}/reply`,
+        url: `lessons/${lessonToAnswer.lesson.publicId}/reply`,
         body: {
           action: 'start',
         },
       });
 
       await testContext.studentRequest({
-        url: `lessons/${lessonToAnswer.lesson.id}/reply`,
+        url: `lessons/${lessonToAnswer.lesson.publicId}/reply`,
         body: {
           action: 'next',
           blockId:
@@ -753,7 +735,7 @@ describe('Lesson learning flow', () => {
 
       await testContext.teacherRequest({
         method: 'PUT',
-        url: `lessons/${lessonToAnswer.lesson.id}`,
+        url: `lessons/${lessonToAnswer.lesson.publicId}`,
         body: {
           lesson: {
             status: 'Draft',
@@ -764,7 +746,7 @@ describe('Lesson learning flow', () => {
 
     it('should return no error', async () => {
       const response = await testContext.studentRequest({
-        url: `lessons/${lessonToAnswer.lesson.id}/reply`,
+        url: `lessons/${lessonToAnswer.lesson.publicId}/reply`,
         body: {
           action: 'response',
           blockId:
@@ -810,14 +792,14 @@ describe('Lesson learning flow', () => {
       });
 
       await testContext.studentRequest({
-        url: `lessons/${finishedLesson.lesson.id}/reply`,
+        url: `lessons/${finishedLesson.lesson.publicId}/reply`,
         body: {
           action: 'start',
         },
       });
 
       await testContext.studentRequest({
-        url: `lessons/${finishedLesson.lesson.id}/reply`,
+        url: `lessons/${finishedLesson.lesson.publicId}/reply`,
         body: {
           action: 'next',
           blockId:
@@ -835,7 +817,7 @@ describe('Lesson learning flow', () => {
       });
 
       await testContext.studentRequest({
-        url: `lessons/${finishedLesson.lesson.id}/reply`,
+        url: `lessons/${finishedLesson.lesson.publicId}/reply`,
         body: {
           action: 'response',
           blockId:
@@ -853,7 +835,7 @@ describe('Lesson learning flow', () => {
       });
 
       await testContext.studentRequest({
-        url: `lessons/${finishedLesson.lesson.id}/reply`,
+        url: `lessons/${finishedLesson.lesson.publicId}/reply`,
         body: {
           action: 'finish',
         },
@@ -872,11 +854,6 @@ describe('Lesson learning flow', () => {
       expect(payload).toHaveProperty('total');
       expect(payload).toHaveProperty('lessons');
       expect(payload.lessons).toBeInstanceOf(Array);
-      expect(payload.lessons[0]).toHaveProperty('author');
-      expect(payload.lessons[0].author).toBeInstanceOf(Object);
-      expect(payload.lessons[0].author).toHaveProperty('id');
-      expect(payload.lessons[0].author).toHaveProperty('firstName');
-      expect(payload.lessons[0].author).toHaveProperty('lastName');
     });
   });
 
@@ -898,7 +875,7 @@ describe('Lesson learning flow', () => {
 
       it('should return one block', async () => {
         const response = await testContext.studentRequest({
-          url: `lessons/${notStarted.lesson.id}/reply`,
+          url: `lessons/${notStarted.lesson.publicId}/reply`,
           body: {
             action: 'start',
           },
@@ -934,7 +911,7 @@ describe('Lesson learning flow', () => {
         });
 
         await testContext.studentRequest({
-          url: `lessons/${notAnswered.lesson.id}/reply`,
+          url: `lessons/${notAnswered.lesson.publicId}/reply`,
           body: {
             action: 'start',
           },
@@ -943,7 +920,7 @@ describe('Lesson learning flow', () => {
 
       it('should return answer and reply', async () => {
         const response = await testContext.studentRequest({
-          url: `lessons/${notAnswered.lesson.id}/reply`,
+          url: `lessons/${notAnswered.lesson.publicId}/reply`,
           body: {
             action: 'response',
             blockId: notAnswered.lesson.blocks[0].blockId,
@@ -987,14 +964,14 @@ describe('Lesson learning flow', () => {
         });
 
         await testContext.studentRequest({
-          url: `lessons/${notFinished.lesson.id}/reply`,
+          url: `lessons/${notFinished.lesson.publicId}/reply`,
           body: {
             action: 'start',
           },
         });
 
         await testContext.studentRequest({
-          url: `lessons/${notFinished.lesson.id}/reply`,
+          url: `lessons/${notFinished.lesson.publicId}/reply`,
           body: {
             action: 'response',
             blockId: notFinished.lesson.blocks[0].blockId,
@@ -1008,7 +985,7 @@ describe('Lesson learning flow', () => {
 
       it('should return no blocks on finish', async () => {
         const response = await testContext.studentRequest({
-          url: `lessons/${notFinished.lesson.id}/reply`,
+          url: `lessons/${notFinished.lesson.publicId}/reply`,
           body: {
             action: 'finish',
           },
@@ -1048,7 +1025,7 @@ describe('Lesson learning flow', () => {
 
       it('should return one block', async () => {
         const response = await testContext.studentRequest({
-          url: `lessons/${notStarted.lesson.id}/reply`,
+          url: `lessons/${notStarted.lesson.publicId}/reply`,
           body: {
             action: 'start',
           },
@@ -1084,7 +1061,7 @@ describe('Lesson learning flow', () => {
         });
 
         await testContext.studentRequest({
-          url: `lessons/${notFinished.lesson.id}/reply`,
+          url: `lessons/${notFinished.lesson.publicId}/reply`,
           body: {
             action: 'start',
           },
@@ -1093,7 +1070,7 @@ describe('Lesson learning flow', () => {
 
       it('should return no blocks on finish', async () => {
         const response = await testContext.studentRequest({
-          url: `lessons/${notFinished.lesson.id}/reply`,
+          url: `lessons/${notFinished.lesson.publicId}/reply`,
           body: {
             action: 'finish',
           },

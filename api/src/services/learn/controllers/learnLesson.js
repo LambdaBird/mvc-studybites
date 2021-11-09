@@ -2,7 +2,7 @@ import { BadRequestError } from '../../../validation/errors';
 
 const options = {
   schema: {
-    params: { $ref: 'paramsLessonId#' },
+    params: { $ref: 'paramsLessonPublicId#' },
     body: {
       type: 'object',
       additionalProperties: false,
@@ -66,9 +66,12 @@ const options = {
   async onRequest(req) {
     await this.auth({ req });
   },
-  async preHandler({ user: { id: userId }, params: { lessonId: resourceId } }) {
+  async preHandler({ user: { id: userId }, params: { lessonPublicId } }) {
+    const {
+      models: { Lesson },
+    } = this;
     const { resources, roles } = this.config.globals;
-
+    const { id: resourceId } = await Lesson.findByPublicId({ lessonPublicId });
     await this.access({
       userId,
       resourceId,
@@ -169,7 +172,7 @@ export async function checkAllowed({
 
 async function handler({
   user: { id: userId },
-  params: { lessonId },
+  params: { lessonPublicId },
   body: { action, blockId, revision, reply },
 }) {
   const {
@@ -177,8 +180,10 @@ async function handler({
       globals: { blockConstants },
       lessonService: { lessonServiceErrors: errors },
     },
-    models: { Result, LessonBlockStructure, Block },
+    models: { Result, LessonBlockStructure, Block, Lesson },
   } = this;
+  const { id: lessonId } = await Lesson.findByPublicId({ lessonPublicId });
+
   /**
    * get allowed action type
    */

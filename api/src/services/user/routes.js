@@ -1,4 +1,5 @@
 import signUp from './controllers/signUp';
+import createAccount from './controllers/createAccount';
 import signIn from './controllers/signIn';
 import refreshToken from './controllers/refreshToken';
 import getSelf from './controllers/getSelf';
@@ -14,6 +15,11 @@ import updateUserLanguage from './controllers/updateUserLanguage';
 
 export default async function router(instance) {
   instance.post('/signup', signUp.options, signUp.handler);
+  instance.post(
+    '/create-account',
+    createAccount.options,
+    createAccount.handler,
+  );
 
   instance.post('/signin', signIn.options, signIn.handler);
 

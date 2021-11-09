@@ -152,6 +152,7 @@ export default {
       back: 'Back',
       forward: 'Forward',
       preview: 'Preview',
+      share: 'Share',
       move_to_draft: 'Move to draft',
       upload: 'Click to select file',
     },

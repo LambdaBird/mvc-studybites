@@ -152,6 +152,7 @@ export default {
       back: 'Назад',
       forward: 'Вперед',
       preview: 'Предпросмотр',
+      share: 'Поделиться',
       move_to_draft: 'Вернуть в черновики',
       upload: 'Нажмите чтобы выбрать файл',
     },

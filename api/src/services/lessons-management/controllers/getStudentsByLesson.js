@@ -1,6 +1,6 @@
 const options = {
   schema: {
-    params: { $ref: 'paramsLessonId#' },
+    params: { $ref: 'paramsLessonEditId#' },
     querystring: { $ref: 'userSearch#' },
     response: {
       200: {
@@ -14,32 +14,19 @@ const options = {
       '5xx': { $ref: '5xx#' },
     },
   },
-  async onRequest(req) {
-    await this.auth({ req });
-  },
-  async preHandler({ user: { id: userId }, params: { lessonId: resourceId } }) {
-    const { resources, roles } = this.config.globals;
-
-    await this.access({
-      userId,
-      resourceId,
-      resourceType: resources.LESSON.name,
-      roleId: roles.MAINTAINER.id,
-    });
-  },
 };
 
 async function handler({
-  user: { id: userId },
-  params: { lessonId },
+  params: { lessonEditId },
   query: { search, offset, limit },
 }) {
   const {
-    models: { UserRole },
+    models: { UserRole, Lesson },
   } = this;
 
+  const { id: lessonId } = await Lesson.findByEditId({ lessonEditId });
+
   const { total, results: students } = await UserRole.getAllStudentsOfResource({
-    userId,
     resourceId: lessonId,
     offset,
     limit,
