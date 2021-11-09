@@ -1,10 +1,7 @@
 import { Col } from 'antd';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import useMobile from '@sb-ui/hooks/useMobile';
-import logo from '@sb-ui/resources/img/logo.svg';
-import { HOME } from '@sb-ui/utils/paths';
 import {
   ChildrenType,
   ClassNameType,
@@ -24,7 +21,6 @@ const Header = ({
   children,
   handleHide,
 }) => {
-  const history = useHistory();
   const isMobile = useMobile();
 
   const headerRef = useRef(null);
@@ -54,13 +50,6 @@ const Header = ({
     };
   }, [headerRef, hideOnScroll]);
 
-  const handleHomeClick = useCallback(() => {
-    if (isMobile && isVisible) {
-      setIsVisible(false);
-    }
-    history.push(HOME);
-  }, [history, isMobile, isVisible]);
-
   const handleHeaderClick = useCallback(() => {
     if (isMobile && isVisible) {
       setIsVisible(false);
@@ -84,11 +73,6 @@ const Header = ({
         onClick={handleHeaderClick}
       >
         <S.RowMain>
-          <Col>
-            <S.LogoLink onClick={handleHomeClick}>
-              <S.Logo src={logo} alt="Logo" />
-            </S.LogoLink>
-          </Col>
           <Col>
             <S.ChildrenWrapper>
               {children}
