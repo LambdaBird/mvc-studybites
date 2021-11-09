@@ -3,6 +3,14 @@ export default {
     lessons: 'LESSONS',
     add_new_lesson: 'New lesson',
   },
+  right_bar: {
+    analytics: 'Analytics',
+    funnel: {
+      title: 'Lesson funnel',
+      description: 'Let`s find the part of the lesson where people are stuck',
+    },
+    anonymous_user: 'Anonymous user',
+  },
   pages: {
     students: 'My students',
     lesson_students: 'Lesson students',

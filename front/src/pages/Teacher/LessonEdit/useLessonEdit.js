@@ -271,5 +271,6 @@ export const useLessonEdit = () => {
     isEditorDisabled,
     isRenderEditor,
     editorJsProps,
+    studentsCount: lessonData?.lesson?.studentsCount,
   };
 };

@@ -3,6 +3,14 @@ export default {
     lessons: 'УРОКИ',
     add_new_lesson: 'Добавить урок',
   },
+  right_bar: {
+    analytics: 'Аналитика',
+    funnel: {
+      title: 'Воронка урока',
+      description: 'Давайте найдем ту часть урока, где люди застревают',
+    },
+    anonymous_user: 'Анонимный пользователь',
+  },
   pages: {
     students: 'Мои студенты',
     lesson_students: 'Студенты урока',

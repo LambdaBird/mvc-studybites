@@ -24,6 +24,7 @@ const LessonEdit = () => {
     isEditorDisabled,
     isRenderEditor,
     editorJsProps,
+    studentsCount,
   } = useLessonEdit();
 
   return (
@@ -41,6 +42,7 @@ const LessonEdit = () => {
       <RightBar
         isPublic={isPublic}
         isCurrentlyEditing={isCurrentlyEditing}
+        studentsCount={studentsCount}
         {...handleButtons}
       />
       <S.Page>
