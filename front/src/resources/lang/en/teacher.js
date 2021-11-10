@@ -175,6 +175,8 @@ export default {
       share: 'Share',
       move_to_draft: 'Move to draft',
       upload: 'Click to select file',
+      analytics: 'Analytics ({{user}})',
+      analytics_user: 'user',
     },
     cover_image: {
       title: 'Cover image link',

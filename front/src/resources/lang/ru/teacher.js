@@ -175,6 +175,8 @@ export default {
       share: 'Поделиться',
       move_to_draft: 'Вернуть в черновики',
       upload: 'Нажмите чтобы выбрать файл',
+      analytics: 'Аналитика ({{user}})',
+      analytics_user: 'пользователь',
     },
     cover_image: {
       title: 'Ссылка на картинку',

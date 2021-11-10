@@ -222,7 +222,7 @@ export const useLessonEdit = () => {
         editorJSRef.current?.render?.({ blocks });
 
         if (editorJSRef?.current?.render) {
-          undoPluginRef.current.initialize({ blocks });
+          undoPluginRef.current?.initialize?.({ blocks });
         }
       }
       if (!lessonData.lesson.status || lessonData?.lesson.status === 'Draft') {
