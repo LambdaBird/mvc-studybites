@@ -2,11 +2,11 @@ import { Avatar, Dropdown, Menu, Space, Tooltip, Typography } from 'antd';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { EllipsisOutlined } from '@ant-design/icons';
 
 import { StyledAvatar } from '@sb-ui/components/molecules/Header/Header.styled';
 import { useCoursePublish } from '@sb-ui/hooks/useCoursePublish';
 import { Statuses } from '@sb-ui/pages/Teacher/Home/Dashboard/constants';
+import { EllipsisOutlined } from '@sb-ui/resources/icons';
 import lesson from '@sb-ui/resources/img/lesson.svg';
 import { COURSES_EDIT } from '@sb-ui/utils/paths';
 

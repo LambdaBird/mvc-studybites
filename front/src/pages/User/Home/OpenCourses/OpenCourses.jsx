@@ -1,13 +1,13 @@
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from 'react-query';
-import { FilterOutlined } from '@ant-design/icons';
 
 import FilterMobile from '@sb-ui/components/molecules/FilterMobile';
 import KeywordsFilter from '@sb-ui/components/molecules/KeywordsFilter';
 import useMobile from '@sb-ui/hooks/useMobile';
 import { PAGE_SIZE } from '@sb-ui/pages/User/Lessons/ResourcesList/constants';
 import * as S from '@sb-ui/pages/User/Lessons/ResourcesList/ResourcesList.styled';
+import { FilterOutlined } from '@sb-ui/resources/icons';
 import emptyImg from '@sb-ui/resources/img/empty.svg';
 import { getCourses } from '@sb-ui/utils/api/v1/courses';
 import { fetchKeywords } from '@sb-ui/utils/api/v1/keywords';

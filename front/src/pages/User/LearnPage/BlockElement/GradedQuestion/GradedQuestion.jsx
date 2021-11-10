@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next';
-import { FileOutlined } from '@ant-design/icons';
 
 import File from '@sb-ui/pages/User/LearnPage/BlockElement/GradedQuestion/File';
 import { useGradedQuestion } from '@sb-ui/pages/User/LearnPage/BlockElement/GradedQuestion/useGradedQuestion';
@@ -11,6 +10,7 @@ import {
   SolvedType,
 } from '@sb-ui/pages/User/LearnPage/BlockElement/types';
 import { ChunkWrapper } from '@sb-ui/pages/User/LearnPage/LearnPage.styled';
+import { FileOutlined } from '@sb-ui/resources/icons';
 
 import * as S from './GradedQuestion.styled';
 

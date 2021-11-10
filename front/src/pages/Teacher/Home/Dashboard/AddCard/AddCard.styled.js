@@ -1,7 +1,7 @@
 import { Row, Typography } from 'antd';
 import styled from 'styled-components';
-import { PlusCircleTwoTone } from '@ant-design/icons';
 
+import { PlusCircleTwoTone } from '@sb-ui/resources/icons';
 import variables from '@sb-ui/theme/variables';
 
 const { Title } = Typography;

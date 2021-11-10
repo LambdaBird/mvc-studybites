@@ -1,10 +1,7 @@
 import { Button, Typography, Upload as UploadAntd } from 'antd';
 import styled from 'styled-components';
-import {
-  PaperClipOutlined,
-  RightOutlined as RightOutlinedAntd,
-} from '@ant-design/icons';
 
+import { PaperClipOutlined, RightOutlinedAntd } from '@sb-ui/resources/icons';
 import variables from '@sb-ui/theme/variables';
 
 import { BlockElementWrapperWhite } from '../BlockElement.styled';

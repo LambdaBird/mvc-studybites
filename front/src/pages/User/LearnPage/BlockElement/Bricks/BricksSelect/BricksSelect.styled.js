@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { RightOutlined as RightOutlinedAntd } from '@ant-design/icons';
 
+import { RightOutlinedAntd } from '@sb-ui/resources/icons';
 import variables from '@sb-ui/theme/variables';
 
 // px sizes

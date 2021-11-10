@@ -2,7 +2,6 @@ import { Avatar, Dropdown, Menu, Space, Tooltip, Typography } from 'antd';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { EllipsisOutlined } from '@ant-design/icons';
 
 import { StyledAvatar } from '@sb-ui/components/molecules/Header/Header.styled';
 import { useLessonStatus } from '@sb-ui/hooks/useLessonStatus';
@@ -10,6 +9,7 @@ import {
   Statuses,
   statusesOptions,
 } from '@sb-ui/pages/Teacher/Home/Dashboard/constants';
+import { EllipsisOutlined } from '@sb-ui/resources/icons';
 import DefaultLessonImage from '@sb-ui/resources/img/lesson.svg';
 import { LESSONS_EDIT } from '@sb-ui/utils/paths';
 

@@ -3,10 +3,10 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from 'react-query';
 import { useHistory } from 'react-router-dom';
-import { PlusOutlined } from '@ant-design/icons';
 
 import DebouncedSearch from '@sb-ui/components/atoms/DebouncedSearch';
 import KeywordsFilter from '@sb-ui/components/molecules/KeywordsFilter';
+import { PlusOutlined } from '@sb-ui/resources/icons';
 import { getTeacherLessons } from '@sb-ui/utils/api/v1/teacher';
 import { LESSONS_NEW } from '@sb-ui/utils/paths';
 import { TEACHER_LESSONS_BASE_KEY } from '@sb-ui/utils/queries';

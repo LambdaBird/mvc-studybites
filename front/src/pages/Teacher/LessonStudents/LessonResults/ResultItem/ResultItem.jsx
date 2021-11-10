@@ -1,7 +1,8 @@
 import T from 'prop-types';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CheckCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
+
+import { CheckCircleTwoTone, CloseCircleTwoTone } from '@sb-ui/resources/icons';
 
 import { getTitleAndIcon } from './getTitleAndIcon';
 import * as S from './ResulItem.styled';
