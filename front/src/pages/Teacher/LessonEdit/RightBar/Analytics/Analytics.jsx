@@ -17,7 +17,7 @@ const Analytics = ({ opened, publicId }) => {
     [TEACHER_LESSON_STUDENTS_BASE_KEY, { lessonId }],
     getTeacherLessonStudents,
     {
-      keepPreviousData: true,
+      enabled: lessonId !== 'new',
     },
   );
 

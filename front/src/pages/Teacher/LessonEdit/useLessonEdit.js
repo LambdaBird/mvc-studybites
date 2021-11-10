@@ -28,7 +28,6 @@ const MAX_NAME_LENGTH = 255;
 export const useLessonEdit = () => {
   const { id: lessonId } = useParams();
   const { t, i18n } = useTranslation('teacher');
-  const [isEditLesson] = useState(lessonId !== 'new');
 
   const { language } = i18n;
   const isCurrentlyEditing = useMemo(() => lessonId !== 'new', [lessonId]);
@@ -223,8 +222,8 @@ export const useLessonEdit = () => {
   }, [editorJSRef, lessonData]);
 
   const isRenderEditor = useMemo(
-    () => !isEditLesson || dataBlocks,
-    [dataBlocks, isEditLesson],
+    () => !isCurrentlyEditing || dataBlocks,
+    [dataBlocks, isCurrentlyEditing],
   );
 
   const editorJsProps = useMemo(

@@ -56,6 +56,10 @@ const ShareModal = ({ publicId, opened, setOpened }) => {
   }, []);
 
   useEffect(() => {
+    setIsShareAnyone(!!publicId);
+  }, [lessonId, publicId]);
+
+  useEffect(() => {
     if (publicId) {
       setIsShareAnyone(true);
     }
