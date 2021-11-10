@@ -2,7 +2,7 @@ import { message } from 'antd';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMutation, useQuery } from 'react-query';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 import { Statuses } from '@sb-ui/pages/Teacher/Home/Dashboard/constants';
 import {
@@ -26,7 +26,8 @@ import { TEACHER_LESSON_BASE_KEY } from '@sb-ui/utils/queries';
 
 const MAX_NAME_LENGTH = 255;
 
-export const useLessonEdit = ({ lessonId }) => {
+export const useLessonEdit = () => {
+  const { id: lessonId } = useParams();
   const { t, i18n } = useTranslation('teacher');
   const [isEditLesson] = useState(lessonId !== 'new');
 
@@ -195,6 +196,7 @@ export const useLessonEdit = ({ lessonId }) => {
       setName('');
       setDataBlocks(null);
       editorJSRef.current?.clear?.();
+      setIsEditorDisabled(false);
     }
   }, [editorJSRef, isCurrentlyEditing, setName]);
 
@@ -255,11 +257,13 @@ export const useLessonEdit = ({ lessonId }) => {
   return {
     isCurrentlyEditing,
     name,
-    handleShare,
-    handleSave,
-    handleInputTitle,
     handleNextLine,
-    handlePreview,
+    handleInputTitle,
+    handleButtons: {
+      handleSave,
+      handlePreview,
+      handleShare,
+    },
     lessons,
     publicId,
     isPublic,

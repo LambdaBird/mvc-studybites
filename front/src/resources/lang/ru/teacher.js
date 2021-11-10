@@ -1,4 +1,8 @@
 export default {
+  left_bar: {
+    lessons: 'УРОКИ',
+    add_new_lesson: 'Добавить урок',
+  },
   pages: {
     students: 'Мои студенты',
     lesson_students: 'Студенты урока',

@@ -5,7 +5,6 @@ import { MoreOutlined } from '@ant-design/icons';
 export const HEADER_HEIGHT = 56;
 
 export const Container = styled.header`
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   background: white;
   height: ${HEADER_HEIGHT}px;
   z-index: 4;

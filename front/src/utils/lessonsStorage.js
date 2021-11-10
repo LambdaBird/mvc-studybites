@@ -15,7 +15,7 @@ export const setStorageLesson = (lesson) => {
       storageLesson.status = lesson.status;
     }
   } else {
-    lessons.push(lesson);
+    lessons.unshift(lesson);
   }
   setStorageLessons(lessons);
 };
