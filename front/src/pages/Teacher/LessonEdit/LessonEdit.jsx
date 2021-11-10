@@ -25,6 +25,8 @@ const LessonEdit = () => {
     isEditorDisabled,
     isRenderEditor,
     isShowAnalytics,
+    isShowShare,
+    setIsShowShare,
     editorJsProps,
     studentsCount,
   } = useLessonEdit();
@@ -46,6 +48,8 @@ const LessonEdit = () => {
         publicId={publicId}
         isCurrentlyEditing={isCurrentlyEditing}
         isShowAnalytics={isShowAnalytics}
+        isShowShare={isShowShare}
+        setIsShowShare={setIsShowShare}
         studentsCount={studentsCount}
         {...handleButtons}
       />
