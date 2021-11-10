@@ -11,6 +11,12 @@ export default {
     },
     no_students: 'Lesson has no students',
     anonymous_user: 'Anonymous user',
+    share_modal: {
+      title: 'Share to web',
+      description: 'Anyone with the link can view',
+      copy_button: 'Copy',
+      link_placeholder: 'Link would be here...',
+    },
   },
   pages: {
     students: 'My students',

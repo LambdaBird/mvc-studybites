@@ -14,7 +14,6 @@ import { queryClient } from '@sb-ui/query';
 import {
   createLesson,
   getLesson,
-  postShareLesson,
   putLesson,
 } from '@sb-ui/utils/api/v1/teacher';
 import {
@@ -31,16 +30,6 @@ export const useLessonEdit = () => {
   const { t, i18n } = useTranslation('teacher');
   const [isEditLesson] = useState(lessonId !== 'new');
 
-  const { mutate: shareLesson } = useMutation(postShareLesson, {
-    onSuccess: () => {
-      setStorageLesson({
-        status: Statuses.PUBLIC,
-        id: lessonId,
-      });
-      queryClient.invalidateQueries(TEACHER_LESSON_BASE_KEY);
-    },
-  });
-
   const { language } = i18n;
   const isCurrentlyEditing = useMemo(() => lessonId !== 'new', [lessonId]);
   const history = useHistory();
@@ -50,6 +39,7 @@ export const useLessonEdit = () => {
   const [dataBlocks, setDataBlocks] = useState(null);
   const [isEditorDisabled, setIsEditorDisabled] = useState(false);
   const [isShowAnalytics, setIsShowAnalytics] = useState(false);
+  const [isShowShare, setIsShowShare] = useState(false);
 
   const inputTitle = useRef(null);
 
@@ -168,10 +158,8 @@ export const useLessonEdit = () => {
   ]);
 
   const handleShare = useCallback(async () => {
-    shareLesson({
-      id: lessonId,
-    });
-  }, [lessonId, shareLesson]);
+    setIsShowShare((prev) => !prev);
+  }, []);
 
   const handleInputTitle = useCallback((e) => {
     const newText = e.target.value;
@@ -277,6 +265,8 @@ export const useLessonEdit = () => {
     isEditorDisabled,
     isRenderEditor,
     isShowAnalytics,
+    isShowShare,
+    setIsShowShare,
     editorJsProps,
     studentsCount: lessonData?.lesson?.studentsCount,
   };
