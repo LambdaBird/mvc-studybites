@@ -2,10 +2,9 @@ import styled, { css } from 'styled-components';
 
 export const FunnelWrapper = styled.div`
   display: grid;
-  grid-template-columns: 12fr 1fr 1fr 6fr 12fr;
+  grid-template-columns: 12fr 1fr;
   grid-auto-rows: 1fr;
   grid-row-gap: 8px;
-  width: 1000px;
 `;
 
 export const TypeWrapper = styled.div`
@@ -76,7 +75,7 @@ const barColor = css`
 
 export const BiteBar = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: flex-end;
   width: ${countWidthPercent}%;
   ${barColor}

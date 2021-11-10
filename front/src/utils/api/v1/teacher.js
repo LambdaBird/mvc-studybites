@@ -63,7 +63,7 @@ export const getTeacherLessonStudents = async ({ queryKey }) => {
     ...data,
     students: data.students.map((x) => ({
       ...x,
-      fullName: `${x.firstName || ''} ${x.lastName || ''}`,
+      lastActivity: +new Date(x.results?.[x.results.length - 1].createdAt),
     })),
   };
 };

@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 import { HEADER_HEIGHT } from '@sb-ui/components/molecules/Header/Header.styled';
-import { LEFT_BAR_WIDTH } from '@sb-ui/pages/Teacher/LessonEdit/constants';
+
+import { LEFT_BAR_WIDTH } from '../constants';
 
 export const Wrapper = styled.div`
   background-color: #fafafa;
