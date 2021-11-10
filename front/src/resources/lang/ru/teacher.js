@@ -11,6 +11,13 @@ export default {
     },
     no_students: 'На уроке нет студентов',
     anonymous_user: 'Анонимный пользователь',
+    share_modal: {
+      title: 'Поделиться в Интернете',
+      description: 'Все, у кого есть ссылка, могут просматривать',
+      copy_button: 'Скопировать',
+      link_placeholder: 'Ссылка будет здесь...',
+    },
+    not_started: 'еще не начал',
   },
   pages: {
     students: 'Мои студенты',
