@@ -20,10 +20,15 @@ const LessonEdit = () => {
     handleButtons,
     lessons,
     isPublic,
+    publicId,
     inputTitle,
     isEditorDisabled,
     isRenderEditor,
+    isShowAnalytics,
+    isShowShare,
+    setIsShowShare,
     editorJsProps,
+    studentsCount,
   } = useLessonEdit();
 
   return (
@@ -40,10 +45,15 @@ const LessonEdit = () => {
       <LeftBar lessons={lessons} />
       <RightBar
         isPublic={isPublic}
+        publicId={publicId}
         isCurrentlyEditing={isCurrentlyEditing}
+        isShowAnalytics={isShowAnalytics}
+        isShowShare={isShowShare}
+        setIsShowShare={setIsShowShare}
+        studentsCount={studentsCount}
         {...handleButtons}
       />
-      <S.Page>
+      <S.Page isRightOpen={isShowAnalytics}>
         <S.InputTitle
           ref={inputTitle}
           type="text"

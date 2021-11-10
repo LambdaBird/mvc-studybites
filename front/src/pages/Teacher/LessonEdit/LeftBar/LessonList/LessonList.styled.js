@@ -24,12 +24,12 @@ export const LessonsTitle = styled.div`
 export const LessonsList = styled.div`
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
+  overflow-y: auto;
 `;
 
 export const Wrapper = styled.div`
   display: flex;
-  height: calc(100% - ${HEADER_HEIGHT}px - ${HEADER_HEIGHT}px);
+  height: calc(100% - 2 * ${HEADER_HEIGHT}px);
   flex-direction: column;
   gap: 0.5rem;
   padding-left: 1rem;

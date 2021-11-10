@@ -14,7 +14,6 @@ import { queryClient } from '@sb-ui/query';
 import {
   createLesson,
   getLesson,
-  postShareLesson,
   putLesson,
 } from '@sb-ui/utils/api/v1/teacher';
 import {
@@ -29,17 +28,6 @@ const MAX_NAME_LENGTH = 255;
 export const useLessonEdit = () => {
   const { id: lessonId } = useParams();
   const { t, i18n } = useTranslation('teacher');
-  const [isEditLesson] = useState(lessonId !== 'new');
-
-  const { mutate: shareLesson } = useMutation(postShareLesson, {
-    onSuccess: () => {
-      setStorageLesson({
-        status: Statuses.PUBLIC,
-        id: lessonId,
-      });
-      queryClient.invalidateQueries(TEACHER_LESSON_BASE_KEY);
-    },
-  });
 
   const { language } = i18n;
   const isCurrentlyEditing = useMemo(() => lessonId !== 'new', [lessonId]);
@@ -49,6 +37,8 @@ export const useLessonEdit = () => {
   const [name, setName] = useState('');
   const [dataBlocks, setDataBlocks] = useState(null);
   const [isEditorDisabled, setIsEditorDisabled] = useState(false);
+  const [isShowAnalytics, setIsShowAnalytics] = useState(false);
+  const [isShowShare, setIsShowShare] = useState(false);
 
   const inputTitle = useRef(null);
 
@@ -121,6 +111,10 @@ export const useLessonEdit = () => {
     },
   });
 
+  const handleAnalytics = useCallback(() => {
+    setIsShowAnalytics((prev) => !prev);
+  }, []);
+
   const handleSave = useCallback(async () => {
     try {
       const { blocks } = await editorJSRef.current.save();
@@ -163,10 +157,8 @@ export const useLessonEdit = () => {
   ]);
 
   const handleShare = useCallback(async () => {
-    shareLesson({
-      id: lessonId,
-    });
-  }, [lessonId, shareLesson]);
+    setIsShowShare((prev) => !prev);
+  }, []);
 
   const handleInputTitle = useCallback((e) => {
     const newText = e.target.value;
@@ -230,8 +222,8 @@ export const useLessonEdit = () => {
   }, [editorJSRef, lessonData]);
 
   const isRenderEditor = useMemo(
-    () => !isEditLesson || dataBlocks,
-    [dataBlocks, isEditLesson],
+    () => !isCurrentlyEditing || dataBlocks,
+    [dataBlocks, isCurrentlyEditing],
   );
 
   const editorJsProps = useMemo(
@@ -263,6 +255,7 @@ export const useLessonEdit = () => {
       handleSave,
       handlePreview,
       handleShare,
+      handleAnalytics,
     },
     lessons,
     publicId,
@@ -270,6 +263,10 @@ export const useLessonEdit = () => {
     inputTitle,
     isEditorDisabled,
     isRenderEditor,
+    isShowAnalytics,
+    isShowShare,
+    setIsShowShare,
     editorJsProps,
+    studentsCount: lessonData?.lesson?.studentsCount,
   };
 };
