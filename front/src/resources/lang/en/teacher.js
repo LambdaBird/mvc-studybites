@@ -17,6 +17,7 @@ export default {
       copy_button: 'Copy',
       link_placeholder: 'Link would be here...',
     },
+    not_started: 'not started yet',
   },
   pages: {
     students: 'My students',

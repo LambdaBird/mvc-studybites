@@ -17,6 +17,7 @@ export default {
       copy_button: 'Скопировать',
       link_placeholder: 'Ссылка будет здесь...',
     },
+    not_started: 'еще не начал',
   },
   pages: {
     students: 'Мои студенты',

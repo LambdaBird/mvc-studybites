@@ -63,7 +63,7 @@ export const getTeacherLessonStudents = async ({ queryKey }) => {
     ...data,
     students: data.students.map((x) => ({
       ...x,
-      lastActivity: +new Date(x.results?.[x.results.length - 1].createdAt),
+      lastActivity: +new Date(x.results?.[x.results.length - 1]?.createdAt),
     })),
   };
 };

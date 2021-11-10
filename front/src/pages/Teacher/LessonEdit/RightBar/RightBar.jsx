@@ -35,7 +35,7 @@ const RightBar = ({
       <Button disabled={!isCurrentlyEditing} onClick={handleShare}>
         {t('lesson_edit.buttons.share')}
       </Button>
-      <Analytics opened={isShowAnalytics} publicId={publicId} />
+      <Analytics opened={isShowAnalytics} />
       <ShareModal
         publicId={isPublic && publicId}
         opened={isShowShare}

@@ -10,7 +10,7 @@ import { TEACHER_LESSON_STUDENTS_BASE_KEY } from '@sb-ui/utils/queries';
 import Students from './Students';
 import * as S from './Analytics.styled';
 
-const Analytics = ({ opened, publicId }) => {
+const Analytics = ({ opened }) => {
   const { id: lessonId } = useParams();
   const { t } = useTranslation('teacher');
   const { data: studentsData } = useQuery(
@@ -38,7 +38,7 @@ const Analytics = ({ opened, publicId }) => {
             <S.FunnelContainerWrapper>
               <FunnelContainer lessonId={lessonId} />
             </S.FunnelContainerWrapper>
-            <Students students={students} publicId={publicId} />
+            <Students students={students} />
           </>
         ) : (
           <S.NoStudents>{t('right_bar.no_students')}</S.NoStudents>
@@ -50,7 +50,6 @@ const Analytics = ({ opened, publicId }) => {
 
 Analytics.propTypes = {
   opened: T.bool,
-  publicId: T.string,
 };
 
 export default Analytics;
