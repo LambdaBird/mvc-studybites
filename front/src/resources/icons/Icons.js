@@ -8,6 +8,7 @@ export { default as EllipsisOutlined } from '@ant-design/icons/lib/icons/Ellipsi
 export { default as ExclamationCircleOutlined } from '@ant-design/icons/lib/icons/ExclamationCircleOutlined';
 export { default as FileOutlined } from '@ant-design/icons/lib/icons/FileOutlined';
 export { default as FilterOutlined } from '@ant-design/icons/lib/icons/FilterOutlined';
+export { default as GlobalOutlined } from '@ant-design/icons/lib/icons/GlobalOutlined';
 export { default as LoadingOutlined } from '@ant-design/icons/lib/icons/LoadingOutlined';
 export { default as MenuOutlinedAntd } from '@ant-design/icons/lib/icons/MenuOutlined';
 export { default as MoreOutlined } from '@ant-design/icons/lib/icons/MoreOutlined';

@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import useMobile from '@sb-ui/hooks/useMobile';
 import logo from '@sb-ui/resources/img/logo.svg';
-import { HOME } from '@sb-ui/utils/paths';
+import { LESSONS_NEW } from '@sb-ui/utils/paths';
 import {
   ChildrenType,
   ClassNameType,
@@ -24,9 +24,8 @@ const Header = ({
   children,
   handleHide,
 }) => {
-  const history = useHistory();
   const isMobile = useMobile();
-
+  const history = useHistory();
   const headerRef = useRef(null);
   const [scroll, setScroll] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -54,13 +53,6 @@ const Header = ({
     };
   }, [headerRef, hideOnScroll]);
 
-  const handleHomeClick = useCallback(() => {
-    if (isMobile && isVisible) {
-      setIsVisible(false);
-    }
-    history.push(HOME);
-  }, [history, isMobile, isVisible]);
-
   const handleHeaderClick = useCallback(() => {
     if (isMobile && isVisible) {
       setIsVisible(false);
@@ -72,6 +64,10 @@ const Header = ({
       handleHide?.(scroll === 'down');
     }
   }, [handleHide, scroll]);
+
+  const handleHomeClick = useCallback(() => {
+    history.push(LESSONS_NEW);
+  }, [history]);
 
   return (
     <>
@@ -88,14 +84,7 @@ const Header = ({
             <S.LogoLink onClick={handleHomeClick}>
               <S.Logo src={logo} alt="Logo" />
             </S.LogoLink>
-          </Col>
-          <Col>
-            <S.ChildrenWrapper>
-              {children}
-              <div>
-                <S.MoreButton />
-              </div>
-            </S.ChildrenWrapper>
+            <S.ChildrenWrapper>{children}</S.ChildrenWrapper>
           </Col>
         </S.RowMain>
         {bottom}

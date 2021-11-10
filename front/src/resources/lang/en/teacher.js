@@ -1,4 +1,24 @@
 export default {
+  left_bar: {
+    lessons: 'LESSONS',
+    add_new_lesson: 'New lesson',
+  },
+  right_bar: {
+    analytics: 'Analytics',
+    funnel: {
+      title: 'Lesson funnel',
+      description: 'Let`s find the part of the lesson where people are stuck',
+    },
+    no_students: 'Lesson has no students',
+    anonymous_user: 'Anonymous user',
+    share_modal: {
+      title: 'Share to web',
+      description: 'Anyone with the link can view',
+      copy_button: 'Copy',
+      link_placeholder: 'Link would be here...',
+    },
+    not_started: 'not started yet',
+  },
   pages: {
     students: 'My students',
     lesson_students: 'Lesson students',
@@ -155,6 +175,8 @@ export default {
       share: 'Share',
       move_to_draft: 'Move to draft',
       upload: 'Click to select file',
+      analytics: 'Analytics ({{user}})',
+      analytics_user: 'user',
     },
     cover_image: {
       title: 'Cover image link',

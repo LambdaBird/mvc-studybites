@@ -1,4 +1,24 @@
 export default {
+  left_bar: {
+    lessons: 'УРОКИ',
+    add_new_lesson: 'Добавить урок',
+  },
+  right_bar: {
+    analytics: 'Аналитика',
+    funnel: {
+      title: 'Воронка урока',
+      description: 'Давайте найдем ту часть урока, где люди застревают',
+    },
+    no_students: 'На уроке нет студентов',
+    anonymous_user: 'Анонимный пользователь',
+    share_modal: {
+      title: 'Поделиться в Интернете',
+      description: 'Все, у кого есть ссылка, могут просматривать',
+      copy_button: 'Скопировать',
+      link_placeholder: 'Ссылка будет здесь...',
+    },
+    not_started: 'еще не начал',
+  },
   pages: {
     students: 'Мои студенты',
     lesson_students: 'Студенты урока',
@@ -155,6 +175,8 @@ export default {
       share: 'Поделиться',
       move_to_draft: 'Вернуть в черновики',
       upload: 'Нажмите чтобы выбрать файл',
+      analytics: 'Аналитика ({{user}})',
+      analytics_user: 'пользователь',
     },
     cover_image: {
       title: 'Ссылка на картинку',

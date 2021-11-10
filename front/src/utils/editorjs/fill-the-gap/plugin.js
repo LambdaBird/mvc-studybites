@@ -86,6 +86,13 @@ export default class FillTheGap extends PluginBase {
     };
   }
 
+  backspacePressed(event) {
+    event.stopPropagation();
+    if (this.input.innerText.trim().length === 0) {
+      this.api.blocks.delete();
+    }
+  }
+
   render() {
     const container = document.createElement('div');
     container.classList.add(this.CSS.container);
@@ -101,16 +108,16 @@ export default class FillTheGap extends PluginBase {
       this.data.tokens = this.data.tokens.map(({ value, type, id }) => ({
         id,
         type,
-        value:
-          type === 'input'
-            ? this.data.answers.find((answer) => answer.id === id).value
-            : value,
+        value: type === 'input' ? '' : value,
       }));
 
       this.input.innerHTML = this.data.tokens
-        .map(({ type, value }) => {
+        .map(({ type, value, id }) => {
           if (type === 'input') {
-            return `{{ ${value.join(', ')} }}`;
+            const answersValue = this.data.answers.find(
+              (answer) => answer.id === id,
+            ).value;
+            return `{{ ${answersValue.join(', ')} }}`;
           }
           return value;
         })
@@ -123,6 +130,12 @@ export default class FillTheGap extends PluginBase {
 
     container.appendChild(this.titleWrapper);
     container.appendChild(this.input);
+
+    this.input.addEventListener('keydown', (event) => {
+      if (event.code === 'Backspace') {
+        this.backspacePressed(event);
+      }
+    });
 
     return container;
   }

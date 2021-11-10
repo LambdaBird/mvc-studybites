@@ -2,7 +2,7 @@ import { message } from 'antd';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMutation, useQuery } from 'react-query';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 import { Statuses } from '@sb-ui/pages/Teacher/Home/Dashboard/constants';
 import {
@@ -14,7 +14,6 @@ import { queryClient } from '@sb-ui/query';
 import {
   createLesson,
   getLesson,
-  postShareLesson,
   putLesson,
 } from '@sb-ui/utils/api/v1/teacher';
 import {
@@ -26,19 +25,9 @@ import { TEACHER_LESSON_BASE_KEY } from '@sb-ui/utils/queries';
 
 const MAX_NAME_LENGTH = 255;
 
-export const useLessonEdit = ({ lessonId }) => {
+export const useLessonEdit = () => {
+  const { id: lessonId } = useParams();
   const { t, i18n } = useTranslation('teacher');
-  const [isEditLesson] = useState(lessonId !== 'new');
-
-  const { mutate: shareLesson } = useMutation(postShareLesson, {
-    onSuccess: () => {
-      setStorageLesson({
-        status: Statuses.PUBLIC,
-        id: lessonId,
-      });
-      queryClient.invalidateQueries(TEACHER_LESSON_BASE_KEY);
-    },
-  });
 
   const { language } = i18n;
   const isCurrentlyEditing = useMemo(() => lessonId !== 'new', [lessonId]);
@@ -48,6 +37,8 @@ export const useLessonEdit = ({ lessonId }) => {
   const [name, setName] = useState('');
   const [dataBlocks, setDataBlocks] = useState(null);
   const [isEditorDisabled, setIsEditorDisabled] = useState(false);
+  const [isShowAnalytics, setIsShowAnalytics] = useState(false);
+  const [isShowShare, setIsShowShare] = useState(false);
 
   const inputTitle = useRef(null);
 
@@ -120,24 +111,33 @@ export const useLessonEdit = ({ lessonId }) => {
     },
   });
 
+  const handleAnalytics = useCallback(() => {
+    setIsShowAnalytics((prev) => !prev);
+  }, []);
+
   const handleSave = useCallback(async () => {
     try {
       const { blocks } = await editorJSRef.current.save();
       const params = {
         lesson: {
           editId: lessonId,
-          name,
+          name:
+            !isCurrentlyEditing && name?.trim()?.length === 0
+              ? 'Untitled'
+              : name,
           status: Statuses.DRAFT,
         },
         blocks: prepareBlocksForApi(blocks),
       };
-      if (!name) {
+
+      if (!params.lesson.name) {
         message.error({
           content: t('editor_js.message.error_lesson_name'),
           duration: 2,
         });
         return;
       }
+
       if (params.blocks.length === 0) {
         message.error({
           content: t('editor_js.message.error_empty_blocks'),
@@ -162,10 +162,8 @@ export const useLessonEdit = ({ lessonId }) => {
   ]);
 
   const handleShare = useCallback(async () => {
-    shareLesson({
-      id: lessonId,
-    });
-  }, [lessonId, shareLesson]);
+    setIsShowShare((prev) => !prev);
+  }, []);
 
   const handleInputTitle = useCallback((e) => {
     const newText = e.target.value;
@@ -185,9 +183,17 @@ export const useLessonEdit = ({ lessonId }) => {
   };
 
   useEffect(() => {
-    if (lessonData?.lesson.name) {
-      setName(lessonData.lesson.name);
+    const lessonName = lessonData?.lesson?.name;
+    if (lessonName) {
+      setName(lessonName);
+      setStorageLesson({
+        name: lessonName,
+        status: lessonData?.lesson?.status,
+        id: lessonId,
+      });
     }
+    // Should setStorageLesson only when lesson data changes only
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lessonData?.lesson]);
 
   useEffect(() => {
@@ -195,6 +201,7 @@ export const useLessonEdit = ({ lessonId }) => {
       setName('');
       setDataBlocks(null);
       editorJSRef.current?.clear?.();
+      setIsEditorDisabled(false);
     }
   }, [editorJSRef, isCurrentlyEditing, setName]);
 
@@ -218,6 +225,10 @@ export const useLessonEdit = ({ lessonId }) => {
         editorJSRef.current?.clear();
       } else {
         editorJSRef.current?.render?.({ blocks });
+
+        if (editorJSRef?.current?.render) {
+          undoPluginRef.current?.initialize?.({ blocks });
+        }
       }
       if (!lessonData.lesson.status || lessonData?.lesson.status === 'Draft') {
         setIsEditorDisabled(false);
@@ -228,8 +239,8 @@ export const useLessonEdit = ({ lessonId }) => {
   }, [editorJSRef, lessonData]);
 
   const isRenderEditor = useMemo(
-    () => !isEditLesson || dataBlocks,
-    [dataBlocks, isEditLesson],
+    () => !isCurrentlyEditing || dataBlocks,
+    [dataBlocks, isCurrentlyEditing],
   );
 
   const editorJsProps = useMemo(
@@ -255,17 +266,24 @@ export const useLessonEdit = ({ lessonId }) => {
   return {
     isCurrentlyEditing,
     name,
-    handleShare,
-    handleSave,
-    handleInputTitle,
     handleNextLine,
-    handlePreview,
+    handleInputTitle,
+    handleButtons: {
+      handleSave,
+      handlePreview,
+      handleShare,
+      handleAnalytics,
+    },
     lessons,
     publicId,
     isPublic,
     inputTitle,
     isEditorDisabled,
     isRenderEditor,
+    isShowAnalytics,
+    isShowShare,
+    setIsShowShare,
     editorJsProps,
+    studentsCount: lessonData?.lesson?.studentsCount,
   };
 };

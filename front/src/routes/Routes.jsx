@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Redirect, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from 'react-router-dom';
 
 import { LessonEdit, LessonPreview } from '@sb-ui/pages/Teacher';
 import LearnPageWrapper from '@sb-ui/pages/User/LearnPage/LearnPageWrapper';
@@ -16,9 +21,9 @@ const Routes = () => (
       <AuthRoute isPublic path={paths.LESSONS_PREVIEW}>
         <LessonPreview />
       </AuthRoute>
-      <AuthRoute isPublic path={paths.LESSONS_EDIT}>
+      <Route path={paths.LESSONS_EDIT}>
         <LessonEdit />
-      </AuthRoute>
+      </Route>
       <Redirect to={paths.LESSONS_NEW} />
     </Switch>
   </Router>

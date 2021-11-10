@@ -22,9 +22,7 @@ async function handler({ params: { lessonId } }) {
   } = this;
 
   await Lesson.updateLessonStatus({ lessonId, status: 'Public' });
-  const { publicId } = await Lesson.generateLessonLearnId({
-    lessonEditId: lessonId,
-  });
+  const { publicId } = await Lesson.findByEditId({ lessonEditId: lessonId });
   return {
     publicId,
   };

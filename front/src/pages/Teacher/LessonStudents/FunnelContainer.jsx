@@ -16,6 +16,10 @@ import {
 import LessonFunnel from './LessonFunnel';
 import { FunnelContainerWrapper } from './LessonStudents.styled';
 
+const isLastFinish = (index, bites, student) =>
+  index === bites?.length - 1 &&
+  student.results?.[student.results?.length - 1]?.action === 'finish';
+
 const FunnelContainer = ({ lessonId }) => {
   const { data: students, isLoading: isStudentsLoading } = useQuery(
     [TEACHER_LESSON_STUDENTS_BASE_KEY, { lessonId }],
@@ -64,7 +68,7 @@ const FunnelContainer = ({ lessonId }) => {
       },
       ...chunks,
     ]
-      .map((bite, index) => {
+      .map((bite, index, allBites) => {
         if (!index) {
           return bite;
         }
@@ -76,7 +80,7 @@ const FunnelContainer = ({ lessonId }) => {
             (result) => result?.revision === interactiveBlock?.revision,
           );
 
-          return !!theResult;
+          return !!theResult || isLastFinish(index, allBites, student);
         });
 
         return {
@@ -85,9 +89,12 @@ const FunnelContainer = ({ lessonId }) => {
           landed: landedStudents.length,
           blocks: bite.map((block) => block.type),
           replySeries: landedStudents.map((student) => {
-            const theResultIndex = student.results.findIndex(
+            let theResultIndex = student.results.findIndex(
               (result) => result?.revision === interactiveBlock?.revision,
             );
+            if (isLastFinish(index, allBites, student)) {
+              theResultIndex = student.results.length - 1;
+            }
 
             return (
               new Date(student.results[theResultIndex].createdAt) -

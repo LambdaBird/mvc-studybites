@@ -1,36 +1,35 @@
-import { Button } from 'antd';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
 
-import Header from '@sb-ui/components/molecules/Header';
+import LeftBar from '@sb-ui/pages/Teacher/LessonEdit/LeftBar';
+import RightBar from '@sb-ui/pages/Teacher/LessonEdit/RightBar';
 import { useLessonEdit } from '@sb-ui/pages/Teacher/LessonEdit/useLessonEdit';
 import { sbPostfix } from '@sb-ui/utils/constants';
 import EditorJs from '@sb-ui/utils/editorjs/EditorJsContainer';
 
-import LessonList from './LessonList';
 import * as S from './LessonEdit.styled';
 
 const LessonEdit = () => {
   const { t } = useTranslation('teacher');
-  const { id: lessonId } = useParams();
 
   const {
     isCurrentlyEditing,
     name,
-    handleShare,
-    handleSave,
     handleInputTitle,
     handleNextLine,
-    handlePreview,
+    handleButtons,
     lessons,
-    publicId,
     isPublic,
+    publicId,
     inputTitle,
     isEditorDisabled,
     isRenderEditor,
+    isShowAnalytics,
+    isShowShare,
+    setIsShowShare,
     editorJsProps,
-  } = useLessonEdit({ lessonId });
+    studentsCount,
+  } = useLessonEdit();
 
   return (
     <>
@@ -42,25 +41,19 @@ const LessonEdit = () => {
           {sbPostfix}
         </title>
       </Helmet>
-      <Header isFixed>
-        <Button disabled={isPublic} type="primary" onClick={handleSave}>
-          {t('lesson_edit.buttons.save')}
-        </Button>
 
-        <div>
-          <Button disabled={!isCurrentlyEditing} onClick={handlePreview}>
-            {t('lesson_edit.buttons.preview')}
-          </Button>
-        </div>
-        <div>
-          <Button disabled={!isCurrentlyEditing} onClick={handleShare}>
-            {t('lesson_edit.buttons.share')}
-          </Button>
-        </div>
-      </Header>
-      <S.Page>
-        <LessonList lessons={lessons} publicId={isPublic && publicId} />
-
+      <LeftBar lessons={lessons} />
+      <RightBar
+        isPublic={isPublic}
+        publicId={publicId}
+        isCurrentlyEditing={isCurrentlyEditing}
+        isShowAnalytics={isShowAnalytics}
+        isShowShare={isShowShare}
+        setIsShowShare={setIsShowShare}
+        studentsCount={studentsCount}
+        {...handleButtons}
+      />
+      <S.Page isRightOpen={isShowAnalytics}>
         <S.InputTitle
           ref={inputTitle}
           type="text"

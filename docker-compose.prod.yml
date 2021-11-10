@@ -44,6 +44,7 @@ services:
       - '443:443'
     environment:
       REACT_APP_SB_HOST: https://studybites.app
+      REACT_APP_SELF_HOST: https://studybites.app
 
 volumes:
   postgres-prod: {}
