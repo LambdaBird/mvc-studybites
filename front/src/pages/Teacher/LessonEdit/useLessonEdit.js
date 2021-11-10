@@ -121,18 +121,23 @@ export const useLessonEdit = () => {
       const params = {
         lesson: {
           editId: lessonId,
-          name,
+          name:
+            !isCurrentlyEditing && name?.trim()?.length === 0
+              ? 'Untitled'
+              : name,
           status: Statuses.DRAFT,
         },
         blocks: prepareBlocksForApi(blocks),
       };
-      if (!name) {
+
+      if (!params.lesson.name) {
         message.error({
           content: t('editor_js.message.error_lesson_name'),
           duration: 2,
         });
         return;
       }
+
       if (params.blocks.length === 0) {
         message.error({
           content: t('editor_js.message.error_empty_blocks'),

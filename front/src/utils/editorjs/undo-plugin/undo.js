@@ -94,7 +94,7 @@ export default class Undo {
     const firstElement = { index: initialIndex, state: initialData };
     this.undoStack = [JSON.parse(JSON.stringify(firstElement))];
     this.redoStack = [];
-    this.toolbar = this.getEditorHolder().querySelector(`.${CE_TOOLBAR}`);
+    this.toolbar = this.getEditorHolder()?.querySelector(`.${CE_TOOLBAR}`);
   }
 
   /**

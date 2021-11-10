@@ -32,7 +32,7 @@ class ErrorBoundary extends React.Component {
             title={t('errors_page.boundary_title')}
             subTitle={t('errors_page.boundary_subtitle')}
             extra={
-              <Button type="primary" onClick={this.handleRefreshClick}>
+              <Button type="primary" onClick={ErrorBoundary.handleRefreshClick}>
                 {t('errors_page.refresh_page_button')}
               </Button>
             }
