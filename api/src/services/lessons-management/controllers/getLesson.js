@@ -1,6 +1,6 @@
 const options = {
   schema: {
-    params: { $ref: 'paramsLessonId#' },
+    params: { $ref: 'paramsLessonEditId' },
     response: {
       200: {
         type: 'object',
@@ -19,6 +19,8 @@ const options = {
             type: 'object',
             properties: {
               id: { type: 'number' },
+              editId: { type: 'string' },
+              publicId: { type: 'string' },
               name: { type: 'string' },
               description: { type: ['string', 'null'] },
               image: { type: ['string', 'null'] },
@@ -44,22 +46,9 @@ const options = {
       '5xx': { $ref: '5xx#' },
     },
   },
-  async onRequest(req) {
-    await this.auth({ req });
-  },
-  async preHandler({ user: { id: userId }, params: { lessonId: resourceId } }) {
-    const { resources, roles } = this.config.globals;
-
-    await this.access({
-      userId,
-      resourceId,
-      resourceType: resources.LESSON.name,
-      roleId: roles.MAINTAINER.id,
-    });
-  },
 };
 
-async function handler({ params: { lessonId } }) {
+async function handler({ params: { lessonEditId } }) {
   const {
     models: { Lesson, LessonBlockStructure, UserRole, ResourceKeyword },
     config: {
@@ -67,7 +56,8 @@ async function handler({ params: { lessonId } }) {
     },
   } = this;
 
-  const lesson = await Lesson.findById({ lessonId });
+  const lesson = await Lesson.findByEditId({ lessonEditId });
+  const lessonId = lesson.id;
   const { count: studentsCount } = await UserRole.getResourceStudentsCount({
     resourceId: lessonId,
     resourceType: resources.LESSON.name,

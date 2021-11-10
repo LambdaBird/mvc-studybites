@@ -16,6 +16,7 @@ export default {
     boundary_title: 'Oops',
     boundary_subtitle: 'Something went wrong',
     not_exist: 'Sorry, the page you visited does not exist.',
+    lesson_not_exist: 'Sorry, the lesson you visited does not exist.',
     restricted: 'Sorry, you are not authorized to access this page.',
     back_home_button: 'Back Home',
     refresh_page_button: 'Refresh page',

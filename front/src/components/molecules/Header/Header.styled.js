@@ -1,13 +1,10 @@
-import { Avatar, Menu as MenuAntd, Row, Typography } from 'antd';
+import { Avatar, Row } from 'antd';
 import styled from 'styled-components';
-import { MenuOutlined as MenuOutlinedAntd } from '@ant-design/icons';
-
-const { Text } = Typography;
+import { MoreOutlined } from '@ant-design/icons';
 
 export const HEADER_HEIGHT = 56;
 
 export const Container = styled.header`
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   background: white;
   height: ${HEADER_HEIGHT}px;
   z-index: 4;
@@ -67,34 +64,16 @@ export const Profile = styled.div`
   gap: 0.5rem;
 `;
 
-export const StyledName = styled(Text)`
-  font-size: 0.85rem;
+export const ChildrenWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 `;
 
-export const DropdownBackground = styled.div`
-  position: fixed;
-  min-height: 100%;
-  width: 100%;
-  z-index: 2;
-  background-color: rgba(0, 0, 0, 0.5);
-`;
-
-export const MenuOutlined = styled(MenuOutlinedAntd)`
-  font-size: 1.25rem;
-`;
-
-export const Menu = styled(MenuAntd)`
-  z-index: 3;
-`;
-
-export const MenuWrapper = styled.div`
-  position: absolute;
-  z-index: 3;
-  width: 100%;
-  transition: transform 0.3s ease-in-out;
-  margin-top: 0;
-  transform: ${(props) =>
-    props.visible ? `translateY(${HEADER_HEIGHT}px)` : 'translateY(-100%)'};
+export const MoreButton = styled(MoreOutlined)`
+  font-size: 24px;
+  transform: rotate(90deg);
 `;
 
 export const LogoLink = styled.div`

@@ -19,9 +19,25 @@ export const error5xx = {
 export const lessonIdParam = {
   type: 'object',
   properties: {
-    lessonId: { type: 'number' },
+    lessonId: { type: 'string' },
   },
   required: ['lessonId'],
+};
+
+export const lessonEditIdParam = {
+  type: 'object',
+  properties: {
+    lessonEditId: { type: 'string' },
+  },
+  required: ['lessonEditId'],
+};
+
+export const lessonPublicIdParam = {
+  type: 'object',
+  properties: {
+    lessonPublicId: { type: 'string' },
+  },
+  required: ['lessonPublicId'],
 };
 
 export const courseIdParam = {

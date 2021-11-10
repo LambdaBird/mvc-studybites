@@ -326,11 +326,14 @@ const EditorJsContainer = forwardRef((props, ref) => {
     return () => {};
   }, [changeData, props]);
 
-  const renderEditorWithBlocks = useCallback(async () => {
-    const { blocks } = await instance.current.save();
-    await destroyEditor();
-    await initEditor({ data: { blocks } });
-  }, [destroyEditor, initEditor]);
+  const renderEditorWithBlocks = useCallback(
+    async (params) => {
+      const { blocks } = params || (await instance.current.save());
+      await destroyEditor();
+      await initEditor({ data: { blocks } });
+    },
+    [destroyEditor, initEditor],
+  );
 
   useEffect(() => {
     if (language !== initialLanguage.current) {
@@ -346,7 +349,7 @@ const EditorJsContainer = forwardRef((props, ref) => {
   return (
     <>
       <S.GlobalStylesEditorPage toolbarHint={t('tools.hint')} />
-      {children || <div id={holder} />}
+      {children || <S.Container id={holder} />}
     </>
   );
 });

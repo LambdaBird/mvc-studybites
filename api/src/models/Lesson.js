@@ -1,6 +1,7 @@
 import objection from 'objection';
 import path from 'path';
 
+import { v4 } from 'uuid';
 import { BadRequestError, NotFoundError } from '../validation/errors';
 import {
   lessonServiceErrors as errors,
@@ -177,6 +178,18 @@ class Lesson extends BaseModel {
     };
   }
 
+  static findByPublicId({ lessonPublicId }) {
+    return this.query().first().where({
+      public_id: lessonPublicId,
+    });
+  }
+
+  static findByEditId({ lessonEditId }) {
+    return this.query().first().where({
+      edit_id: lessonEditId,
+    });
+  }
+
   static findById({ lessonId }) {
     return this.query()
       .findById(lessonId)
@@ -312,7 +325,23 @@ class Lesson extends BaseModel {
   }
 
   static updateLessonStatus({ lessonId, status }) {
-    return this.query().findById(lessonId).patch({ status }).returning('*');
+    return this.query()
+      .first()
+      .where({ edit_id: lessonId })
+      .patch({ status })
+      .returning('*');
+  }
+
+  static generateLessonLearnId({ lessonEditId }) {
+    return this.query()
+      .first()
+      .where({
+        edit_id: lessonEditId,
+      })
+      .patch({
+        public_id: v4(),
+      })
+      .returning('*');
   }
 
   static updateLessonsStatus({ lessons, status }) {
@@ -393,6 +422,14 @@ class Lesson extends BaseModel {
 
   static updateLesson({ trx, lessonId, lesson }) {
     return this.query(trx).findById(lessonId).patch(lesson).returning('*');
+  }
+
+  static updateLessonByEditId({ trx, lessonEditId, lesson }) {
+    return this.query(trx)
+      .first()
+      .where({ edit_id: lessonEditId })
+      .patch(lesson)
+      .returning('*');
   }
 
   /**

@@ -1,6 +1,5 @@
 import { Skeleton, Typography } from 'antd';
 import PropTypes from 'prop-types';
-import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import * as S from './InfoBlock.styled';
@@ -9,11 +8,6 @@ const { Text } = Typography;
 
 const InfoBlock = ({ isLoading, lesson, total }) => {
   const { t } = useTranslation('user');
-
-  const author = useMemo(
-    () => `${lesson.author?.firstName} ${lesson.author?.lastName}`,
-    [lesson.author],
-  );
 
   return (
     <S.BlockWrapper justify="start" align="top">
@@ -24,9 +18,6 @@ const InfoBlock = ({ isLoading, lesson, total }) => {
           <S.TitleEllipsis>{lesson.name}</S.TitleEllipsis>
           <S.StyledRow>{lesson.description}</S.StyledRow>
           <S.StyledRow justify="space-between">
-            <Text type="secondary">
-              {t('lesson.by')} {author}
-            </Text>
             <Text type="secondary">
               {total} {t('lesson.blocks')}
             </Text>

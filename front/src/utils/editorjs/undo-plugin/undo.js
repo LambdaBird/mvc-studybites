@@ -93,7 +93,8 @@ export default class Undo {
     const initialIndex = initialData.length - 1;
     const firstElement = { index: initialIndex, state: initialData };
     this.undoStack = [JSON.parse(JSON.stringify(firstElement))];
-    this.toolbar = this.getEditorHolder().querySelector(`.${CE_TOOLBAR}`);
+    this.redoStack = [];
+    this.toolbar = this.getEditorHolder()?.querySelector(`.${CE_TOOLBAR}`);
   }
 
   /**
@@ -301,14 +302,14 @@ export default class Undo {
 
     const handleDestroy = () => {
       holderElement.removeEventListener('keydown', handleAction);
-      undoButtonElement.removeEventListener('click', handleUndo);
-      redoButtonElement.removeEventListener('click', handleRedo);
+      undoButtonElement?.removeEventListener('click', handleUndo);
+      redoButtonElement?.removeEventListener('click', handleRedo);
     };
 
     holderElement.addEventListener('keydown', handleAction);
 
-    undoButtonElement.addEventListener('click', handleUndo);
-    redoButtonElement.addEventListener('click', handleRedo);
+    undoButtonElement?.addEventListener('click', handleUndo);
+    redoButtonElement?.addEventListener('click', handleRedo);
 
     holderElement.addEventListener('destroy', handleDestroy);
   }

@@ -2,16 +2,13 @@ import hash from 'object-hash';
 import Marker from '@editorjs/marker';
 
 import { BLOCKS_TYPE } from '@sb-ui/pages/User/LearnPage/BlockElement/types';
-import Attach from '@sb-ui/utils/editorjs/attach-plugin';
 import Bricks from '@sb-ui/utils/editorjs/bricks-plugin';
 import ClosedQuestion from '@sb-ui/utils/editorjs/closed-question-plugin';
 import CodeTool from '@sb-ui/utils/editorjs/code-plugin';
 import Delimiter from '@sb-ui/utils/editorjs/delimiter-plugin';
 import Embed from '@sb-ui/utils/editorjs/embed-plugin';
 import FillTheGap from '@sb-ui/utils/editorjs/fill-the-gap/plugin';
-import GradedQuestion from '@sb-ui/utils/editorjs/graded-question-plugin';
 import HeaderTool from '@sb-ui/utils/editorjs/header-plugin';
-import Image from '@sb-ui/utils/editorjs/image-plugin';
 import List from '@sb-ui/utils/editorjs/list-plugin';
 import Match from '@sb-ui/utils/editorjs/match-plugin';
 import Next from '@sb-ui/utils/editorjs/next-plugin';
@@ -193,16 +190,10 @@ export const getBaseBlocks = (t) => ({
     },
     inlineToolbar: true,
   },
-  image: {
-    class: Image,
-    inlineToolbar: true,
-  },
+
   embed: {
     class: Embed,
     inlineToolbar: true,
-  },
-  attach: {
-    class: Attach,
   },
   list: {
     class: List,
@@ -248,10 +239,6 @@ export const getInteractiveBlocks = () => ({
   },
   bricks: {
     class: Bricks,
-    inlineToolbar: true,
-  },
-  gradedQuestion: {
-    class: GradedQuestion,
     inlineToolbar: true,
   },
 });

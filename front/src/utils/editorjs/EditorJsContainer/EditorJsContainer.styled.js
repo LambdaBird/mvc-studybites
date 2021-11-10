@@ -1,6 +1,10 @@
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 
 import variables from '@sb-ui/theme/variables';
+
+export const Container = styled.div`
+  width: 100%;
+`;
 
 export const GlobalStylesEditorPage = createGlobalStyle`
   .codex-editor__redactor{

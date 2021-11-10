@@ -16,6 +16,7 @@ export default {
     boundary_title: 'Упс',
     boundary_subtitle: 'Что то пошло не так',
     not_exist: 'Простите, страница которую вы посетили не существует',
+    lesson_not_exist: 'Простите, урок которуй вы посетили не существует',
     restricted: 'Простите, у вас нет прав для этой страницы',
     back_home_button: 'Назад на Главную',
     refresh_page_button: 'Обновить страницу',

@@ -25,14 +25,14 @@ down-dev() {
 }
 
 migrate() {
-  if docker exec -it studybites_api_1 yarn migrate; then
+  if docker exec -it mvc-studybites_api_1 yarn migrate; then
     exit 0
   fi
   exit 1
 }
 
 psql-dev() {
-  if docker exec -it studybites_db_1 psql -d studybites -U sb-admin; then
+  if docker exec -it mvc-studybites_db_1 psql -d studybites -U sb-admin; then
     exit 0
   fi
   exit 1

@@ -85,7 +85,7 @@ describe('Maintainer flow', () => {
   });
 
   describe('Create a lesson', () => {
-    it('should return an error if the user is not a teacher', async () => {
+    it('should not return an error if the user is not a teacher', async () => {
       const response = await testContext.studentRequest({
         url: 'lessons-management/lessons',
         body: prepareLessonFromSeed(french, '-notCreated'),
@@ -93,9 +93,12 @@ describe('Maintainer flow', () => {
 
       const payload = JSON.parse(response.payload);
 
-      expect(response.statusCode).toBe(401);
-      expect(payload.statusCode).toBe(401);
-      expect(payload.message).toBe(errors.USER_ERR_UNAUTHORIZED);
+      expect(response.statusCode).toBe(200);
+      expect(payload).toHaveProperty('lesson');
+      expect(payload.lesson).toHaveProperty('blocks');
+      expect(payload.lesson.blocks).toBeInstanceOf(Array);
+      // eslint-disable-next-line no-underscore-dangle
+      expect(payload.lesson.blocks.length).toBe(french._blocks._current.length);
     });
 
     it('should return a lesson with blocks', async () => {
@@ -164,25 +167,11 @@ describe('Maintainer flow', () => {
       });
     });
 
-    it('should return an error if the user is not a teacher', async () => {
-      const response = await testContext.studentRequest({
-        url: `lessons-management/lessons/${lessonToUpdate.lesson.id}`,
-        method: 'PUT',
-        body: {},
-      });
-
-      const payload = JSON.parse(response.payload);
-
-      expect(response.statusCode).toBe(401);
-      expect(payload.statusCode).toBe(401);
-      expect(payload.message).toBe(errors.USER_ERR_UNAUTHORIZED);
-    });
-
     it('should return a lesson with a new name', async () => {
       const name = 'New name for the lesson';
 
       const response = await testContext.request({
-        url: `lessons/${lessonToUpdate.lesson.id}`,
+        url: `lessons/${lessonToUpdate.lesson.editId}`,
         method: 'PUT',
         body: {
           lesson: {
@@ -219,7 +208,7 @@ describe('Maintainer flow', () => {
       ];
 
       const response = await testContext.request({
-        url: `lessons/${lessonToUpdate.lesson.id}`,
+        url: `lessons/${lessonToUpdate.lesson.editId}`,
         method: 'PUT',
         body: {
           blocks,
@@ -268,46 +257,6 @@ describe('Maintainer flow', () => {
     });
   });
 
-  describe('Search through maintainable lessons', () => {
-    let lessonToSearch;
-
-    beforeAll(async () => {
-      lessonToSearch = await createLesson({
-        app: testContext.app,
-        credentials: teacherCredentials,
-        body: prepareLessonFromSeed(french, '-newUniqueIdentifier'),
-      });
-    });
-
-    it('should return one lesson by name', async () => {
-      const response = await testContext.request({
-        method: 'GET',
-        url: `lessons?search=${lessonToSearch.lesson.name}`,
-      });
-
-      const payload = JSON.parse(response.payload);
-
-      expect(response.statusCode).toBe(200);
-      expect(payload).toHaveProperty('total');
-      expect(payload).toHaveProperty('lessons');
-      expect(payload.total).toBe(1);
-    });
-
-    it('should return no lessons', async () => {
-      const response = await testContext.request({
-        method: 'GET',
-        url: 'lessons?search=nomatchstring',
-      });
-
-      const payload = JSON.parse(response.payload);
-
-      expect(response.statusCode).toBe(200);
-      expect(payload).toHaveProperty('total');
-      expect(payload).toHaveProperty('lessons');
-      expect(payload.total).toBe(0);
-    });
-  });
-
   describe('Get maintainable lesson by id', () => {
     let lessonToGet;
     let notMaintainableLesson;
@@ -330,35 +279,33 @@ describe('Maintainer flow', () => {
       });
     });
 
-    it('should return an error if the user is not a teacher', async () => {
+    it('should not return an error if the user is not a teacher', async () => {
       const response = await testContext.studentRequest({
-        url: `lessons-management/lessons/${lessonToGet.lesson.id}`,
+        url: `lessons-management/lessons/${lessonToGet.lesson.editId}`,
         method: 'GET',
       });
 
       const payload = JSON.parse(response.payload);
 
-      expect(response.statusCode).toBe(401);
-      expect(payload.statusCode).toBe(401);
-      expect(payload.message).toBe(errors.USER_ERR_UNAUTHORIZED);
+      expect(response.statusCode).toBe(200);
+      expect(payload).toHaveProperty('lesson');
     });
 
-    it('should return an error if the user is not a maintainer of this lesson', async () => {
+    it('should return not error if the user is not a maintainer of this lesson', async () => {
       const response = await testContext.studentRequest({
-        url: `lessons-management/lessons/${notMaintainableLesson.lesson.id}`,
+        url: `lessons-management/lessons/${notMaintainableLesson.lesson.editId}`,
         method: 'GET',
       });
 
       const payload = JSON.parse(response.payload);
 
-      expect(response.statusCode).toBe(401);
-      expect(payload.statusCode).toBe(401);
-      expect(payload.message).toBe(errors.USER_ERR_UNAUTHORIZED);
+      expect(response.statusCode).toBe(200);
+      expect(payload).toHaveProperty('lesson');
     });
 
     it('should return a lesson with blocks and students count', async () => {
       const response = await testContext.request({
-        url: `lessons/${lessonToGet.lesson.id}`,
+        url: `lessons/${lessonToGet.lesson.editId}`,
         method: 'GET',
       });
       const payload = JSON.parse(response.payload);
@@ -462,23 +409,25 @@ describe('Maintainer flow', () => {
       });
     });
 
-    it('should return an error if the user is not a teacher', async () => {
+    it('should not return error if the user is not a teacher', async () => {
       const response = await testContext.studentRequest({
         method: 'GET',
-        url: `lessons-management/lessons/${lessonToGetStudents.lesson.id}/students`,
+        url: `lessons-management/lessons/${lessonToGetStudents.lesson.editId}/students`,
       });
 
       const payload = JSON.parse(response.payload);
 
-      expect(response.statusCode).toBe(401);
-      expect(payload.statusCode).toBe(401);
-      expect(payload.message).toBe(errors.USER_ERR_UNAUTHORIZED);
+      expect(response.statusCode).toBe(200);
+      expect(response.statusCode).toBe(200);
+      expect(payload).toHaveProperty('total');
+      expect(payload).toHaveProperty('students');
+      expect(payload.total).toBe(0);
     });
 
     it('should return students with total count', async () => {
       const response = await testContext.request({
         method: 'GET',
-        url: `lessons/${lessonToGetStudents.lesson.id}/students`,
+        url: `lessons/${lessonToGetStudents.lesson.editId}/students`,
       });
 
       const payload = JSON.parse(response.payload);
@@ -507,7 +456,7 @@ describe('Maintainer flow', () => {
     it('should return one student by name', async () => {
       const response = await testContext.request({
         method: 'GET',
-        url: `lessons/${lessonToSearchStudents.lesson.id}/students?search=${studentJohn.first_name}`,
+        url: `lessons/${lessonToSearchStudents.lesson.editId}/students?search=${studentJohn.first_name}`,
       });
 
       const payload = JSON.parse(response.payload);
@@ -521,7 +470,7 @@ describe('Maintainer flow', () => {
     it('should return no students', async () => {
       const response = await testContext.request({
         method: 'GET',
-        url: `lessons/${lessonToSearchStudents.lesson.id}/students?search=nomatchstring`,
+        url: `lessons/${lessonToSearchStudents.lesson.editId}/students?search=nomatchstring`,
       });
 
       const payload = JSON.parse(response.payload);
