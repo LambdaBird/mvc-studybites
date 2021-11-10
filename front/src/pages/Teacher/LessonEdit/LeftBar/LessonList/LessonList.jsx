@@ -28,7 +28,7 @@ const LessonList = ({ lessons }) => {
             onClick={() => handleLessonClick(id)}
           >
             <S.Badge status={status} />
-            <span>{name}</span>
+            <S.Text>{name}</S.Text>
           </S.Lesson>
         ))}
       </S.LessonsList>

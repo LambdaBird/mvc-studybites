@@ -1,7 +1,9 @@
-import { Badge as BadgeAntd } from 'antd';
+import { Badge as BadgeAntd, Typography } from 'antd';
 import styled from 'styled-components';
 
 import { HEADER_HEIGHT } from '@sb-ui/components/molecules/Header/Header.styled';
+
+const { Text: TextAntd } = Typography;
 
 export const Lessons = styled.div`
   height: calc(100%);
@@ -59,3 +61,12 @@ export const Lesson = styled.div`
 export const Badge = styled(BadgeAntd).attrs(({ status }) => ({
   status: status === 'Public' ? 'success' : 'warning',
 }))``;
+
+export const Text = styled(TextAntd).attrs({
+  ellipsis: {
+    tooltip: true,
+    rows: 0,
+  },
+})`
+  width: 90%;
+`;
