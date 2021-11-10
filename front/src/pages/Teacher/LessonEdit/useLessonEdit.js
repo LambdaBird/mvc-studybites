@@ -178,9 +178,17 @@ export const useLessonEdit = () => {
   };
 
   useEffect(() => {
-    if (lessonData?.lesson.name) {
-      setName(lessonData.lesson.name);
+    const lessonName = lessonData?.lesson?.name;
+    if (lessonName) {
+      setName(lessonName);
+      setStorageLesson({
+        name: lessonName,
+        status: lessonData?.lesson?.status,
+        id: lessonId,
+      });
     }
+    // Should setStorageLesson only when lesson data changes only
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lessonData?.lesson]);
 
   useEffect(() => {
@@ -212,6 +220,10 @@ export const useLessonEdit = () => {
         editorJSRef.current?.clear();
       } else {
         editorJSRef.current?.render?.({ blocks });
+
+        if (editorJSRef?.current?.render) {
+          undoPluginRef.current.initialize({ blocks });
+        }
       }
       if (!lessonData.lesson.status || lessonData?.lesson.status === 'Draft') {
         setIsEditorDisabled(false);

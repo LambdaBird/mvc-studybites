@@ -107,7 +107,7 @@ const ShareModal = ({ publicId, opened, setOpened }) => {
 };
 
 ShareModal.propTypes = {
-  publicId: T.string,
+  publicId: T.oneOfType([T.string, T.bool]),
   opened: T.bool,
   setOpened: T.func,
 };

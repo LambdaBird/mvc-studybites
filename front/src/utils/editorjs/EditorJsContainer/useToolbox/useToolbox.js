@@ -70,7 +70,7 @@ export const useToolbox = ({ editor }) => {
   const prepareToolbox = useCallback(() => {
     toolbox.current = document.querySelector('.ce-toolbox');
     const wrapper = toolbox.current;
-    wrapper.addEventListener('keydown', (e) => {
+    wrapper?.addEventListener('keydown', (e) => {
       if (e.code === KEYS.ESCAPE) {
         const currentBlockIndex = editor.current.blocks.getCurrentBlockIndex();
         editor.current.caret.setToBlock(currentBlockIndex);
