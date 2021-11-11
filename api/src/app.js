@@ -92,5 +92,7 @@ export default (options = {}) => {
     prefix: '/api/v1/keywords',
   });
 
+  app.get('/api/v1/healthcheck', async () => ({ status: 'ok' }));
+
   return app;
 };
