@@ -14,7 +14,7 @@ import { TEACHER_LESSON_BASE_KEY } from '@sb-ui/utils/queries';
 
 import * as S from './ShareModal.styled';
 
-const HOST = process.env.REACT_APP_SELF_HOST;
+const HOST = process.env.REACT_APP_SELF_HOST || 'https://studybites.app';
 
 const ShareModal = ({ publicId, opened, setOpened }) => {
   const { id: lessonId } = useParams();
