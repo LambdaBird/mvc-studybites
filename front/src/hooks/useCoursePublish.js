@@ -2,6 +2,7 @@ import { Modal } from 'antd';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from 'react-query';
+import * as Sentry from '@sentry/browser';
 
 import { Statuses } from '@sb-ui/pages/Teacher/Home/Dashboard/constants';
 import { queryClient } from '@sb-ui/query';
@@ -50,7 +51,9 @@ export const useCoursePublish = ({ courseId }) => {
         });
         return;
       }
-
+      if (process.env.NODE_ENV === 'production') {
+        Sentry.captureException(e);
+      }
       throw new Error(e);
     }
   }, [courseId, t, updateCourseStatus]);
