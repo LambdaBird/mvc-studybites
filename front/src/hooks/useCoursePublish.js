@@ -52,7 +52,7 @@ export const useCoursePublish = ({ courseId }) => {
         return;
       }
       if (process.env.NODE_ENV === 'production') {
-        Sentry.captureException(e);
+        Sentry.captureMessage(e);
       }
       throw new Error(e);
     }

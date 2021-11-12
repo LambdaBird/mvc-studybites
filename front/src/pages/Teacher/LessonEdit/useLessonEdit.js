@@ -153,7 +153,7 @@ export const useLessonEdit = () => {
       // eslint-disable-next-line no-console
       console.error('Editor JS error: ', e);
       if (process.env.NODE_ENV === 'production') {
-        Sentry.captureException(e);
+        Sentry.captureMessage(e);
       }
     }
   }, [

@@ -15,7 +15,7 @@ export const postSignUp = async (formData) => {
     return { status, data };
   } catch (e) {
     if (process.env.NODE_ENV === 'production') {
-      Sentry.captureException(e);
+      Sentry.captureMessage(e);
     }
     const { status, data } = e.response;
     return {
@@ -33,7 +33,7 @@ export const postSignIn = async (formData) => {
     return { status, data };
   } catch (e) {
     if (process.env.NODE_ENV === 'production') {
-      Sentry.captureException(e);
+      Sentry.captureMessage(e);
     }
     const { status, data } = e.response;
     return {
