@@ -25,19 +25,6 @@ import { NotFoundError } from './errors';
 export default fp((instance, opts, next) => {
   instance.decorate('config', config);
 
-  if (!process.env.DEVELOPMENT_MODE) {
-    Sentry.init({
-      dsn: process.env.SENTRY_DSN,
-    });
-  }
-
-  instance.addHook('onError', async (req, repl, err, done) => {
-    if (!process.env.DEVELOPMENT_MODE) {
-      Sentry.captureException(err);
-    }
-    done();
-  });
-
   instance.addSchema({
     $id: 'paramsLessonEditId',
     ...lessonEditIdParam,

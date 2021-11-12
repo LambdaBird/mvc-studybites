@@ -1,7 +1,11 @@
+import * as Sentry from '@sentry/node';
 import { globalErrors } from '../config';
 
 export default function errorHandler(err, req, reply) {
   req.log.error(err);
+  if (!process.env.DEVELOPMENT_MODE) {
+    Sentry.captureMessage(err);
+  }
   const { validation, statusCode, message, payload } = err;
   if (validation) {
     return reply.status(400).send({

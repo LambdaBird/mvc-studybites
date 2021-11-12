@@ -2,6 +2,7 @@ import fastify from 'fastify';
 import fastifyCors from 'fastify-cors';
 import fastifyObjection from 'fastify-objection';
 import qs from 'qs';
+import * as Sentry from '@sentry/node';
 
 import User from './models/User';
 import Role from './models/Role';
@@ -29,6 +30,12 @@ import errorsAndValidation from './validation';
 import i18n from './i18n';
 
 export default (options = {}) => {
+  if (!process.env.DEVELOPMENT_MODE) {
+    Sentry.init({
+      dsn: process.env.SENTRY_DSN,
+    });
+  }
+
   const app = fastify({
     ...options,
     querystringParser: (str) => qs.parse(str),
