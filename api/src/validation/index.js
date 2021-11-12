@@ -1,4 +1,5 @@
 import fp from 'fastify-plugin';
+import * as Sentry from '@sentry/node';
 
 import config, { globalErrors } from '../config';
 

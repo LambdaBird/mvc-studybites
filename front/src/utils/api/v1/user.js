@@ -1,3 +1,5 @@
+import * as Sentry from '@sentry/browser';
+
 import { PAGE_SIZE } from '@sb-ui/pages/User/Lessons/ResourcesList/constants';
 import api from '@sb-ui/utils/api';
 
@@ -12,6 +14,9 @@ export const postSignUp = async (formData) => {
     });
     return { status, data };
   } catch (e) {
+    if (process.env.NODE_ENV === 'production') {
+      Sentry.captureMessage(e);
+    }
     const { status, data } = e.response;
     return {
       status,
@@ -27,6 +32,9 @@ export const postSignIn = async (formData) => {
     });
     return { status, data };
   } catch (e) {
+    if (process.env.NODE_ENV === 'production') {
+      Sentry.captureMessage(e);
+    }
     const { status, data } = e.response;
     return {
       status,

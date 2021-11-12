@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMutation, useQuery } from 'react-query';
 import { useHistory, useParams } from 'react-router-dom';
+import * as Sentry from '@sentry/browser';
 
 import { Statuses } from '@sb-ui/pages/Teacher/Home/Dashboard/constants';
 import {
@@ -151,6 +152,9 @@ export const useLessonEdit = () => {
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error('Editor JS error: ', e);
+      if (process.env.NODE_ENV === 'production') {
+        Sentry.captureMessage(e);
+      }
     }
   }, [
     createLessonMutation,

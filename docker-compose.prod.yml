@@ -27,6 +27,7 @@ services:
       PORT: 3017
       JWT_SECRET: tvXqYGduhyMw28EzyBxaGrFP8zQsmRG93GZHrmADmHsU9WwB7nbULUsJ98aAqWzM
       DATABASE_URL: postgres://sb-admin:sb-password@postgres:5432/studybites
+      SENTRY_DSN: https://04a6df63dbcb4037847b066e04a62ea4@o1066809.ingest.sentry.io/6060921
     command: yarn run:prod
 
   frontend:
@@ -45,6 +46,7 @@ services:
     environment:
       REACT_APP_SB_HOST: https://studybites.app
       REACT_APP_SELF_HOST: https://studybites.app
+      NODE_ENV: production
 
 volumes:
   postgres-prod: {}
