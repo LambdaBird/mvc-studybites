@@ -1,6 +1,8 @@
 import { Input as InputAntd } from 'antd';
 import styled from 'styled-components';
 
+import variables from '@sb-ui/theme/variables';
+
 export const Overlay = styled.div`
   position: fixed;
   height: 100vh;
@@ -33,7 +35,7 @@ export const ShareWrapper = styled.div`
   justify-content: space-between;
   width: 100%;
   align-items: center;
-  color: #595959;
+  color: ${variables['secondary-text-color']};
 `;
 
 export const InputWrapper = styled.div`

@@ -2,6 +2,7 @@ import { Spin as SpinAntd } from 'antd';
 import styled from 'styled-components';
 
 import { HEADER_HEIGHT } from '@sb-ui/components/molecules/Header/Header.styled';
+import variables from '@sb-ui/theme/variables';
 
 import { LEFT_BAR_WIDTH } from '../constants';
 
@@ -45,10 +46,10 @@ export const AddNewLessonWrapper = styled.div`
   gap: 10px;
   align-items: center;
   font-size: 0.875rem;
-  color: #595959;
+  color: ${variables['secondary-text-color']};
 
-  border-top: 2px solid #f0f0f0;
+  border-top: 2px solid ${variables['gray-4']};
   &:hover {
-    background-color: #f0f0f0;
+    background-color: ${variables['gray-4']};
   }
 `;

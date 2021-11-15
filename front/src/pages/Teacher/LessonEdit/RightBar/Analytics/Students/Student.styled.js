@@ -1,6 +1,8 @@
 import { Progress as ProgressAntd } from 'antd';
 import styled from 'styled-components';
 
+import variables from '@sb-ui/theme/variables';
+
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -12,7 +14,7 @@ export const Student = styled.div`
   gap: 1rem;
   padding: 0.5rem;
   &:hover {
-    background-color: #f0f0f0;
+    background-color: ${variables['gray-4']};
     cursor: pointer;
   }
   align-items: center;
