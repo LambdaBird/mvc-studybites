@@ -179,15 +179,25 @@ class Lesson extends BaseModel {
   }
 
   static findByPublicId({ lessonPublicId }) {
-    return this.query().first().where({
-      public_id: lessonPublicId,
-    });
+    return this.query()
+      .first()
+      .where({
+        public_id: lessonPublicId,
+      })
+      .throwIfNotFound({
+        error: new NotFoundError(errors.LESSON_ERR_LESSON_NOT_FOUND),
+      });
   }
 
   static findByEditId({ lessonEditId }) {
-    return this.query().first().where({
-      edit_id: lessonEditId,
-    });
+    return this.query()
+      .first()
+      .where({
+        edit_id: lessonEditId,
+      })
+      .throwIfNotFound({
+        error: new NotFoundError(errors.LESSON_ERR_LESSON_NOT_FOUND),
+      });
   }
 
   static findById({ lessonId }) {

@@ -6,22 +6,16 @@ export const Button = styled.div`
   align-items: center;
   border-radius: 0.25rem;
   height: 22px;
-  padding: 1rem;
+  padding: 1rem 1rem;
   cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
   user-select: none;
-  ${(props) =>
-    props.bold
-      ? `
-      font-weight: bold;
-  
-  `
-      : ''}
+  ${(props) => (props.bold ? `font-weight: bold;` : '')}
 
+  ${(props) => (props.active ? `background-color: #f0f0f0;` : '')}
+  
   ${(props) =>
     props.disabled
-      ? `
-      background-color: #bfbfbf;
-  `
+      ? `color: #BFBFBF;`
       : `
       &:hover {
         background-color: #f0f0f0;

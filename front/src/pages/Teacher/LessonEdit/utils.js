@@ -190,7 +190,6 @@ export const getBaseBlocks = (t) => ({
     },
     inlineToolbar: true,
   },
-
   embed: {
     class: Embed,
     inlineToolbar: true,

@@ -10,7 +10,7 @@ import { LESSONS_NEW } from '@sb-ui/utils/paths';
 import LessonList from './LessonList';
 import * as S from './LeftBar.styled';
 
-const LeftBar = ({ lessons }) => {
+const LeftBar = ({ isLoading, lessons }) => {
   const { t } = useTranslation('teacher');
   const history = useHistory();
 
@@ -26,6 +26,7 @@ const LeftBar = ({ lessons }) => {
     <S.Wrapper>
       <S.LogoLink onClick={handleHomeClick}>
         <S.Logo src={logo} alt="Logo" />
+        {isLoading && <S.Spin />}
       </S.LogoLink>
       <LessonList lessons={lessons} />
       <S.AddNewLessonWrapper onClick={handleNewLessonClick}>
@@ -37,6 +38,7 @@ const LeftBar = ({ lessons }) => {
 };
 
 LeftBar.propTypes = {
+  isLoading: T.bool,
   lessons: T.arrayOf(T.shape({})),
 };
 
