@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import variables from '@sb-ui/theme/variables';
+
 export const Button = styled.div`
   display: flex;
   justify-content: center;
@@ -9,25 +11,20 @@ export const Button = styled.div`
   padding: 1rem;
   cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
   user-select: none;
-  ${(props) =>
-    props.bold
-      ? `
-      font-weight: bold;
-  
-  `
-      : ''}
+  ${(props) => (props.bold ? `font-weight: bold;` : '')}
 
   ${(props) =>
+    props.active ? `background-color: ${variables['gray-4']};` : ''}
+  
+  ${(props) =>
     props.disabled
-      ? `
-      background-color: #bfbfbf;
-  `
+      ? `color: ${variables['gray-6']};`
       : `
       &:hover {
-        background-color: #f0f0f0;
+        background-color: ${variables['gray-4']};
       }
       &:active {
-        background-color: #d9d9d9;
+        background-color: ${variables['gray-5']};
       }    
       `}
 `;

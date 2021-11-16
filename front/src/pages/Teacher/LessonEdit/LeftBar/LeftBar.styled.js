@@ -1,6 +1,8 @@
+import { Spin as SpinAntd } from 'antd';
 import styled from 'styled-components';
 
 import { HEADER_HEIGHT } from '@sb-ui/components/molecules/Header/Header.styled';
+import variables from '@sb-ui/theme/variables';
 
 import { LEFT_BAR_WIDTH } from '../constants';
 
@@ -18,6 +20,9 @@ export const Wrapper = styled.div`
 `;
 
 export const LogoLink = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
   padding: 1rem;
   cursor: pointer;
   height: ${HEADER_HEIGHT}px;
@@ -29,6 +34,10 @@ export const Logo = styled.img`
   cursor: pointer;
 `;
 
+export const Spin = styled(SpinAntd)`
+  margin-top: 0.5rem;
+`;
+
 export const AddNewLessonWrapper = styled.div`
   margin-top: auto;
   cursor: pointer;
@@ -36,9 +45,11 @@ export const AddNewLessonWrapper = styled.div`
   display: flex;
   gap: 10px;
   align-items: center;
-  font-size: 1rem;
-  border-top: 2px solid #f0f0f0;
+  font-size: 0.875rem;
+  color: ${variables['secondary-text-color']};
+
+  border-top: 2px solid ${variables['gray-4']};
   &:hover {
-    background-color: #f0f0f0;
+    background-color: ${variables['gray-4']};
   }
 `;

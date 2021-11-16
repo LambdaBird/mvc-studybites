@@ -24,13 +24,12 @@ const RightBar = ({
   studentsCount = 0,
 }) => {
   const { t } = useTranslation('teacher');
-
   return (
     <S.Wrapper>
       <Button bold disabled={isPublic} type="primary" onClick={handleSave}>
         {t('lesson_edit.buttons.save')}
       </Button>
-      <Button onClick={handleAnalytics}>
+      <Button active={isShowAnalytics} onClick={handleAnalytics}>
         {t('lesson_edit.buttons.analytics', {
           user: pluralize(
             studentsCount,

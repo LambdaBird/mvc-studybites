@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import { HEADER_HEIGHT } from '@sb-ui/components/molecules/Header/Header.styled';
+import variables from '@sb-ui/theme/variables';
 
 import { RIGHT_BAR_WIDTH } from '../../constants';
 
@@ -11,7 +12,7 @@ export const Wrapper = styled.div`
   z-index: -1;
   height: 100vh;
   width: ${RIGHT_BAR_WIDTH}px;
-  border-left: 1px solid #f0f0f0;
+  border-left: 1px solid ${variables['gray-4']};
   transition: all 0.3s ease 0.1s;
   transform: translate3d(${(props) => (props.opened ? '0' : '100%')}, 0, 0);
   padding-top: ${HEADER_HEIGHT}px;
@@ -19,11 +20,11 @@ export const Wrapper = styled.div`
 
 export const Title = styled.div`
   padding: 1.5rem;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid ${variables['gray-4']};
   font-weight: 500;
   font-size: 16px;
   line-height: 24px;
-  color: #595959;
+  color: ${variables['secondary-text-color']};
 `;
 
 export const Content = styled.div`
