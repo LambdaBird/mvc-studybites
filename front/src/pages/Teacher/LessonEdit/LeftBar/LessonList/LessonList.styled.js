@@ -2,6 +2,7 @@ import { Badge as BadgeAntd, Typography } from 'antd';
 import styled from 'styled-components';
 
 import { HEADER_HEIGHT } from '@sb-ui/components/molecules/Header/Header.styled';
+import variables from '@sb-ui/theme/variables';
 
 const { Text: TextAntd } = Typography;
 
@@ -48,12 +49,12 @@ export const Lesson = styled.div`
   ${(props) =>
     props.selected
       ? `
-      background-color: #f0f0f0;
+      background-color: ${variables['gray-4']};
       border-radius: 4px;`
       : ''}
 
   &:hover {
-    background-color: #f0f0f0;
+    background-color: ${variables['gray-4']};
     border-radius: 4px;
   }
 `;

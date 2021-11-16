@@ -21,10 +21,12 @@ import {
   getStorageLessons,
   setStorageLesson,
 } from '@sb-ui/utils/lessonsStorage';
-import { LESSONS_EDIT, LESSONS_PREVIEW } from '@sb-ui/utils/paths';
+import { LESSONS_EDIT, LESSONS_NEW, LESSONS_PREVIEW } from '@sb-ui/utils/paths';
 import { TEACHER_LESSON_BASE_KEY } from '@sb-ui/utils/queries';
 
 const MAX_NAME_LENGTH = 255;
+
+export const CLIENT_ERROR_STARTS = '4';
 
 export const useLessonEdit = () => {
   const { id: lessonId } = useParams();
@@ -50,7 +52,13 @@ export const useLessonEdit = () => {
     getLesson,
     {
       refetchOnWindowFocus: false,
+      retry: 2,
       enabled: isCurrentlyEditing,
+      onError: (error) => {
+        if (error.response.status.toString().startsWith(CLIENT_ERROR_STARTS)) {
+          history.push(LESSONS_NEW);
+        }
+      },
     },
   );
 
@@ -268,6 +276,7 @@ export const useLessonEdit = () => {
   );
 
   return {
+    isLoading,
     isCurrentlyEditing,
     name,
     handleNextLine,

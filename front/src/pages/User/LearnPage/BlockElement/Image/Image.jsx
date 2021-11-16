@@ -16,9 +16,9 @@ const Image = ({ content, blockId }) => {
         <S.Image src={location} alt={caption} />
       </Col>
       {caption && (
-        <Col span={24}>
+        <S.Caption>
           <Text>{htmlToReact(caption)}</Text>
-        </Col>
+        </S.Caption>
       )}
     </Row>
   );

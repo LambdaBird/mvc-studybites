@@ -25,6 +25,7 @@ const LessonEdit = () => {
     isEditorDisabled,
     isRenderEditor,
     isShowAnalytics,
+    isLoading,
     isShowShare,
     setIsShowShare,
     editorJsProps,
@@ -42,7 +43,7 @@ const LessonEdit = () => {
         </title>
       </Helmet>
 
-      <LeftBar lessons={lessons} />
+      <LeftBar isLoading={isLoading} lessons={lessons} />
       <RightBar
         isPublic={isPublic}
         publicId={publicId}
@@ -55,6 +56,7 @@ const LessonEdit = () => {
       />
       <S.Page isRightOpen={isShowAnalytics}>
         <S.InputTitle
+          disabled={isLoading}
           ref={inputTitle}
           type="text"
           placeholder={t('lesson_edit.title.placeholder')}

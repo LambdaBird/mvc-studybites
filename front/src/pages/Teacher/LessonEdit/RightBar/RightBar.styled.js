@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
   right: 0;
   top: 0;
   display: flex;
-  gap: 1rem;
+  gap: 0.25rem;
   padding: 1rem;
   z-index: 2;
 `;
