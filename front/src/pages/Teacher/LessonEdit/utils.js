@@ -15,6 +15,7 @@ import Next from '@sb-ui/utils/editorjs/next-plugin';
 import Paragraph from '@sb-ui/utils/editorjs/paragraph-plugin';
 import Quiz from '@sb-ui/utils/editorjs/quiz-plugin';
 import Quote from '@sb-ui/utils/editorjs/quote-plugin';
+import Image from '@sb-ui/utils/editorjs/simple-image-plugin';
 import Table from '@sb-ui/utils/editorjs/table-plugin';
 import Warning from '@sb-ui/utils/editorjs/warning-plugin';
 import { shuffleArray } from '@sb-ui/utils/utils';
@@ -188,6 +189,10 @@ export const getBaseBlocks = (t) => ({
       levels: [1, 2, 3, 4, 5],
       defaultLevel: 2,
     },
+    inlineToolbar: true,
+  },
+  image: {
+    class: Image,
     inlineToolbar: true,
   },
   embed: {
