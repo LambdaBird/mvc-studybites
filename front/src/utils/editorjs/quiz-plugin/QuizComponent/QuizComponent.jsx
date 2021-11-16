@@ -11,7 +11,7 @@ import {
 import BaseHeader from '../../PluginBase/BaseHeader';
 
 import { ToolType } from './types';
-import * as S from './Quiz.styled';
+import * as S from './QuizComponent.styled';
 
 const initialItems = [{ id: 1, value: '', correct: false, ref: createRef() }];
 
