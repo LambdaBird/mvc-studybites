@@ -100,42 +100,142 @@ export const GlobalStylesEditorPage = createGlobalStyle`
   }
 
   @media (max-width: 650px){
-        .ce-toolbar{
+    .ce-toolbar{
+      width: 100%;
+      height: 50px;
+      ${(props) => (props.isOpen ? `             height: unset;` : '')}
+    }
 
-              width: 100%;
-              height: 50px;
-              ${(props) =>
-                props.isOpen
-                  ? `
-                  height: unset;
-       /* border: 0;
-        box-shadow: none;
-        */
-      `
-                  : ''}
-        }
+    .ce-toolbar__content{
+      width: 100%;     
+    }
 
-        .ce-toolbar__content{
-          width: 100%;     
-        }
+    .ce-toolbox{
+      width: 200px;
+      padding: 0.25rem 0 0 0;
+      box-shadow: none; 
+    }
+    .ce-toolbar__actions{
+      top: 1rem;
+    }
+    
+    .toolbox-input-search{
+      display: none;
+    }
+    
+    .hidden{
+      visibility: hidden;
+    }
+    
+    .editor-plus-toolbar{
+      top : 0;
+      position : absolute;
+      display: flex;
+      width: calc(100% + 25px);
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+    
+    .d-none{
+      display: none;
+    }
 
-        .ce-toolbox{
-          width: calc(100% + 50px);
-          padding: 0.25rem 0 0 0;
-          box-shadow: none; 
-        }
-        .ce-toolbar__actions{
-          top: 1rem;
-        }
-        
-        .toolbox-input-search{
-          display: none;
-        }
-        
+    .ce-toolbar{
+      display: none;
+    }
+    
+    .ce-toolbar__actions{
+      opacity: 1;
+      background-color: ${variables['gray-4']};
+      top: 0.5rem;
+      right: -25px;
+
+    }
+  }
+  
+  @media(min-width: 651px){
+    .editor-plus-toolbar{
+      display: none;
+    }
   }
   
   
   .cte-toolbox-upper{
     transform: translate3d(0px,calc(-100% + 25px),0px)!important;
   }
+`;
+
+export const PlusToolbar = styled.div`
+  font-size: 24px;
+  color: ${(props) =>
+    props.active
+      ? variables['editorjs-primary-color']
+      : variables['editorjs-grey-color']};
+  display: flex;
+`;
+
+export const ToolbarWrapper = styled.div`
+  height: 400px;
+  width: 100%;
+  padding: 1rem;
+  background-color: white;
+  box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%), 0px 6px 16px rgb(0 0 0 / 8%),
+    0px 9px 28px 8px rgb(0 0 0 / 5%);
+  color: ${variables['editorjs-grey-color']};
+
+  overflow-y: scroll;
+`;
+
+export const BlocksTitle = styled.div`
+  user-select: none;
+  color: rgba(0, 0, 0, 0.45);
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  margin-bottom: 0.5rem;
+`;
+
+export const InteractiveBlocksTitle = styled(BlocksTitle)`
+  margin-top: 1rem;
+`;
+
+export const Blocks = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 1rem;
+`;
+
+export const BlockWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  user-select: none;
+  width: 100%;
+  &:active {
+    color: ${variables['editorjs-primary-color']} !important;
+  }
+`;
+export const BlockImage = styled.div`
+  border: 1px solid ${variables['gray-3']};
+  padding: 8px;
+  height: 36px;
+  width: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  svg {
+    height: 20px;
+    width: 20px;
+  }
+`;
+export const DataWrapper = styled.div`
+  margin-left: 0.5rem;
+`;
+export const Name = styled.div`
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.85);
+`;
+export const Description = styled.div`
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
 `;

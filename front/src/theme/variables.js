@@ -22,6 +22,8 @@ const variables = {
   'border-color-base': '#d9d9d9',
   'background-color-light': '#fafafa',
   'editorjs-grey-color': '#707684',
+  'editorjs-primary-color': '#388ae5',
+  'gray-3': '#f5f5f5',
   'gray-4': '#f0f0f0',
   'gray-5': '#d9d9d9',
 };
