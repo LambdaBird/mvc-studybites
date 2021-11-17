@@ -1,3 +1,4 @@
+import { Button } from 'antd';
 import styled from 'styled-components';
 
 export const Checkbox = styled.span.attrs((props) => ({
@@ -18,6 +19,18 @@ export const Input = styled.div.attrs({
 export const ItemsWrapper = styled.div.attrs({
   className: 'quiz-tool__items--wrapper',
 })``;
+
+export const AddWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+export const AddLineButton = styled(Button).attrs({
+  type: 'link',
+})`
+  display: flex;
+  align-items: center;
+`;
 
 export const Item = styled.div.attrs({
   className: 'quiz-tool__item',

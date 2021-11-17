@@ -28,14 +28,15 @@ export const GlobalStylesEditorPage = createGlobalStyle`
     content: '${(props) => props.toolbarHint}';
     position: absolute;
     left: 36px;
-    width: 300px;
+    width: 160px;
     user-select: none;
     pointer-events: none;
     color: ${variables['editorjs-grey-color']};
   }
-  
+
   .ce-toolbox{
     flex-direction: column;
+    align-items: flex-start;
     transform: translate3d(0px,0px,0px)!important;
     background-color: white;
     height: 400px;
@@ -97,6 +98,43 @@ export const GlobalStylesEditorPage = createGlobalStyle`
       }
     }
   }
+
+  @media (max-width: 650px){
+        .ce-toolbar{
+
+              width: 100%;
+              height: 50px;
+              ${(props) =>
+                props.isOpen
+                  ? `
+                  height: unset;
+       /* border: 0;
+        box-shadow: none;
+        */
+      `
+                  : ''}
+        }
+
+        .ce-toolbar__content{
+          width: 100%;     
+        }
+
+        .ce-toolbox{
+          width: calc(100% + 50px);
+          padding: 0.25rem 0 0 0;
+          box-shadow: none; 
+        }
+        .ce-toolbar__actions{
+          top: 1rem;
+        }
+        
+        .toolbox-input-search{
+          display: none;
+        }
+        
+  }
+  
+  
   .cte-toolbox-upper{
     transform: translate3d(0px,calc(-100% + 25px),0px)!important;
   }

@@ -14,7 +14,9 @@ const EditorJsContainer = forwardRef((props, ref) => {
   const { t } = useTranslation('editorjs');
   const instance = useRef(null);
 
-  const { prepareToolbox, updateLanguage } = useToolbox({ editor: instance });
+  const { prepareToolbox, updateLanguage, isOpen } = useToolbox({
+    editor: instance,
+  });
 
   const { children, language } = props;
   const holder = useMemo(
@@ -345,10 +347,9 @@ const EditorJsContainer = forwardRef((props, ref) => {
   useEffect(() => {
     updateLanguage();
   }, [language, updateLanguage]);
-
   return (
     <>
-      <S.GlobalStylesEditorPage toolbarHint={t('tools.hint')} />
+      <S.GlobalStylesEditorPage isOpen={isOpen} toolbarHint={t('tools.hint')} />
       {children || <S.Container id={holder} />}
     </>
   );

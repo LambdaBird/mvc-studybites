@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-const DESKTOP = 768;
-const getCurrentWidth = () =>
+export const DESKTOP_WIDTH = 768;
+export const getCurrentWidth = () =>
   document.documentElement.clientWidth ||
   window.innerWidth ||
   document.body.clientWidth;
@@ -17,7 +17,7 @@ const useMobile = () => {
   }, []);
 
   useEffect(() => {
-    if (currentWidth < DESKTOP) {
+    if (currentWidth < DESKTOP_WIDTH) {
       setIsMobile(true);
     } else {
       setIsMobile(false);

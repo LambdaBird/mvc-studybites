@@ -23,6 +23,7 @@ const variables = {
   'background-color-light': '#fafafa',
   'editorjs-grey-color': '#707684',
   'gray-4': '#f0f0f0',
+  'gray-5': '#d9d9d9',
 };
 
 module.exports = variables;

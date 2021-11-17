@@ -15,9 +15,24 @@ export const Page = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: padding-right 0.3s ease 0.1s;
+  transition: padding 0.3s ease 0.1s;
   padding-right: ${(props) =>
     props.isRightOpen ? `${RIGHT_BAR_WIDTH}px` : '2rem'};
+
+  padding-left: ${(props) =>
+    props.isMobile ? `2rem` : `calc(${LEFT_BAR_WIDTH}px + 2rem)`};
+
+  padding-left: ${(props) =>
+    props.isLeftOpen ? `calc(${LEFT_BAR_WIDTH}px + 2rem)` : '2rem'};
+
+  @media (max-width: 767px) {
+    padding-right: 2rem;
+  }
+
+  @media (max-width: 480px) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 `;
 
 export const InputTitle = styled.input`

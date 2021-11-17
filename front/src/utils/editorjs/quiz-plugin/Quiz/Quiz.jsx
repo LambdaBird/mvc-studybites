@@ -1,5 +1,6 @@
-import { createRef, useEffect, useRef, useState } from 'react';
+import { createRef, useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { PlusOutlined } from '@ant-design/icons';
 
 import { htmlToReact } from '@sb-ui/pages/User/LearnPage/utils';
 import {
@@ -12,6 +13,7 @@ import BaseHeader from '../../PluginBase/BaseHeader';
 
 import { ToolType } from './types';
 import * as S from './Quiz.styled';
+import { AddLineButton } from './Quiz.styled';
 
 const initialItems = [{ id: 1, value: '', correct: false, ref: createRef() }];
 
@@ -144,6 +146,10 @@ const Quiz = ({ tool }) => {
     }
   };
 
+  const handleAddLine = useCallback(() => {
+    addNewItem({ value: '', afterId: items[items.length - 1].id, caret: true });
+  }, [items]);
+
   const clearNewItem = (id) => {
     setItems((prev) => {
       deletePropsFromTool(
@@ -198,6 +204,11 @@ const Quiz = ({ tool }) => {
             </S.Item>
           ))}
         </S.ItemsWrapper>
+        <S.AddWrapper>
+          <AddLineButton onClick={handleAddLine}>
+            <PlusOutlined /> Add line
+          </AddLineButton>
+        </S.AddWrapper>
       </S.Wrapper>
     </>
   );

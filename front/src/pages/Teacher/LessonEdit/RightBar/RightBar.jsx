@@ -1,5 +1,11 @@
 import T from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import {
+  EyeOutlined,
+  PieChartOutlined,
+  SaveOutlined,
+  ShareAltOutlined,
+} from '@ant-design/icons';
 
 import Button from '@sb-ui/components/atoms/Button';
 
@@ -19,17 +25,30 @@ const RightBar = ({
   isShowShare,
   setIsShowShare,
   isPublic,
+  isLoading,
   publicId,
   isCurrentlyEditing,
   studentsCount = 0,
 }) => {
   const { t } = useTranslation('teacher');
+
   return (
     <S.Wrapper>
-      <Button bold disabled={isPublic} type="primary" onClick={handleSave}>
+      {isLoading && <S.Spin />}
+      <Button
+        iconComponent={<SaveOutlined />}
+        bold
+        disabled={isPublic}
+        type="primary"
+        onClick={handleSave}
+      >
         {t('lesson_edit.buttons.save')}
       </Button>
-      <Button active={isShowAnalytics} onClick={handleAnalytics}>
+      <Button
+        iconComponent={<PieChartOutlined />}
+        active={isShowAnalytics}
+        onClick={handleAnalytics}
+      >
         {t('lesson_edit.buttons.analytics', {
           user: pluralize(
             studentsCount,
@@ -37,10 +56,18 @@ const RightBar = ({
           ),
         })}
       </Button>
-      <Button disabled={!isCurrentlyEditing} onClick={handlePreview}>
+      <Button
+        iconComponent={<EyeOutlined />}
+        disabled={!isCurrentlyEditing}
+        onClick={handlePreview}
+      >
         {t('lesson_edit.buttons.preview')}
       </Button>
-      <Button disabled={!isCurrentlyEditing} onClick={handleShare}>
+      <Button
+        iconComponent={<ShareAltOutlined />}
+        disabled={!isCurrentlyEditing}
+        onClick={handleShare}
+      >
         {t('lesson_edit.buttons.share')}
       </Button>
       <Analytics opened={isShowAnalytics} />
@@ -60,6 +87,7 @@ RightBar.propTypes = {
   handleAnalytics: T.func,
   publicId: T.string,
   isPublic: T.bool,
+  isLoading: T.bool,
   isCurrentlyEditing: T.bool,
   isShowAnalytics: T.bool,
   isShowShare: T.bool,

@@ -1,6 +1,14 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 
+import MobileContext from '@sb-ui/contexts/MobileContext';
 import { useSearch } from '@sb-ui/utils/editorjs/EditorJsContainer/useToolbox/useSearch';
 import { debounce } from '@sb-ui/utils/utils';
 
@@ -36,6 +44,8 @@ export const useToolbox = ({ editor }) => {
   const inputRef = useRef(null);
   const itemsRef = useRef(null);
   const currentItemRef = useRef(null);
+
+  const isMobile = useContext(MobileContext);
 
   useSearch({ itemsRef, inputRef, currentItemRef, isOpen, value });
 
@@ -131,19 +141,28 @@ export const useToolbox = ({ editor }) => {
   }, [t]);
 
   useEffect(() => {
+    if (isMobile) {
+      toolbox.current?.classList?.remove?.(TOOLBOX_UPPER);
+      return;
+    }
     if (isOpen) {
       const position = getElementOverlapsPosition(toolbox.current);
       toggleToolboxPosition(toolbox.current, position);
     } else {
       toolbox.current?.classList?.remove?.(TOOLBOX_UPPER);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
   const handleScroll = useCallback(() => {
+    if (isMobile) {
+      return;
+    }
     const position = getElementOverlapsPosition(toolbox.current);
     if (position && toolbox.current.classList.contains(TOOLBOX_OPENED)) {
       toggleToolboxPosition(toolbox.current, position);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleScrollDebounced = useMemo(
@@ -159,5 +178,6 @@ export const useToolbox = ({ editor }) => {
   return {
     prepareToolbox,
     updateLanguage,
+    isOpen,
   };
 };

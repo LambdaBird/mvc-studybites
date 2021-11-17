@@ -1,6 +1,8 @@
+import { useContext } from 'react';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 
+import MobileContext from '@sb-ui/contexts/MobileContext';
 import LeftBar from '@sb-ui/pages/Teacher/LessonEdit/LeftBar';
 import RightBar from '@sb-ui/pages/Teacher/LessonEdit/RightBar';
 import { useLessonEdit } from '@sb-ui/pages/Teacher/LessonEdit/useLessonEdit';
@@ -30,7 +32,12 @@ const LessonEdit = () => {
     setIsShowShare,
     editorJsProps,
     studentsCount,
+    handleHideLeftBar,
+    handleShowLeftBar,
+    isLeftBarOpen,
   } = useLessonEdit();
+
+  const isMobile = useContext(MobileContext);
 
   return (
     <>
@@ -43,8 +50,14 @@ const LessonEdit = () => {
         </title>
       </Helmet>
 
-      <LeftBar isLoading={isLoading} lessons={lessons} />
+      <LeftBar
+        handleShowLeftBar={handleShowLeftBar}
+        handleHideLeftBar={handleHideLeftBar}
+        isOpen={isLeftBarOpen}
+        lessons={lessons}
+      />
       <RightBar
+        isLoading={isLoading}
         isPublic={isPublic}
         publicId={publicId}
         isCurrentlyEditing={isCurrentlyEditing}
@@ -54,7 +67,11 @@ const LessonEdit = () => {
         studentsCount={studentsCount}
         {...handleButtons}
       />
-      <S.Page isRightOpen={isShowAnalytics}>
+      <S.Page
+        isMobile={isMobile}
+        isLeftOpen={isLeftBarOpen}
+        isRightOpen={isShowAnalytics}
+      >
         <S.InputTitle
           disabled={isLoading}
           ref={inputTitle}

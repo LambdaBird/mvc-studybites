@@ -13,13 +13,13 @@ export const Overlay = styled.div`
 
 export const Wrapper = styled.div`
   position: absolute;
-  left: calc(50% - 380px / 2);
   top: calc(100%);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 1rem;
-  width: 380px;
+  width: 90%;
+  max-width: 380px;
   height: 200px;
   max-height: ${(props) => (props.showShareAnyone ? '125' : '75')}px;
   background: white;
