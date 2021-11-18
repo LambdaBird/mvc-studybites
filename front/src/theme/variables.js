@@ -27,6 +27,7 @@ const variables = {
   'gray-4': '#f0f0f0',
   'gray-5': '#d9d9d9',
   'gray-6': '#bfbfbf',
+  'neutral-8': '#595959',
 };
 
 module.exports = variables;

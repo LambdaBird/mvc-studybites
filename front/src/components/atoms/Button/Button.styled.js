@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import variables from '@sb-ui/theme/variables';
 
 export const IconButton = styled.div`
-  font-size: 24px;
+  font-size: 1.5rem;
   color: ${variables['secondary-text-color']};
   border: 2px solid ${variables['gray-4']};
   border-radius: 1rem;
@@ -38,8 +38,8 @@ export const Button = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 0.25rem;
-  height: 22px;
-  padding: 1rem;
+  height: 1.375rem;
+  padding: 1rem 0.5rem;
   cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
   user-select: none;
   ${(props) => (props.bold ? `font-weight: bold;` : '')}

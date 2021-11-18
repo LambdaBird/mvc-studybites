@@ -2,6 +2,7 @@ import { Spin as SpinAntd } from 'antd';
 import styled from 'styled-components';
 
 import { LEFT_BAR_WIDTH } from '@sb-ui/pages/Teacher/LessonEdit/constants';
+import variables from '@sb-ui/theme/variables';
 
 export const Wrapper = styled.div`
   position: fixed;
@@ -14,6 +15,7 @@ export const Wrapper = styled.div`
   width: 100%;
   justify-content: flex-end;
   background-color: white;
+  color: ${variables['neutral-8']};
 
   @media (max-width: 767px) {
     justify-content: flex-end;

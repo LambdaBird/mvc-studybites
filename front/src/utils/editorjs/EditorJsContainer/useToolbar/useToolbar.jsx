@@ -33,8 +33,7 @@ export const useToolbar = ({ editor }) => {
     const bodyRect = editorElementRef.current.getBoundingClientRect();
     const elemRect = block?.holder?.getBoundingClientRect();
     const offset = elemRect.top - bodyRect.top;
-    const blockHeight = elemRect.height;
-    const realOffset = offset + blockHeight;
+    const realOffset = offset + 2;
     toolbarWrapper.style.transform = `translate3d(-25px,${realOffset.toFixed(
       0,
     )}px,0px)`;

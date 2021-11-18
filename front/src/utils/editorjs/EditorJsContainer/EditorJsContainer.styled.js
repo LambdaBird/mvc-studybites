@@ -28,7 +28,7 @@ export const GlobalStylesEditorPage = createGlobalStyle`
     content: '${(props) => props.toolbarHint}';
     position: absolute;
     left: 36px;
-    width: 160px;
+    width: 200px;
     user-select: none;
     pointer-events: none;
     color: ${variables['editorjs-grey-color']};
