@@ -39,22 +39,23 @@ export const Button = styled.div`
   align-items: center;
   border-radius: 0.25rem;
   height: 22px;
-  padding: 1rem 1rem;
+  padding: 1rem;
   cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
   user-select: none;
   ${(props) => (props.bold ? `font-weight: bold;` : '')}
 
-  ${(props) => (props.active ? `background-color: #f0f0f0;` : '')}
+  ${(props) =>
+    props.active ? `background-color: ${variables['gray-4']};` : ''}
   
   ${(props) =>
     props.disabled
-      ? `color: #BFBFBF;`
+      ? `color: ${variables['gray-6']};`
       : `
       &:hover {
-        background-color: #f0f0f0;
+        background-color: ${variables['gray-4']};
       }
       &:active {
-        background-color: #d9d9d9;
+        background-color: ${variables['gray-5']};
       }    
       `}
 `;

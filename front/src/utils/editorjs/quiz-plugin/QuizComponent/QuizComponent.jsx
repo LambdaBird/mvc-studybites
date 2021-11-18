@@ -12,8 +12,7 @@ import {
 import BaseHeader from '../../PluginBase/BaseHeader';
 
 import { ToolType } from './types';
-import * as S from './Quiz.styled';
-import { AddLineButton } from './Quiz.styled';
+import * as S from './QuizComponent.styled';
 
 const initialItems = [{ id: 1, value: '', correct: false, ref: createRef() }];
 
@@ -205,9 +204,9 @@ const Quiz = ({ tool }) => {
           ))}
         </S.ItemsWrapper>
         <S.AddWrapper>
-          <AddLineButton onClick={handleAddLine}>
+          <S.AddLineButton onClick={handleAddLine}>
             <PlusOutlined /> Add line
-          </AddLineButton>
+          </S.AddLineButton>
         </S.AddWrapper>
       </S.Wrapper>
     </>

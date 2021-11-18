@@ -3,7 +3,7 @@ FROM node:14-alpine
 WORKDIR /api
 
 RUN apk --no-cache --virtual build-dependencies add \
-  python \
+  python3 \
   make \
   g++
 

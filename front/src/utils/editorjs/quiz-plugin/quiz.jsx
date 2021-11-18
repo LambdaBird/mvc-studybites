@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom';
 
 import PluginBase from '../PluginBase';
 
-import QuizComponent from './Quiz';
+import QuizComponent from './QuizComponent';
 import { ToolboxIcon } from './resources';
 
 import './quiz.css';
