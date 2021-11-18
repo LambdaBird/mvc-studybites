@@ -1,8 +1,3 @@
-export const Roles = {
-  SUPER_ADMIN: 'SuperAdmin',
-  TEACHER: 'Teacher',
-};
-
 export const allowedImageTypes = ['image/png', 'image/jpeg'];
 
 export const allowedTypes = [
@@ -23,3 +18,8 @@ export const allowedTypes = [
 ];
 
 export const sbPostfix = ' · StudyBites';
+
+export const Statuses = {
+  PUBLIC: 'Public',
+  DRAFT: 'Draft',
+};

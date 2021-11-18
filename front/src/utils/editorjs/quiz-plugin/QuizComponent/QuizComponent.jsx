@@ -197,6 +197,7 @@ const Quiz = ({ tool }) => {
                   handleKeyDown(e, id);
                 }}
                 placeholder={t('tools.quiz.answer')}
+                suppressContentEditableWarning
               >
                 {htmlToReact(value)}
               </S.ItemInput>

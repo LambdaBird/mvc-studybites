@@ -66,7 +66,6 @@ export const Badge = styled(BadgeAntd).attrs(({ status }) => ({
 export const Text = styled(TextAntd).attrs({
   ellipsis: {
     tooltip: true,
-    rows: 0,
   },
 })`
   width: 90%;

@@ -1,4 +1,3 @@
-import { Col } from 'antd';
 import styled from 'styled-components';
 
 import {
@@ -41,9 +40,4 @@ export const InputTitle = styled.input`
     padding-left: 0;
   }
   width: 100%;
-`;
-
-export const HeaderButtons = styled(Col)`
-  margin-left: auto;
-  margin-right: 2rem;
 `;

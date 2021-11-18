@@ -9,7 +9,6 @@ import {
   DESKTOP_WIDTH,
   getCurrentWidth,
 } from '@sb-ui/hooks/useMobile/useMobile';
-import { Statuses } from '@sb-ui/pages/Teacher/Home/Dashboard/constants';
 import {
   getConfig,
   prepareBlocksForApi,
@@ -21,6 +20,7 @@ import {
   getLesson,
   putLesson,
 } from '@sb-ui/utils/api/v1/teacher';
+import { Statuses } from '@sb-ui/utils/constants';
 import {
   getStorageLessons,
   setStorageLesson,

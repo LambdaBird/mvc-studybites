@@ -5,8 +5,6 @@ import variables from '@sb-ui/theme/variables';
 
 import { LEFT_BAR_WIDTH } from '../constants';
 
-export const Main = styled.div``;
-
 export const CloseArea = styled.div`
   position: fixed;
   top: 0;

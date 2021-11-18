@@ -9,7 +9,7 @@ import LearnContext from '@sb-ui/contexts/LearnContext';
 import InfoBlock from '@sb-ui/pages/User/LearnPage/InfoBlock';
 import { getEnrolledLesson, postLessonById } from '@sb-ui/utils/api/v1/student';
 import { sbPostfix } from '@sb-ui/utils/constants';
-import { USER_HOME } from '@sb-ui/utils/paths';
+import { HOME } from '@sb-ui/utils/paths';
 
 import LearnChunk from './LearnChunk';
 import { useLearnChunks } from './useLearnChunks';
@@ -39,7 +39,7 @@ const LearnPage = () => {
   useEffect(
     () => () => {
       if (location.state.fromEnroll && history.action === HISTORY_BACK) {
-        history.replace(USER_HOME);
+        history.replace(HOME);
       }
     },
     [history, location],

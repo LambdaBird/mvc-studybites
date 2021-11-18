@@ -1,35 +1,4 @@
 /**
- * Remove and return HTML content after carer position in current input
- *
- * @returns {DocumentFragment} extracted HTML nodes
- */
-export function extractContentAfterCaret() {
-  const input = document.activeElement;
-  const selection = window.getSelection();
-  const selectRange = selection.getRangeAt(0);
-  const range = selectRange.cloneRange();
-
-  range.selectNodeContents(input);
-  range.setStart(selectRange.endContainer, selectRange.endOffset);
-
-  return range.extractContents();
-}
-
-/**
- * Converts DocumentFragment to HTML code string
- *
- * @param {DocumentFragment} fragment - what to convert
- * @returns {string}
- */
-export function fragmentToHtml(fragment) {
-  const tmpDiv = document.createElement('div');
-
-  tmpDiv.appendChild(fragment);
-
-  return tmpDiv.innerHTML;
-}
-
-/**
  * Helper for making Elements with attributes
  *
  * @param  {string} tagName           - new Element tag name
@@ -52,17 +21,6 @@ export function make(tagName, classNames = null, attributes = {}) {
   }
 
   return el;
-}
-
-/**
- * Returns element's HTML content
- * with simple sanitizing
- *
- * @param {Element} el - content editable element
- * @returns {string}
- */
-export function getHTML(el) {
-  return el.innerHTML.replace('<br>', ' ').trim();
 }
 
 /**

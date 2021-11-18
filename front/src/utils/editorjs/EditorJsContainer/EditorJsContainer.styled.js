@@ -166,7 +166,7 @@ export const GlobalStylesEditorPage = createGlobalStyle`
 `;
 
 export const PlusToolbar = styled.div`
-  font-size: 24px;
+  font-size: 1rem;
   color: ${(props) =>
     props.active
       ? variables['editorjs-primary-color']
