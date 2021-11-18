@@ -122,7 +122,12 @@ const BarSpark = ({ series }) => {
         />
       ))}
       <path stroke="#888" fill="none" strokeWidth={1} d={tickLine} />
-      <text fill="#000" x="0" y={SPARK_LINE_HEIGHT + SPARK_LINE_PADD} style={{ fontSize: '32px' }}>
+      <text
+        fill="#000"
+        x="0"
+        y={SPARK_LINE_HEIGHT + SPARK_LINE_PADD}
+        style={{ fontSize: '32px' }}
+      >
         {bands[indexOfMax]?.count}
       </text>
     </svg>

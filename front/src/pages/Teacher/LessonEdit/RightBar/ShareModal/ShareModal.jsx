@@ -5,10 +5,10 @@ import { useTranslation } from 'react-i18next';
 import { useMutation } from 'react-query';
 import { useParams } from 'react-router-dom';
 
-import { Statuses } from '@sb-ui/pages/Teacher/Home/Dashboard/constants';
 import { queryClient } from '@sb-ui/query';
 import { GlobalOutlined } from '@sb-ui/resources/icons';
 import { postShareLesson } from '@sb-ui/utils/api/v1/teacher';
+import { Statuses } from '@sb-ui/utils/constants';
 import { setStorageLesson } from '@sb-ui/utils/lessonsStorage';
 import { TEACHER_LESSON_BASE_KEY } from '@sb-ui/utils/queries';
 

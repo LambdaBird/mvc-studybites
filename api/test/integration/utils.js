@@ -37,9 +37,7 @@ export const createLesson = async ({ app, credentials, body }) => {
     body,
   });
 
-  const payload = JSON.parse(response.payload);
-
-  return payload;
+  return JSON.parse(response.payload);
 };
 
 export const createCourse = async ({ app, credentials, body }) => {

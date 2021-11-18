@@ -22,32 +22,6 @@ export const getLesson = async ({ queryKey }) => {
   return data;
 };
 
-export const getTeacherLessons = async ({ queryKey }) => {
-  const [, paramsData] = queryKey;
-
-  const { data } = await api.get(`${PATH}/lessons`, {
-    params: paramsData,
-  });
-
-  return data;
-};
-
-export const getTeacherStudents = async ({ queryKey }) => {
-  const [, paramsData] = queryKey;
-
-  const { data } = await api.get(`${PATH}/students`, {
-    params: paramsData,
-  });
-
-  return {
-    ...data,
-    students: data.students.map((x) => ({
-      ...x,
-      fullName: `${x.firstName || ''} ${x.lastName || ''}`,
-    })),
-  };
-};
-
 export const getTeacherLessonStudents = async ({ queryKey }) => {
   const [, { lessonId, offset, limit, search }] = queryKey;
 
@@ -66,14 +40,6 @@ export const getTeacherLessonStudents = async ({ queryKey }) => {
       lastActivity: +new Date(x.results?.[x.results.length - 1]?.createdAt),
     })),
   };
-};
-
-export const patchLessonStatus = async (params) => {
-  const { data } = await api.patch(
-    `${PATH}/lessons/${params.id}/update-status`,
-    params,
-  );
-  return data;
 };
 
 export const postShareLesson = async (params) => {

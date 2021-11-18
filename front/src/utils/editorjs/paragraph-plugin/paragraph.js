@@ -66,11 +66,9 @@ class Paragraph {
   }
 
   merge(data) {
-    const newData = {
+    this.data = {
       text: this.data.text + data.text,
     };
-
-    this.data = newData;
   }
 
   validate(savedData) {
@@ -88,11 +86,9 @@ class Paragraph {
   }
 
   onPaste(event) {
-    const data = {
+    this.data = {
       text: event.detail.data.innerHTML,
     };
-
-    this.data = data;
   }
 
   static get conversionConfig() {

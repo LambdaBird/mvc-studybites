@@ -11,64 +11,10 @@ export const postLessonById = async (paramsData) => {
   return data;
 };
 
-export const getEnrolledLessons = async ({ queryKey }) => {
-  const [, paramsData] = queryKey;
-
-  const { data } = await api.get(`${PATH}/lessons`, {
-    params: paramsData,
-  });
-
-  return data;
-};
-
 export const getEnrolledLesson = async ({ queryKey }) => {
   const [, paramsData] = queryKey;
 
   const { data } = await api.get(`${PATH}/lessons/${paramsData.id}`);
-
-  return data;
-};
-
-export const getEnrolledLessonsFinished = async ({ queryKey }) => {
-  const [, paramsData] = queryKey;
-
-  const { data } = await api.get(`${PATH}/lessons`, {
-    params: {
-      ...paramsData,
-      progress: 'finished',
-    },
-  });
-
-  return data;
-};
-
-export const getCourseLessons = async ({ queryKey }) => {
-  const [, paramsData] = queryKey;
-
-  const { data } = await api.get(`${PATH}/courses/${paramsData.id}`);
-
-  return data;
-};
-
-export const getEnrolledCourses = async ({ queryKey }) => {
-  const [, paramsData] = queryKey;
-
-  const { data } = await api.get(`${PATH}/courses`, {
-    params: paramsData,
-  });
-
-  return data;
-};
-
-export const getEnrolledCoursesFinished = async ({ queryKey }) => {
-  const [, paramsData] = queryKey;
-
-  const { data } = await api.get(`${PATH}/courses`, {
-    params: {
-      ...paramsData,
-      progress: 'finished',
-    },
-  });
 
   return data;
 };
