@@ -23,6 +23,7 @@ import {
 import { Statuses } from '@sb-ui/utils/constants';
 import {
   getStorageLessons,
+  removeStorageLesson,
   setStorageLesson,
 } from '@sb-ui/utils/lessonsStorage';
 import { LESSONS_EDIT, LESSONS_NEW, LESSONS_PREVIEW } from '@sb-ui/utils/paths';
@@ -64,6 +65,7 @@ export const useLessonEdit = () => {
       enabled: isCurrentlyEditing,
       onError: (error) => {
         if (error.response.status.toString().startsWith(CLIENT_ERROR_STARTS)) {
+          removeStorageLesson(lessonId);
           history.push(LESSONS_NEW);
         }
       },

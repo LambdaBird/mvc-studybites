@@ -54,6 +54,7 @@ export default {
       description: 'Создать простой тест',
       question: 'Вопрос',
       answer: 'Введите ответ',
+      add_answer: 'Добавить ответ',
     },
     embed: {
       title: 'Видео',

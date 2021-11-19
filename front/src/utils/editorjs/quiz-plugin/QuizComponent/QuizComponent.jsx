@@ -206,7 +206,7 @@ const Quiz = ({ tool }) => {
         </S.ItemsWrapper>
         <S.AddWrapper>
           <S.AddLineButton onClick={handleAddLine}>
-            <PlusOutlined /> Add line
+            <PlusOutlined /> {t('tools.quiz.add_answer')}
           </S.AddLineButton>
         </S.AddWrapper>
       </S.Wrapper>
