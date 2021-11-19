@@ -1,13 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 
-import { CODEX_EDITOR, CODEX_EDITOR_REDACTOR } from './constants';
+import { CODEX_EDITOR, CODEX_EDITOR_REDACTOR, DISPLAY_NONE } from './constants';
 import {
   createToolbar,
   moveActionsButtonsToDesktop,
   moveActionsButtonsToMobile,
+  setTransform3d,
 } from './domToolbarHelpers';
 import Toolbar from './Toolbar';
+import { getCurrentBlock } from './toolbarHelpers';
 import { useEditorMobile } from './useEditorMobile';
 
 const toolbarWrapper = createToolbar();
@@ -20,22 +22,22 @@ export const useToolbar = ({ editor }) => {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const func = useCallback(
-    ({ notClose } = {}) => {
-      if (!notClose) {
+  const handleFocus = useCallback(
+    ({ stayOpen } = {}) => {
+      if (!stayOpen) {
         setIsOpen(false);
       }
-      const { blocks } = editor.current;
-      const currentIndex = blocks.getCurrentBlockIndex();
-      const block = blocks.getBlockByIndex(currentIndex);
+      const block = getCurrentBlock(editor.current);
       const bodyRect = editorElementRef.current.getBoundingClientRect();
       const elemRect = block?.holder?.getBoundingClientRect();
       const offset = elemRect.top - bodyRect.top;
       const realOffset = offset + 2;
-      toolbarWrapper.style.transform = `translate3d(-25px,${realOffset.toFixed(
-        0,
-      )}px,0px)`;
-      toolbarWrapper.classList.remove('d-none');
+      setTransform3d(toolbarWrapper, {
+        x: -25,
+        y: realOffset,
+        z: 0,
+      });
+      toolbarWrapper.classList.remove(DISPLAY_NONE);
     },
     [editor],
   );
@@ -47,31 +49,28 @@ export const useToolbar = ({ editor }) => {
       const currentIndex = blocks.getCurrentBlockIndex();
       blocks.delete(currentIndex - 1);
       caret.setToBlock(currentIndex - 1);
-      func();
+      handleFocus();
     },
-    [func, editor],
+    [handleFocus, editor],
   );
 
   const handlePlusClick = useCallback(() => {
     setIsOpen((prev) => {
       if (prev === false) {
         const { blocks, caret } = editor.current;
-
-        const currentBlock = blocks.getBlockByIndex(
-          blocks.getCurrentBlockIndex(),
-        );
+        const currentBlock = getCurrentBlock(editor.current);
         if (!currentBlock?.isEmpty) {
           blocks.insert('paragraph');
           const currentIndex = blocks.getCurrentBlockIndex();
           caret.setToBlock(currentIndex);
-          func({ notClose: true });
+          handleFocus({ stayOpen: true });
         }
         return true;
       }
-      func();
+      handleFocus();
       return false;
     });
-  }, [editor, func]);
+  }, [editor, handleFocus]);
 
   const renderToolbar = useCallback(() => {
     ReactDOM.render(
@@ -100,14 +99,14 @@ export const useToolbar = ({ editor }) => {
     renderToolbar();
     parent?.insertAdjacentElement('beforeend', toolbarWrapper);
 
-    editorElement?.addEventListener('mousedown', func);
-    editorElement?.addEventListener('keydown', func);
+    editorElement?.addEventListener('mousedown', handleFocus);
+    editorElement?.addEventListener('keydown', handleFocus);
 
     return () => {
-      editorElement?.removeEventListener('mousedown', func);
-      editorElement?.removeEventListener('keydown', func);
+      editorElement?.removeEventListener('mousedown', handleFocus);
+      editorElement?.removeEventListener('keydown', handleFocus);
     };
-  }, [isReady, editor, func, renderToolbar]);
+  }, [isReady, editor, handleFocus, renderToolbar]);
 
   useEffect(() => {
     if (toolbarRef.current) {
