@@ -2,6 +2,8 @@ import styled, { createGlobalStyle } from 'styled-components';
 
 import variables from '@sb-ui/theme/variables';
 
+import { BLOCK_BUTTONS } from './useToolbar/constants';
+
 export const Container = styled.div`
   width: 100%;
   .codex-editor--narrow {
@@ -32,6 +34,9 @@ export const GlobalStylesEditorPage = createGlobalStyle`
   }
 
   @media (min-width: 651px) {
+    .ce-toolbox-active{
+      color: ${variables['editorjs-primary-color']}
+    }
     .codex-editor--narrow {
       .codex-editor__redactor {
         margin-right: 0;
@@ -131,7 +136,25 @@ export const GlobalStylesEditorPage = createGlobalStyle`
     }
   }
 
+  .ce-toolbar{
+    display: none;
+  }
+
+  .editor-plus-toolbar{
+    top : 0;
+    position : absolute;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    width: calc(100% + 25px);
+  }
+  
   @media (max-width: 650px){
+    .editor-plus-toolbar{
+      left: 0;
+      justify-content: space-between;
+      width: calc(100% + 25px);
+    }
     .ce-toolbar{
       width: 100%;
       height: 50px;
@@ -147,10 +170,6 @@ export const GlobalStylesEditorPage = createGlobalStyle`
       padding: 0.25rem 0 0 0;
       box-shadow: none;
     }
-    .ce-toolbar__actions{
-      top: 1rem;
-    }
-
     .toolbox-input-search{
       display: none;
     }
@@ -159,22 +178,6 @@ export const GlobalStylesEditorPage = createGlobalStyle`
       visibility: hidden;
     }
 
-    .editor-plus-toolbar{
-      top : 0;
-      position : absolute;
-      display: flex;
-      width: calc(100% + 25px);
-      justify-content: space-between;
-      gap: 0.5rem;
-    }
-
-    .d-none{
-      display: none;
-    }
-
-    .ce-toolbar{
-      display: none;
-    }
 
     .ce-toolbar__actions{
       opacity: 1;
@@ -185,9 +188,29 @@ export const GlobalStylesEditorPage = createGlobalStyle`
     }
   }
 
+  .d-none{
+    display: none;
+  }
+  
+  
   @media(min-width: 651px){
     .editor-plus-toolbar{
-      display: none;
+      margin-left: 15px;
+    }
+    .ce-toolbar__actions{
+      position: initial;
+      opacity: 1;
+      right: 0;
+      margin-left: 25px;
+    }
+  }
+
+  @media(min-width: 650px) and (max-width: 750px){
+    .editor-plus-toolbar{
+      margin-left: 5px;
+    }
+    .ce-toolbar__actions{
+      margin-left: 30px;
     }
   }
 
@@ -206,6 +229,16 @@ export const PlusToolbar = styled.div`
   display: flex;
 `;
 
+export const Wrapper = styled.div`
+  display: flex;
+  width: 100%;
+  gap: 0.5rem;
+
+  @media (min-width: 651px) {
+    max-width: 650px;
+  }
+`;
+
 export const ToolbarWrapper = styled.div`
   height: 400px;
   width: 100%;
@@ -216,6 +249,22 @@ export const ToolbarWrapper = styled.div`
   color: ${variables['editorjs-grey-color']};
 
   overflow-y: scroll;
+  @media (min-width: 651px) {
+    width: 300px;
+  }
+`;
+
+export const SearchInput = styled.input`
+  &:focus {
+    outline: none;
+  }
+  border: 1px solid #d9d9d9;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+  width: 100%;
+  @media (max-width: 650px) {
+    display: none;
+  }
 `;
 
 export const BlocksTitle = styled.div`
@@ -238,7 +287,9 @@ export const Blocks = styled.div`
   gap: 1rem;
 `;
 
-export const BlockWrapper = styled.div`
+export const BlockWrapper = styled.div.attrs({
+  className: BLOCK_BUTTONS,
+})`
   display: flex;
   align-items: center;
   user-select: none;

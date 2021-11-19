@@ -76,8 +76,7 @@ export const selectItemsDescKeys = (item) => {
  * second value is index to select
  */
 export const getSelectingIndexes = (current, items, tabNext) => {
-  const index = items.findIndex((item) => item === current);
-
+  const index = items.findIndex((item) => item.dataset.tool === current);
   if (tabNext) {
     if (current === null) {
       return [-1, 0];
