@@ -55,6 +55,7 @@ export default {
       description: 'Create a simple test',
       question: 'Question',
       answer: 'Input answer',
+      add_answer: 'Add answer',
     },
     embed: {
       title: 'Video',

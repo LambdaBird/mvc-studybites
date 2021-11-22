@@ -22,6 +22,7 @@ import {
 } from '@sb-ui/utils/api/v1/teacher';
 import { Statuses } from '@sb-ui/utils/constants';
 import {
+  clearNonexistentStorageLessons,
   getStorageLessons,
   setStorageLesson,
 } from '@sb-ui/utils/lessonsStorage';
@@ -64,6 +65,7 @@ export const useLessonEdit = () => {
       enabled: isCurrentlyEditing,
       onError: (error) => {
         if (error.response.status.toString().startsWith(CLIENT_ERROR_STARTS)) {
+          clearNonexistentStorageLessons(lessonId);
           history.push(LESSONS_NEW);
         }
       },

@@ -4,6 +4,18 @@ import variables from '@sb-ui/theme/variables';
 
 export const Container = styled.div`
   width: 100%;
+  .codex-editor--narrow {
+    .codex-editor__redactor {
+      margin-right: 0;
+    }
+    .ce-block--focused {
+      margin-right: 0;
+      padding-right: 0;
+    }
+    .ce-toolbar__plus {
+      left: -34px;
+    }
+  }
 `;
 
 export const GlobalStylesEditorPage = createGlobalStyle`
@@ -15,6 +27,26 @@ export const GlobalStylesEditorPage = createGlobalStyle`
   .toolbox-item-none{
     display: none!important;
   }
+  .ct.ct--bottom{
+    display: none;
+  }
+
+  @media (min-width: 651px) {
+    .codex-editor--narrow {
+      .codex-editor__redactor {
+        margin-right: 0;
+      }
+      .ce-block--focused {
+        margin-right: 0;
+        padding-right: 0;
+      }
+      .ce-toolbar__plus {
+        left: -34px;
+      }
+    }
+  }
+
+
   .toolbox-input-search{
     &:focus{
       outline: none;
@@ -23,7 +55,7 @@ export const GlobalStylesEditorPage = createGlobalStyle`
     padding: 0.5rem 0.75rem;
     margin-bottom: 0.5rem;
   }
-  
+
   .ce-toolbar__plus::after{
     content: '${(props) => props.toolbarHint}';
     position: absolute;
@@ -50,7 +82,7 @@ export const GlobalStylesEditorPage = createGlobalStyle`
       -webkit-animation: none;
       animation:  none;
     }
-    
+
     .toolbox-basic-items-title, .toolbox-interactive-items-title{
       user-select: none;
       color: rgba(0, 0, 0, 0.45);
@@ -59,7 +91,7 @@ export const GlobalStylesEditorPage = createGlobalStyle`
       font-size: 14px;
       margin-bottom: 0.5rem;
     }
-    
+
     .toolbox-interactive-items, .toolbox-basic-items{
       display: flex;
       flex-direction: column;
@@ -82,7 +114,7 @@ export const GlobalStylesEditorPage = createGlobalStyle`
         width: 20px;
       }
     }
-    
+
     .toolbox-item-wrapper{
       display: flex;
       margin-left: 1rem;
@@ -107,26 +139,26 @@ export const GlobalStylesEditorPage = createGlobalStyle`
     }
 
     .ce-toolbar__content{
-      width: 100%;     
+      width: 100%;
     }
 
     .ce-toolbox{
       width: 200px;
       padding: 0.25rem 0 0 0;
-      box-shadow: none; 
+      box-shadow: none;
     }
     .ce-toolbar__actions{
       top: 1rem;
     }
-    
+
     .toolbox-input-search{
       display: none;
     }
-    
+
     .hidden{
       visibility: hidden;
     }
-    
+
     .editor-plus-toolbar{
       top : 0;
       position : absolute;
@@ -135,7 +167,7 @@ export const GlobalStylesEditorPage = createGlobalStyle`
       justify-content: space-between;
       gap: 0.5rem;
     }
-    
+
     .d-none{
       display: none;
     }
@@ -143,7 +175,7 @@ export const GlobalStylesEditorPage = createGlobalStyle`
     .ce-toolbar{
       display: none;
     }
-    
+
     .ce-toolbar__actions{
       opacity: 1;
       background-color: ${variables['gray-4']};
@@ -152,14 +184,14 @@ export const GlobalStylesEditorPage = createGlobalStyle`
 
     }
   }
-  
+
   @media(min-width: 651px){
     .editor-plus-toolbar{
       display: none;
     }
   }
-  
-  
+
+
   .cte-toolbox-upper{
     transform: translate3d(0px,calc(-100% + 25px),0px)!important;
   }
