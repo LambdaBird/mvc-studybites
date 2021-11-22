@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 
+import { getToolboxItems } from '@sb-ui/utils/editorjs/EditorJsContainer/useToolbox/domToolboxHelpers';
+
 import { CODEX_EDITOR, CODEX_EDITOR_REDACTOR, DISPLAY_NONE } from './constants';
 import {
   createToolbar,
-  moveActionsButtonsToDesktop,
   moveActionsButtonsToMobile,
   setTransform3d,
 } from './domToolbarHelpers';
@@ -21,6 +22,7 @@ export const useToolbar = ({ editor }) => {
   const toolbarRef = useRef(null);
 
   const [isOpen, setIsOpen] = useState(false);
+  const itemsRef = useRef(null);
 
   const handleFocus = useCallback(
     ({ stayOpen } = {}) => {
@@ -54,23 +56,50 @@ export const useToolbar = ({ editor }) => {
     [handleFocus, editor],
   );
 
-  const handlePlusClick = useCallback(() => {
-    setIsOpen((prev) => {
-      if (prev === false) {
-        const { blocks, caret } = editor.current;
-        const currentBlock = getCurrentBlock(editor.current);
-        if (!currentBlock?.isEmpty) {
-          blocks.insert('paragraph');
-          const currentIndex = blocks.getCurrentBlockIndex();
-          caret.setToBlock(currentIndex);
-          handleFocus({ stayOpen: true });
+  const handlePlusClick = useCallback(
+    ({ forceClose } = {}) => {
+      setIsOpen((prev) => {
+        if (prev === false && !forceClose) {
+          const { blocks, caret } = editor.current;
+          const currentBlock = getCurrentBlock(editor.current);
+          if (!currentBlock?.isEmpty) {
+            blocks.insert('paragraph');
+            const currentIndex = blocks.getCurrentBlockIndex();
+            caret.setToBlock(currentIndex);
+            handleFocus({ stayOpen: true });
+          }
+          return true;
         }
-        return true;
+        const { blocks, caret } = editor.current;
+
+        const currentIndex = blocks.getCurrentBlockIndex();
+        caret.setToBlock(currentIndex);
+        handleFocus();
+        return false;
+      });
+    },
+    [editor, handleFocus],
+  );
+
+  const handleKeyDown = useCallback(
+    (event) => {
+      event.stopImmediatePropagation();
+      switch (event.key) {
+        case 'Tab':
+          if (!isOpen) {
+            editor.current.toolbar.toggleBlockSettings(0);
+            handlePlusClick();
+          }
+          break;
+        case 'Escape':
+          handlePlusClick({ forceClose: true });
+          break;
+        default:
+          break;
       }
-      handleFocus();
-      return false;
-    });
-  }, [editor, handleFocus]);
+    },
+    [editor, handlePlusClick, isOpen],
+  );
 
   const renderToolbar = useCallback(() => {
     ReactDOM.render(
@@ -81,12 +110,10 @@ export const useToolbar = ({ editor }) => {
       />,
       toolbarRef.current,
       () => {
-        if (isMobile) {
-          moveActionsButtonsToMobile();
-        }
+        moveActionsButtonsToMobile();
       },
     );
-  }, [handleInsertBlockClick, handlePlusClick, isMobile, isOpen]);
+  }, [handleInsertBlockClick, handlePlusClick, isOpen]);
 
   useEffect(() => {
     if (!isReady) {
@@ -94,19 +121,21 @@ export const useToolbar = ({ editor }) => {
     }
     const parent = document.querySelector(`.${CODEX_EDITOR}`);
     const editorElement = document.querySelector(`.${CODEX_EDITOR_REDACTOR}`);
+
     editorElementRef.current = editorElement;
     toolbarRef.current = toolbarWrapper;
+    itemsRef.current = Array.from(getToolboxItems(editorElement));
     renderToolbar();
     parent?.insertAdjacentElement('beforeend', toolbarWrapper);
-
+    parent?.addEventListener?.('keydown', handleKeyDown);
     editorElement?.addEventListener('mousedown', handleFocus);
     editorElement?.addEventListener('keydown', handleFocus);
-
     return () => {
       editorElement?.removeEventListener('mousedown', handleFocus);
       editorElement?.removeEventListener('keydown', handleFocus);
+      parent?.removeEventListener?.('keydown', handleKeyDown);
     };
-  }, [isReady, editor, handleFocus, renderToolbar]);
+  }, [isReady, editor, handleFocus, renderToolbar, handleKeyDown]);
 
   useEffect(() => {
     if (toolbarRef.current) {
@@ -117,14 +146,6 @@ export const useToolbar = ({ editor }) => {
   const prepareToolbar = useCallback(() => {
     setIsReady(true);
   }, []);
-
-  useEffect(() => {
-    if (isMobile) {
-      moveActionsButtonsToMobile();
-    } else {
-      moveActionsButtonsToDesktop();
-    }
-  }, [isMobile]);
 
   return { prepareToolbar };
 };

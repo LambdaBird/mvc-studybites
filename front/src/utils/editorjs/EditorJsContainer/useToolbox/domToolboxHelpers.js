@@ -1,6 +1,8 @@
 import { HEADER_HEIGHT } from '@sb-ui/components/molecules/Header/Header.styled';
 import { TOOLBOX_UPPER } from '@sb-ui/utils/editorjs/EditorJsContainer/useToolbox/constants';
 
+import { BLOCK_BUTTONS } from '../useToolbar/constants';
+
 import { getTranslationKey } from './toolboxItemsHelpers';
 
 export const appendItems = ({ node, items = [] }) => {
@@ -38,7 +40,7 @@ export const createInputWithClassName = ({
 };
 
 export const getToolboxItems = (parent) =>
-  parent?.querySelectorAll('.ce-toolbox__button') || [];
+  parent?.querySelectorAll(BLOCK_BUTTONS) || [];
 
 export const updateInnerText = ({ parentNode, text, selector }) => {
   const element = parentNode.querySelector(selector);

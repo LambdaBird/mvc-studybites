@@ -11,7 +11,7 @@ export const Block = ({ onClick, blocks, block }) => {
   const { t } = useTranslation('editorjs');
   const blockKey = getTranslationKey(block);
   return (
-    <S.BlockWrapper onClick={onClick}>
+    <S.BlockWrapper data-tool={block} onClick={onClick}>
       <S.BlockImage>
         {htmlToReact(blocks[block]?.class?.toolbox?.icon)}
       </S.BlockImage>
