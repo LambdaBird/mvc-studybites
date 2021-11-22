@@ -153,6 +153,8 @@ export default {
       answer: 'Enter words and press enter',
       additional: 'Additional words',
       hint: '* Words will be shuffled for students after save',
+      empty_words: 'No words',
+      empty_additional: 'No additional words',
     },
   },
 };
