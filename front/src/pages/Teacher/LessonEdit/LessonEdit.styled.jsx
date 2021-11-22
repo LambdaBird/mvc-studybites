@@ -1,4 +1,3 @@
-import { Col } from 'antd';
 import styled from 'styled-components';
 
 import {
@@ -15,9 +14,17 @@ export const Page = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: padding-right 0.3s ease 0.1s;
+  transition: padding 0.3s ease 0.1s;
   padding-right: ${(props) =>
     props.isRightOpen ? `${RIGHT_BAR_WIDTH}px` : '2rem'};
+
+  padding-left: ${(props) =>
+    props.isLeftOpen ? `calc(${LEFT_BAR_WIDTH}px + 2rem)` : '2rem'};
+
+  @media (max-width: 767px) {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
 `;
 
 export const InputTitle = styled.input`
@@ -33,9 +40,4 @@ export const InputTitle = styled.input`
     padding-left: 0;
   }
   width: 100%;
-`;
-
-export const HeaderButtons = styled(Col)`
-  margin-left: auto;
-  margin-right: 2rem;
 `;

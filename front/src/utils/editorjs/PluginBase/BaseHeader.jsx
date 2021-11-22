@@ -1,3 +1,4 @@
+import { Tooltip } from 'antd';
 import T from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
@@ -10,10 +11,20 @@ const BaseHeader = ({ toolName, noHint = false }) => {
   const snakeCasedToolName = camelToSnakeCase(toolName);
   const title = t(`tools.${snakeCasedToolName}.title`);
   const hint = t(`tools.${snakeCasedToolName}.hint`);
+
   return (
     <S.TitleWrapper>
       <S.BaseText>{title}</S.BaseText>
-      {!noHint && <S.BaseText>{hint}</S.BaseText>}
+      {!noHint && (
+        <>
+          <S.Hint>{hint}</S.Hint>
+          <S.HintDesktop>
+            <Tooltip trigger="click" placement="left" title={hint}>
+              <S.Question />
+            </Tooltip>
+          </S.HintDesktop>
+        </>
+      )}
     </S.TitleWrapper>
   );
 };

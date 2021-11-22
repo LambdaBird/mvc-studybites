@@ -1,10 +1,10 @@
-import { roles, resources } from '../src/config';
+import { resources, roles } from '../src/config';
 import build from '../src/app';
 
 const addLessons = async ({ name, description, status, userId }) => {
   const app = await build();
   const { Lesson, UserRole } = app.models;
-  const data = await Lesson.transaction(async (trx) => {
+  return Lesson.transaction(async (trx) => {
     const lesson = await Lesson.query(trx)
       .insert({
         name,
@@ -23,7 +23,6 @@ const addLessons = async ({ name, description, status, userId }) => {
 
     return lesson;
   });
-  return data;
 };
 
 addLessons({

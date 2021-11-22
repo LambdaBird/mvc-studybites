@@ -163,13 +163,6 @@ export default class ClosedQuestion extends PluginBase {
     this.renderTags();
   }
 
-  renderNew(renderParams) {
-    const oldView = this.container;
-    if (oldView) {
-      oldView.parentNode.replaceChild(this.render(renderParams), oldView);
-    }
-  }
-
   enterPressed(event) {
     event.preventDefault();
     const value = this.elements?.answerInput?.value;

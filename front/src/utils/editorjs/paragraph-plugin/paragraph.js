@@ -16,6 +16,7 @@ class Paragraph {
     this._CSS = {
       block: this.api.styles.block,
       wrapper: 'ce-paragraph',
+      span: 'ce-paragraph-span',
     };
 
     if (!this.readOnly) {
@@ -38,10 +39,9 @@ class Paragraph {
       return;
     }
 
-    const { textContent } = this._element;
-
+    const { textContent } = this.spanElement;
     if (textContent === '') {
-      this._element.innerHTML = '';
+      this.spanElement.innerText = '';
     }
   }
 
@@ -49,12 +49,18 @@ class Paragraph {
     const div = document.createElement('DIV');
 
     div.classList.add(this._CSS.wrapper, this._CSS.block);
-    div.contentEditable = false;
     div.dataset.placeholder = this.api.i18n.t(this._placeholder);
     div.title = this.api.i18n.t('title');
+    const span = document.createElement('span');
+    span.classList.add(this._CSS.span);
+    if (!this.readOnly) {
+      span.contentEditable = true;
+    }
+    this.spanElement = span;
+    div.appendChild(span);
 
     if (!this.readOnly) {
-      div.contentEditable = true;
+      // div.contentEditable = true;
       div.addEventListener('keyup', this.onKeyUp);
     }
 
@@ -66,11 +72,9 @@ class Paragraph {
   }
 
   merge(data) {
-    const newData = {
-      text: this.data.text + data.text,
+    this.data = {
+      text: (this._data?.text || '') + (data?.text || ''),
     };
-
-    this.data = newData;
   }
 
   validate(savedData) {
@@ -81,18 +85,16 @@ class Paragraph {
     return true;
   }
 
-  save(toolsContent) {
+  save() {
     return {
-      text: toolsContent.innerHTML,
+      text: this.spanElement.innerHTML,
     };
   }
 
   onPaste(event) {
-    const data = {
+    this.data = {
       text: event.detail.data.innerHTML,
     };
-
-    this.data = data;
   }
 
   static get conversionConfig() {
@@ -115,7 +117,7 @@ class Paragraph {
   }
 
   get data() {
-    const text = this._element.innerHTML;
+    const { text } = this; // this._element.innerHTML;
 
     this._data.text = text;
 
@@ -125,7 +127,8 @@ class Paragraph {
   set data(data) {
     this._data = data || {};
 
-    this._element.innerHTML = this._data.text || '';
+    this.spanElement.innerHTML = this._data.text || '';
+    // this._element.innerHTML = this._data.text || '';
   }
 
   static get pasteConfig() {

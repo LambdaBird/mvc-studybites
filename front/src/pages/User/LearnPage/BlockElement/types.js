@@ -31,7 +31,6 @@ export const BlockContentType = PropTypes.shape({
 export const BlockIdType = PropTypes.string.isRequired;
 export const RevisionType = PropTypes.string.isRequired;
 export const QuestionType = PropTypes.string.isRequired;
-export const TextType = PropTypes.string.isRequired;
 export const SolvedType = PropTypes.bool;
 
 export const ParagraphContentType = PropTypes.shape({
@@ -80,15 +79,6 @@ export const BricksBlockReplyType = PropTypes.shape({
   words: PropTypes.arrayOf(PropTypes.string),
 });
 
-export const QuizBlockDataType = PropTypes.shape({
-  answers: PropTypes.arrayOf(
-    PropTypes.shape({
-      label: PropTypes.string,
-    }),
-  ).isRequired,
-  question: PropTypes.string.isRequired,
-});
-
 export const QuizBlockAnswerType = PropTypes.shape({
   results: PropTypes.arrayOf(PropTypes.bool),
 });
@@ -97,26 +87,8 @@ export const QuizBlockReplyType = PropTypes.shape({
   results: PropTypes.arrayOf(PropTypes.bool),
 });
 
-export const GradedQuestionBlockReplyType = PropTypes.shape({
-  value: PropTypes.string,
-  files: PropTypes.arrayOf(PropTypes.shape({})),
-});
-
 export const ClosedQuestionResponseDataType = PropTypes.shape({
   response: PropTypes.string,
-});
-
-export const BlockResponseDataType = PropTypes.shape({
-  response: PropTypes.arrayOf(PropTypes.bool),
-});
-
-export const MatchBlockDataType = PropTypes.shape({
-  answers: PropTypes.arrayOf(
-    PropTypes.shape({
-      from: PropTypes.string,
-      to: PropTypes.string,
-    }),
-  ),
 });
 
 export const MatchResponseDataType = PropTypes.shape({

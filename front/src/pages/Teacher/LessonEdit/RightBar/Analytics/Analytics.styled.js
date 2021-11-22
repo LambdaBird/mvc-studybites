@@ -16,6 +16,11 @@ export const Wrapper = styled.div`
   transition: all 0.3s ease 0.1s;
   transform: translate3d(${(props) => (props.opened ? '0' : '100%')}, 0, 0);
   padding-top: ${HEADER_HEIGHT}px;
+
+  @media (max-width: 767px) {
+    background-color: white;
+    width: 100vw;
+  }
 `;
 
 export const Title = styled.div`

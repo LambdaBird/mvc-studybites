@@ -19,3 +19,9 @@ export const setStorageLesson = (lesson) => {
   }
   setStorageLessons(lessons);
 };
+
+export const clearNonexistentStorageLessons = (lessonId) => {
+  const lessons = getStorageLessons();
+  const newLessons = lessons.filter((lesson) => lesson.id !== lessonId);
+  setStorageLessons(newLessons);
+};

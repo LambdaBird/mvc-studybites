@@ -27,18 +27,6 @@ export const MatchColumn = styled(FlipMove)`
   gap: 1rem;
 `;
 
-export const MatchLine = styled.div`
-  align-items: center;
-  width: 100%;
-  @media (max-width: 767px) {
-    width: 100%;
-  }
-  flex-direction: column;
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-`;
-
 export const ArrowConnectWrapper = styled.div`
   display: flex;
   padding-top: 2rem;

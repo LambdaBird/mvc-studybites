@@ -1,4 +1,4 @@
-export const icon = `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0)">
+export const ToolboxIcon = `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0)">
 <path d="M0 16.7718V8.15335C0 7.80708 0.120443 7.5153 0.361328 7.27804C0.602214 7.04078 0.898438 6.92214 1.25 6.92214H18.7499C19.0885 6.92214 19.3816 7.04078 19.629 7.27804C19.8764 7.5153 20 7.80708 20 8.15335V16.7718H0ZM12.5 5.69094V4.45973C12.5 4.12627 12.6204 3.83771 12.8613 3.59403C13.1022 3.35035 13.3984 3.22852 13.75 3.22852H16.2501C16.5885 3.22852 16.8816 3.35035 17.129 3.59403C17.3764 3.83771 17.5 4.12627 17.5 4.45973V5.69094H12.5ZM2.5 5.69094V4.45973C2.5 4.12627 2.62044 3.83771 2.86132 3.59403C3.10222 3.35035 3.39844 3.22852 3.75 3.22852H6.25C6.60156 3.22852 6.89778 3.35035 7.13868 3.59403C7.37956 3.83771 7.5 4.12627 7.5 4.45973V5.69094H2.5Z" />
 </g>
 <defs>
@@ -8,13 +8,3 @@ export const icon = `<svg width="20" height="20" viewBox="0 0 20 20" fill="none"
 </defs>
 </svg>
 `;
-
-export const removeIcon = (className) => `
-<span class="${className}">
- <svg viewBox='64 64 896 896' focusable='false' data-icon='close' width='10px' height='10px' fill='currentColor' aria-hidden='true'>
-  <path d='M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 00203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z'></path>
- </svg>
-</span>
-`;
-
-export const enterIcon = `<svg viewBox="64 64 896 896" focusable="false" data-icon="enter" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M864 170h-60c-4.4 0-8 3.6-8 8v518H310v-73c0-6.7-7.8-10.5-13-6.3l-141.9 112a8 8 0 000 12.6l141.9 112c5.3 4.2 13 .4 13-6.3v-75h498c35.3 0 64-28.7 64-64V178c0-4.4-3.6-8-8-8z"></path></svg>`;

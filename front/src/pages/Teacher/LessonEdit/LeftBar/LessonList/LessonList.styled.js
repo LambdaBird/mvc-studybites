@@ -42,7 +42,7 @@ export const Wrapper = styled.div`
 export const Lesson = styled.div`
   cursor: pointer;
   user-select: none;
-  padding: 0.5rem;
+  padding: 0.25rem 0.5rem;
   width: 100%;
   display: flex;
 
@@ -50,12 +50,11 @@ export const Lesson = styled.div`
     props.selected
       ? `
       background-color: ${variables['gray-4']};
-      border-radius: 4px;`
+      `
       : ''}
 
   &:hover {
     background-color: ${variables['gray-4']};
-    border-radius: 4px;
   }
 `;
 
@@ -66,8 +65,8 @@ export const Badge = styled(BadgeAntd).attrs(({ status }) => ({
 export const Text = styled(TextAntd).attrs({
   ellipsis: {
     tooltip: true,
-    rows: 0,
   },
 })`
   width: 90%;
+  color: ${variables['neutral-8']};
 `;

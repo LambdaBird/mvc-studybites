@@ -7,6 +7,7 @@ import EditorJS from '@editorjs/editorjs';
 import { useToolbox } from '@sb-ui/utils/editorjs/EditorJsContainer/useToolbox';
 import Undo from '@sb-ui/utils/editorjs/undo-plugin';
 
+import { useToolbar } from './useToolbar';
 import * as S from './EditorJsContainer.styled';
 
 const EditorJsContainer = forwardRef((props, ref) => {
@@ -14,7 +15,11 @@ const EditorJsContainer = forwardRef((props, ref) => {
   const { t } = useTranslation('editorjs');
   const instance = useRef(null);
 
-  const { prepareToolbox, updateLanguage } = useToolbox({ editor: instance });
+  const { prepareToolbox, updateLanguage, isOpen } = useToolbox({
+    editor: instance,
+  });
+
+  const { prepareToolbar } = useToolbar({ editor: instance });
 
   const { children, language } = props;
   const holder = useMemo(
@@ -49,6 +54,7 @@ const EditorJsContainer = forwardRef((props, ref) => {
   const handleReady = useCallback(async (editor) => {
     if (editor) {
       prepareToolbox();
+      prepareToolbar();
       try {
         // eslint-disable-next-line no-param-reassign
         ref.current = new Undo({
@@ -345,10 +351,9 @@ const EditorJsContainer = forwardRef((props, ref) => {
   useEffect(() => {
     updateLanguage();
   }, [language, updateLanguage]);
-
   return (
     <>
-      <S.GlobalStylesEditorPage toolbarHint={t('tools.hint')} />
+      <S.GlobalStylesEditorPage isOpen={isOpen} toolbarHint={t('tools.hint')} />
       {children || <S.Container id={holder} />}
     </>
   );

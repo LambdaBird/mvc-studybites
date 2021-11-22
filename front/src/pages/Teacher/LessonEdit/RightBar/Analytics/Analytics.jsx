@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 
-import FunnelContainer from '@sb-ui/pages/Teacher/LessonStudents/FunnelContainer';
+import { FunnelContainer } from '@sb-ui/components/molecules/FunnelContainer';
 import { getTeacherLessonStudents } from '@sb-ui/utils/api/v1/teacher';
 import { TEACHER_LESSON_STUDENTS_BASE_KEY } from '@sb-ui/utils/queries';
 

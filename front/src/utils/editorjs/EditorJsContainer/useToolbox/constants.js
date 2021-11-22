@@ -1,4 +1,5 @@
 export const TOOLBOX_BUTTON_ACTIVE_CLASS = 'ce-toolbox__button--active';
+export const TOOLBOX_ACTIVE_CLASS = 'ce-toolbox-active';
 export const TOOLBOX_TOOLBOX = 'ce-toolbox';
 export const TOOLBOX_OPENED = 'ce-toolbox--opened';
 export const TOOLBOX_ITEM_NONE = 'toolbox-item-none';

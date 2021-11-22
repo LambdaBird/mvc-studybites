@@ -54,6 +54,7 @@ export default {
       description: 'Создать простой тест',
       question: 'Вопрос',
       answer: 'Введите ответ',
+      add_answer: 'Добавить ответ',
     },
     embed: {
       title: 'Видео',
@@ -152,6 +153,8 @@ export default {
       answer: 'Введите слова и нажмите Enter',
       additional: 'Дополнительные слова',
       hint: '* Слова будут перемешаны после сохранения',
+      empty_words: 'Нет слов',
+      empty_additional: 'Нет дополнительных слов',
     },
   },
 };
