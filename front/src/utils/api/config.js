@@ -1,7 +1,5 @@
 import { BLOCKS_TYPE } from '@sb-ui/pages/User/LearnPage/BlockElement/types';
 
-export const SELF_STALE_TIME = 60_000; // 60 seconds
-
 export const interactiveTypesBlocks = [
   BLOCKS_TYPE.NEXT,
   BLOCKS_TYPE.QUIZ,

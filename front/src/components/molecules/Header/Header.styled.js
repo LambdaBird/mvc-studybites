@@ -1,7 +1,5 @@
-import { Avatar, Row } from 'antd';
+import { Row } from 'antd';
 import styled from 'styled-components';
-
-import { MoreOutlined } from '@sb-ui/resources/icons';
 
 export const HEADER_HEIGHT = 56;
 
@@ -53,11 +51,6 @@ export const Logo = styled.img`
   cursor: pointer;
 `;
 
-export const StyledAvatar = styled(Avatar)`
-  color: #f56a00;
-  background-color: #fde3cf;
-`;
-
 export const Profile = styled.div`
   cursor: pointer;
   display: flex;
@@ -70,11 +63,6 @@ export const ChildrenWrapper = styled.div`
   justify-content: center;
   align-items: center;
   gap: 1rem;
-`;
-
-export const MoreButton = styled(MoreOutlined)`
-  font-size: 24px;
-  transform: rotate(90deg);
 `;
 
 export const LogoLink = styled.div`

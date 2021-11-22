@@ -5,7 +5,10 @@ import { useMutation, useQuery } from 'react-query';
 import { useHistory, useParams } from 'react-router-dom';
 import * as Sentry from '@sentry/browser';
 
-import { Statuses } from '@sb-ui/pages/Teacher/Home/Dashboard/constants';
+import {
+  DESKTOP_WIDTH,
+  getCurrentWidth,
+} from '@sb-ui/hooks/useMobile/useMobile';
 import {
   getConfig,
   prepareBlocksForApi,
@@ -17,6 +20,7 @@ import {
   getLesson,
   putLesson,
 } from '@sb-ui/utils/api/v1/teacher';
+import { Statuses } from '@sb-ui/utils/constants';
 import {
   getStorageLessons,
   setStorageLesson,
@@ -41,6 +45,10 @@ export const useLessonEdit = () => {
   const [dataBlocks, setDataBlocks] = useState(null);
   const [isEditorDisabled, setIsEditorDisabled] = useState(false);
   const [isShowAnalytics, setIsShowAnalytics] = useState(false);
+
+  const [isLeftBarOpen, setIsLeftBarOpen] = useState(
+    getCurrentWidth() >= DESKTOP_WIDTH,
+  );
   const [isShowShare, setIsShowShare] = useState(false);
 
   const inputTitle = useRef(null);
@@ -122,6 +130,14 @@ export const useLessonEdit = () => {
 
   const handleAnalytics = useCallback(() => {
     setIsShowAnalytics((prev) => !prev);
+  }, []);
+
+  const handleHideLeftBar = useCallback(() => {
+    setIsLeftBarOpen(false);
+  }, []);
+
+  const handleShowLeftBar = useCallback(() => {
+    setIsLeftBarOpen(true);
   }, []);
 
   const handleSave = useCallback(async () => {
@@ -287,6 +303,9 @@ export const useLessonEdit = () => {
       handleShare,
       handleAnalytics,
     },
+    handleHideLeftBar,
+    handleShowLeftBar,
+    isLeftBarOpen,
     lessons,
     publicId,
     isPublic,

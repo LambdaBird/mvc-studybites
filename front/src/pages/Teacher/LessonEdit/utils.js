@@ -215,16 +215,22 @@ export const getBaseBlocks = (t) => ({
     class: Quote,
     inlineToolbar: true,
   },
-  code: CodeTool,
+  code: {
+    class: CodeTool,
+  },
   table: {
     class: Table,
     inlineToolbar: true,
   },
-  delimiter: Delimiter,
+  delimiter: {
+    class: Delimiter,
+  },
 });
 
 export const getInteractiveBlocks = () => ({
-  next: Next,
+  next: {
+    class: Next,
+  },
   quiz: {
     class: Quiz,
     inlineToolbar: true,

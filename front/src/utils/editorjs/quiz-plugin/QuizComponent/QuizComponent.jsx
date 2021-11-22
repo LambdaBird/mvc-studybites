@@ -1,5 +1,6 @@
-import { createRef, useEffect, useRef, useState } from 'react';
+import { createRef, useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { PlusOutlined } from '@ant-design/icons';
 
 import { htmlToReact } from '@sb-ui/pages/User/LearnPage/utils';
 import {
@@ -144,6 +145,10 @@ const Quiz = ({ tool }) => {
     }
   };
 
+  const handleAddLine = useCallback(() => {
+    addNewItem({ value: '', afterId: items[items.length - 1].id, caret: true });
+  }, [items]);
+
   const clearNewItem = (id) => {
     setItems((prev) => {
       deletePropsFromTool(
@@ -192,12 +197,18 @@ const Quiz = ({ tool }) => {
                   handleKeyDown(e, id);
                 }}
                 placeholder={t('tools.quiz.answer')}
+                suppressContentEditableWarning
               >
                 {htmlToReact(value)}
               </S.ItemInput>
             </S.Item>
           ))}
         </S.ItemsWrapper>
+        <S.AddWrapper>
+          <S.AddLineButton onClick={handleAddLine}>
+            <PlusOutlined /> Add line
+          </S.AddLineButton>
+        </S.AddWrapper>
       </S.Wrapper>
     </>
   );

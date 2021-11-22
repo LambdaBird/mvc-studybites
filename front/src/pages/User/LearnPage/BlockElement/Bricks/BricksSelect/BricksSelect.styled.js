@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-import { RightOutlinedAntd } from '@sb-ui/resources/icons';
 import variables from '@sb-ui/theme/variables';
 
 // px sizes
@@ -8,20 +7,6 @@ export const HEIGHT_GAP = 8;
 export const HEIGHT_WORD = 22;
 export const BORDER = 1;
 export const HEIGHT_GAP_SELECTED = 24;
-
-export const Textarea = styled.textarea.attrs({
-  rows: 2,
-})`
-  flex: 1;
-  outline: none;
-  border: none;
-  word-break: break-word;
-  resize: none;
-`;
-
-export const RightOutlined = styled(RightOutlinedAntd)`
-  color: ${variables['button-send-color']};
-`;
 
 export const LineWrapper = styled.div`
   display: flex;

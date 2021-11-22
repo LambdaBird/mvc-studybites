@@ -19,23 +19,6 @@ export function debounce(func, timeout = 300) {
   };
 }
 
-export const getQueryPage = (params) => {
-  let incorrect = false;
-  let pageNumber = parseInt(new URLSearchParams(params).get('page'), 10);
-  if (!pageNumber) {
-    pageNumber = 1;
-    incorrect = true;
-  }
-  if (pageNumber < 0) {
-    pageNumber = 1;
-    incorrect = true;
-  }
-  return {
-    page: pageNumber,
-    incorrect,
-  };
-};
-
 export const getPasswordStrength = (password = '') => {
   if (password.length === 0) {
     return -1;
@@ -82,11 +65,6 @@ export const getPasswordStrength = (password = '') => {
 
 export const getProgressEnrolledLesson = (blocks, totalBlocks) =>
   (blocks?.length / totalBlocks).toFixed(2) * 100 || 0;
-
-export const skeletonArray = (size) =>
-  [...new Array(size)].map((_, index) => ({
-    id: `skeleton ${index}`,
-  }));
 
 export const formatDate = (date, localeCode = DEFAULT_CODE) =>
   date &&

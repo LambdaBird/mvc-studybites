@@ -1,21 +1,26 @@
 import T from 'prop-types';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useContext, useEffect, useRef } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
+import MobileContext from '@sb-ui/contexts/MobileContext';
 import { LESSONS_EDIT } from '@sb-ui/utils/paths';
 
 import * as S from './LessonList.styled';
 
-const LessonList = ({ lessons }) => {
+const LessonList = ({ lessons, handleHideLeftBar }) => {
   const history = useHistory();
   const { id: currentId } = useParams();
+  const isMobile = useContext(MobileContext);
 
   const selectedLessonRef = useRef(null);
   const handleLessonClick = useCallback(
     (id) => {
       history.push(LESSONS_EDIT.replace(':id', id));
+      if (isMobile) {
+        handleHideLeftBar();
+      }
     },
-    [history],
+    [handleHideLeftBar, history, isMobile],
   );
 
   useEffect(() => {
@@ -44,6 +49,7 @@ const LessonList = ({ lessons }) => {
 };
 
 LessonList.propTypes = {
+  handleHideLeftBar: T.func,
   lessons: T.arrayOf(T.shape({})),
 };
 
