@@ -16,8 +16,6 @@ export const useSearch = ({
   const allBlocks = useRef(null);
   const [currentBlock, setCurrentBlock] = useState(null);
 
-  useEffect(() => {}, []);
-
   useEffect(() => {
     if (isOpen) {
       const blocks = document.querySelectorAll('.block-buttons');

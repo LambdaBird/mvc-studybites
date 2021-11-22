@@ -104,8 +104,6 @@ export const useToolbar = ({ editor }) => {
   const renderToolbar = useCallback(() => {
     ReactDOM.render(
       <Toolbar
-        itemsRef={itemsRef}
-        isMobile={isMobile}
         handlePlusClick={handlePlusClick}
         handleInsertBlockClick={handleInsertBlockClick}
         isOpen={isOpen}
@@ -115,7 +113,7 @@ export const useToolbar = ({ editor }) => {
         moveActionsButtonsToMobile();
       },
     );
-  }, [handleInsertBlockClick, handlePlusClick, isMobile, isOpen]);
+  }, [handleInsertBlockClick, handlePlusClick, isOpen]);
 
   useEffect(() => {
     if (!isReady) {
@@ -148,8 +146,6 @@ export const useToolbar = ({ editor }) => {
   const prepareToolbar = useCallback(() => {
     setIsReady(true);
   }, []);
-
-  useEffect(() => {}, [isMobile]);
 
   return { prepareToolbar };
 };

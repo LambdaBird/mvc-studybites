@@ -1,5 +1,5 @@
 import T from 'prop-types';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PlusOutlined } from '@ant-design/icons';
 
@@ -27,9 +27,9 @@ const Toolbar = ({ isOpen, handlePlusClick, handleInsertBlockClick }) => {
   const inputRef = useRef(null);
   const [value, setValue] = useState('');
 
-  const handleInput = useCallback((e) => {
+  const handleInput = (e) => {
     setValue(e.target.value);
-  }, []);
+  };
 
   useEffect(() => {
     if (isOpen) {
@@ -74,7 +74,7 @@ const Toolbar = ({ isOpen, handlePlusClick, handleInsertBlockClick }) => {
           <S.SearchInput
             ref={inputRef}
             onInput={handleInput}
-            onKeyDown={(e) => handleKeyDown(e)}
+            onKeyDown={handleKeyDown}
             onBlur={() => {
               inputRef.current?.focus({ preventScroll: true });
             }}
