@@ -302,7 +302,9 @@ export const BlockWrapper = styled.div.attrs({
   display: flex;
   align-items: center;
   user-select: none;
+  cursor: pointer;
   width: 100%;
+  &:hover,
   &:active {
     color: ${variables['editorjs-primary-color']} !important;
   }

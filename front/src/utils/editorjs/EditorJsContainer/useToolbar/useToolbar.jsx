@@ -102,10 +102,6 @@ export const useToolbar = ({ editor }) => {
   );
 
   useEffect(() => {
-    if (isMobile) {
-      return;
-    }
-
     if (isOpen) {
       toolbarRef.current?.classList?.add?.('none-events');
     } else {
@@ -119,14 +115,13 @@ export const useToolbar = ({ editor }) => {
         handlePlusClick={handlePlusClick}
         handleInsertBlockClick={handleInsertBlockClick}
         isOpen={isOpen}
-        isMobile={isMobile}
       />,
       toolbarRef.current,
       () => {
         moveActionsButtonsToMobile();
       },
     );
-  }, [handleInsertBlockClick, handlePlusClick, isMobile, isOpen]);
+  }, [handleInsertBlockClick, handlePlusClick, isOpen]);
 
   useEffect(() => {
     if (!isReady) {

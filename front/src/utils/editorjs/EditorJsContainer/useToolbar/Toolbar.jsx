@@ -29,12 +29,7 @@ const filterBlocks = ({ block, value, t }) => {
   return name.includes(lowerCaseValue) || description.includes(lowerCaseValue);
 };
 
-const Toolbar = ({
-  isMobile,
-  isOpen,
-  handlePlusClick,
-  handleInsertBlockClick,
-}) => {
+const Toolbar = ({ isOpen, handlePlusClick, handleInsertBlockClick }) => {
   const { t } = useTranslation('editorjs');
   const toolbarRef = useRef(null);
   const inputRef = useRef(null);
@@ -78,11 +73,11 @@ const Toolbar = ({
   });
 
   useEffect(() => {
-    if (toolbarRef.current && !isMobile) {
+    if (toolbarRef.current) {
       const position = getElementOverlapsPosition(toolbarRef.current);
       toggleToolboxPosition(toolbarRef.current, position);
     }
-  }, [isMobile, isOpen]);
+  }, [isOpen]);
 
   return (
     <S.Wrapper ref={toolbarRef}>
@@ -131,7 +126,6 @@ const Toolbar = ({
 };
 
 Toolbar.propTypes = {
-  isMobile: T.bool,
   isOpen: T.bool,
   handlePlusClick: T.func,
   handleInsertBlockClick: T.func,
