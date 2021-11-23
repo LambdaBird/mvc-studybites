@@ -1,5 +1,6 @@
 import PluginBase from '../PluginBase';
 import * as Utils from '../utils';
+import { stopRepeating } from '../utils';
 
 import { createRemoveIcon, icon } from './resources';
 
@@ -180,9 +181,15 @@ export default class ClosedQuestion extends PluginBase {
   }
 
   backspaceQuestionPressed(event) {
-    event.stopPropagation();
-    if (this.elements.questionInput.innerText.trim().length === 0) {
-      this.api.blocks.delete();
+    if (
+      this.elements.questionInput.innerText.trim().length === 0 &&
+      !stopRepeating(event)
+    ) {
+      if (this.answers.length === 0) {
+        this.api.blocks.delete();
+      } else {
+        event.stopPropagation();
+      }
     }
   }
 

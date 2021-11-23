@@ -34,6 +34,9 @@ export const GlobalStylesEditorPage = createGlobalStyle`
   }
 
   @media (min-width: 651px) {
+    .ce-settings {
+      right: unset;  
+    }
     .ce-toolbox-active{
       color: ${variables['editorjs-primary-color']}
     }
@@ -194,6 +197,10 @@ export const GlobalStylesEditorPage = createGlobalStyle`
   
   
   @media(min-width: 651px){
+    .none-events{
+      pointer-events: none;
+    }
+    
     .editor-plus-toolbar{
       margin-left: 15px;
     }
@@ -216,7 +223,8 @@ export const GlobalStylesEditorPage = createGlobalStyle`
 
 
   .cte-toolbox-upper{
-    transform: translate3d(0px,calc(-100% + 25px),0px)!important;
+    transform: translate3d(0px,calc(-100% + 16px),0px)!important;
+    align-items: flex-end;
   }
 `;
 
@@ -235,6 +243,7 @@ export const Wrapper = styled.div`
   gap: 0.5rem;
 
   @media (min-width: 651px) {
+    pointer-events: all;
     max-width: 650px;
   }
 `;
@@ -293,7 +302,9 @@ export const BlockWrapper = styled.div.attrs({
   display: flex;
   align-items: center;
   user-select: none;
+  cursor: pointer;
   width: 100%;
+  &:hover,
   &:active {
     color: ${variables['editorjs-primary-color']} !important;
   }

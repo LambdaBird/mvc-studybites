@@ -101,6 +101,14 @@ export const useToolbar = ({ editor }) => {
     [editor, handlePlusClick, isOpen],
   );
 
+  useEffect(() => {
+    if (isOpen) {
+      toolbarRef.current?.classList?.add?.('none-events');
+    } else {
+      toolbarRef.current?.classList?.remove?.('none-events');
+    }
+  }, [isMobile, isOpen]);
+
   const renderToolbar = useCallback(() => {
     ReactDOM.render(
       <Toolbar

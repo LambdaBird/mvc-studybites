@@ -10,6 +10,7 @@ import {
   isBackspaceValid,
   moveCaretToEnd,
 } from '@sb-ui/utils/editorjs/toolsHelper';
+import { stopRepeating } from '@sb-ui/utils/editorjs/utils';
 
 import PluginBase from '../PluginBase';
 
@@ -131,12 +132,17 @@ export default class Warning extends PluginBase {
     container.appendChild(title);
     container.appendChild(message);
     this.titleElement = title;
+    this.messageElement = message;
 
     return container;
   }
 
   handleTitleKeydown(event) {
-    if (isBackspaceValid(event, this.titleElement.innerText)) {
+    if (
+      isBackspaceValid(event, this.titleElement?.innerText) &&
+      isBackspaceValid(event, this.messageElement?.innerText) &&
+      !stopRepeating(event)
+    ) {
       this.api.blocks.delete();
     }
   }
@@ -146,7 +152,11 @@ export default class Warning extends PluginBase {
     if (event.keyCode === 8) {
       const sel = window.getSelection();
       const range = sel.getRangeAt(0);
-      if (range.startOffset === range.endOffset && range.endOffset === 0) {
+      if (
+        !event.repeat &&
+        range.startOffset === range.endOffset &&
+        range.endOffset === 0
+      ) {
         event.preventDefault();
         event.stopPropagation();
         this.titleElement.focus();

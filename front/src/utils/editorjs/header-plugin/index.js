@@ -116,11 +116,18 @@ export default class Header extends PluginBase {
   }
 
   elementKeydown(event) {
-    if (
-      event.code === 'Backspace' &&
-      this._element.innerHTML.trim().length === 0
-    ) {
-      this.api.blocks.delete();
+    if (event.code === 'Backspace') {
+      const elementTextLength = this._element.innerText.trim().length;
+      const isEmpty = elementTextLength === 0;
+      if (isEmpty && event.repeat) {
+        event.preventDefault();
+        event.stopPropagation();
+        return;
+      }
+
+      if (isEmpty && !event.repeat) {
+        this.api.blocks.delete();
+      }
     }
   }
 

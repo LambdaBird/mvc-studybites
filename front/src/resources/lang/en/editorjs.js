@@ -19,7 +19,7 @@ export default {
     },
   },
   tools: {
-    search_placeholder: 'Input block name',
+    search_placeholder: 'Start typing block name',
     hint: 'Click "Tab" for commands',
     basic_blocks: 'Basic blocks',
     interactive_blocks: 'Interactive blocks',

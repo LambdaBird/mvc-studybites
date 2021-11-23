@@ -1,17 +1,18 @@
 import { useCallback, useEffect, useRef } from 'react';
 
-import { setPropsInTool } from '@sb-ui/utils/editorjs/utils';
+import { moveCaretToEnd } from '../../toolsHelper';
+import { isDivInputEmpty, setPropsInTool, stopRepeating } from '../../utils';
 
-const isEmpty = (event, input) =>
-  event.code === 'Backspace' && input?.innerText?.trim?.()?.length === 0;
-
-export const useSimpleImage = ({ tool, data, loaded, error, src, setSrc }) => {
+export const useSimpleImage = ({ tool, loaded, error, src, setSrc }) => {
   const linkInputRef = useRef(null);
   const captionInputRef = useRef(null);
 
   const handleInputLinkKeyDown = useCallback(
     (event) => {
-      if (isEmpty(event, linkInputRef.current)) {
+      if (isDivInputEmpty(event, linkInputRef.current)) {
+        if (stopRepeating(event)) {
+          return;
+        }
         tool.api.blocks.delete();
       }
     },
@@ -19,45 +20,19 @@ export const useSimpleImage = ({ tool, data, loaded, error, src, setSrc }) => {
   );
 
   const handleInputCaptionKeyDown = useCallback((event) => {
-    if (isEmpty(event, captionInputRef.current)) {
+    if (isDivInputEmpty(event, captionInputRef.current)) {
+      if (stopRepeating(event)) {
+        return;
+      }
       linkInputRef.current.focus();
+      moveCaretToEnd(linkInputRef.current);
+      event.preventDefault();
     }
   }, []);
 
   const handleLinkInput = useCallback(() => {
     setSrc(linkInputRef.current?.innerText);
   }, [setSrc]);
-
-  const handleCaptionInput = useCallback(() => {
-    setPropsInTool(tool, {
-      caption: captionInputRef.current?.innerHTML,
-    });
-  }, [tool]);
-
-  useEffect(() => {
-    const { location, caption } = data;
-    if (location) {
-      setSrc(location);
-      linkInputRef.current.innerText = location;
-    }
-    if (caption) {
-      captionInputRef.current.innerHTML = caption;
-    }
-    setPropsInTool(tool, {
-      location,
-      caption,
-      linkInputRef,
-      captionInputRef,
-    });
-  }, [
-    data.location,
-    data.caption,
-    data,
-    tool,
-    setSrc,
-    linkInputRef,
-    captionInputRef,
-  ]);
 
   useEffect(() => {
     if (loaded && src?.length > 0) {
@@ -75,13 +50,29 @@ export const useSimpleImage = ({ tool, data, loaded, error, src, setSrc }) => {
     }
   }, [error, tool]);
 
+  useEffect(() => {
+    setPropsInTool(tool, {
+      linkInputRef,
+      captionInputRef,
+    });
+    if (tool.data.location) {
+      setSrc(tool.data.location);
+      linkInputRef.current.innerText = tool.data.location;
+    }
+  }, [setSrc, tool]);
+
+  useEffect(() => {
+    if (loaded && tool.data.caption) {
+      captionInputRef.current.innerHTML = tool.data.caption;
+    }
+  }, [loaded, tool.data.caption]);
+
   return {
     linkInputRef,
     captionInputRef,
     handleInputLinkKeyDown,
     handleInputCaptionKeyDown,
     handleLinkInput,
-    handleCaptionInput,
     linkSrc: linkInputRef.current?.innerText,
   };
 };
