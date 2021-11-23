@@ -42,6 +42,12 @@ export default class Image {
     return null;
   };
 
+  // validate() should not be static
+  // eslint-disable-next-line class-methods-use-this
+  validate(savedData) {
+    return !!savedData;
+  }
+
   static get sanitize() {
     return {
       div: true,
