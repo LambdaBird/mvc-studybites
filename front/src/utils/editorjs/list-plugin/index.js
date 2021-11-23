@@ -2,6 +2,8 @@
 /**
  * Build styles
  */
+import { stopRepeating } from '@sb-ui/utils/editorjs/utils';
+
 import PluginBase from '../PluginBase';
 
 import './index.css';
@@ -431,7 +433,7 @@ export default class List extends PluginBase {
     }
   }
 
-  backspace() {
+  backspace(event) {
     const items = this._elements.wrapper.querySelectorAll(`.${this.CSS.item}`);
     const firstItem = items[0];
 
@@ -443,7 +445,9 @@ export default class List extends PluginBase {
      * Save the last one.
      */
     if (items.length < 2 && !firstItem.innerHTML.replace('<br>', ' ').trim()) {
-      this.api.blocks.delete();
+      if (!stopRepeating(event)) {
+        this.api.blocks.delete();
+      }
     }
   }
 

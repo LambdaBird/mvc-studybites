@@ -6,6 +6,7 @@ import {
   isBackspaceValid,
   moveCaretToEnd,
 } from '@sb-ui/utils/editorjs/toolsHelper';
+import { stopRepeating } from '@sb-ui/utils/editorjs/utils';
 
 import PluginBase from '../PluginBase';
 
@@ -215,6 +216,7 @@ export default class Quote extends PluginBase {
     quote.addEventListener('keydown', this.handleQuoteKeydown.bind(this));
     caption.addEventListener('keydown', this.handleCaptionKeydown.bind(this));
     this.quoteElement = quote;
+    this.captionElement = caption;
 
     container.appendChild(quote);
     container.appendChild(caption);
@@ -223,7 +225,11 @@ export default class Quote extends PluginBase {
   }
 
   handleQuoteKeydown(event) {
-    if (isBackspaceValid(event, this.quoteElement.innerText)) {
+    if (
+      isBackspaceValid(event, this.quoteElement.innerText) &&
+      isBackspaceValid(event, this.captionElement.innerText) &&
+      !stopRepeating(event)
+    ) {
       this.api.blocks.delete();
     }
   }
@@ -233,7 +239,11 @@ export default class Quote extends PluginBase {
     if (event.keyCode === 8) {
       const sel = window.getSelection();
       const range = sel.getRangeAt(0);
-      if (range.startOffset === range.endOffset && range.endOffset === 0) {
+      if (
+        !event.repeat &&
+        range.startOffset === range.endOffset &&
+        range.endOffset === 0
+      ) {
         event.preventDefault();
         event.stopPropagation();
         this.quoteElement.focus();

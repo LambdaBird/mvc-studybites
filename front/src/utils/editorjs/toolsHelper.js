@@ -1,3 +1,5 @@
+import { stopRepeating } from '@sb-ui/utils/editorjs/utils';
+
 export const isBackspaceValid = (event, value) =>
   event.code === 'Backspace' && value.trim().length === 0;
 
@@ -24,12 +26,16 @@ export const deleteIfBackspace = ({
   const cells = elements;
   if (isCellEmpty) {
     const cellIndex = cells.findIndex((cell) => cell === element);
-    if (cellIndex === 0 && cells.every(checkIsCellEmpty)) {
+    if (
+      cellIndex === 0 &&
+      cells.every(checkIsCellEmpty) &&
+      !stopRepeating(event)
+    ) {
       api.blocks.delete();
       return;
     }
     const prevCell = cells[cellIndex - 1];
-    if (prevCell) {
+    if (prevCell && !stopRepeating(event)) {
       event.preventDefault();
       event.stopPropagation();
       const prevEditable = selectInCell ? selectInCell(prevCell) : prevCell;

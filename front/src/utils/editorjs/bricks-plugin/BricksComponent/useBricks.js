@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { setPropsInTool } from '@sb-ui/utils/editorjs/utils';
+import { setPropsInTool, stopRepeating } from '@sb-ui/utils/editorjs/utils';
 
 const addNewWordWrapper = ({ setWords, words, word }) => {
   setWords((prev) => {
@@ -90,12 +90,17 @@ export const useBricks = (tool) => {
     (event) => {
       if (
         event.key === 'Backspace' &&
-        questionInputRef?.current?.innerText.trim().length === 0
+        questionInputRef?.current?.innerText.trim().length === 0 &&
+        !stopRepeating(event)
       ) {
-        tool.api.blocks.delete();
+        if (words.length === 0 && additionalWords.length === 0) {
+          tool.api.blocks.delete();
+        } else {
+          event.stopPropagation();
+        }
       }
     },
-    [tool.api.blocks],
+    [additionalWords.length, tool.api.blocks, words.length],
   );
 
   return {

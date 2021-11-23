@@ -1,4 +1,4 @@
-import { stripHTML } from '@sb-ui/utils/editorjs/utils';
+import { stopRepeating, stripHTML } from '@sb-ui/utils/editorjs/utils';
 
 import PluginBase from '../PluginBase';
 
@@ -87,8 +87,7 @@ export default class FillTheGap extends PluginBase {
   }
 
   backspacePressed(event) {
-    event.stopPropagation();
-    if (this.input.innerText.trim().length === 0) {
+    if (this.input.innerText.trim().length === 0 && !stopRepeating(event)) {
       this.api.blocks.delete();
     }
   }
