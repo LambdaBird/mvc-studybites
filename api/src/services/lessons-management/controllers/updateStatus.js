@@ -1,4 +1,4 @@
-import { resources, roles, userServiceErrors as errors } from '../../../config';
+import { resources } from '../../../config';
 
 export const options = {
   schema: {
@@ -29,41 +29,13 @@ export const options = {
       '5xx': { $ref: '5xx#' },
     },
   },
-  async onRequest(req) {
-    await this.auth({ req });
-  },
-  async preHandler({ user: { id: userId }, params: { lessonId: resourceId } }) {
-    await this.access({
-      userId,
-      resourceId,
-      resourceType: resources.LESSON.name,
-      roleId: roles.MAINTAINER.id,
-    });
-  },
 };
 
-async function handler({ body: { status }, params: { lessonId } }, reply) {
+async function handler({ body: { status }, params: { lessonId } }) {
   const {
-    models: { Course, Lesson },
+    models: { Lesson },
   } = this;
 
-  const allLessonCourses = await Course.getAllCoursesByLessonId({ lessonId });
-
-  if (status === 'Draft' || status === 'Archived') {
-    const nonDraftAndArchivedCourses = allLessonCourses.filter(
-      (lessonCourse) => lessonCourse.status !== status,
-    );
-    if (nonDraftAndArchivedCourses.length > 0) {
-      return reply.status(400).send({
-        statusCode: 400,
-        message: errors.USER_ERR_COURSES_RESTRICTED,
-        payload: {
-          courses: nonDraftAndArchivedCourses,
-          status,
-        },
-      });
-    }
-  }
   await Lesson.updateLessonStatus({ lessonId, status });
   return {
     status,

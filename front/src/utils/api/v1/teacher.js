@@ -43,8 +43,8 @@ export const getTeacherLessonStudents = async ({ queryKey }) => {
 };
 
 export const postShareLesson = async (params) => {
-  const { data } = await api.post(
-    `${PATH}/lessons/${params.id}/share-lesson`,
+  const { data } = await api.patch(
+    `${PATH}/lessons/${params.id}/update-status`,
     params,
   );
   return data;

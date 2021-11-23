@@ -24,7 +24,6 @@ const LessonEdit = () => {
     isPublic,
     publicId,
     inputTitle,
-    isEditorDisabled,
     isRenderEditor,
     isShowAnalytics,
     isLoading,
@@ -78,16 +77,10 @@ const LessonEdit = () => {
           type="text"
           placeholder={t('lesson_edit.title.placeholder')}
           value={name}
-          readOnly={isEditorDisabled}
           onChange={handleInputTitle}
           onKeyDown={handleNextLine}
         />
-        {isRenderEditor && isEditorDisabled === true && (
-          <EditorJs {...editorJsProps} readOnly />
-        )}
-        {isRenderEditor && isEditorDisabled === false && (
-          <EditorJs {...editorJsProps} readOnly={false} />
-        )}
+        {isRenderEditor && <EditorJs {...editorJsProps} readOnly={false} />}
       </S.Page>
     </>
   );
