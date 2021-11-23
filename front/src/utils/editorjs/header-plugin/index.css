@@ -30,7 +30,3 @@
 .ce-header[contentEditable='true'][data-placeholder]:empty::before {
   display: block;
 }
-
-.ce-header[contentEditable='true'][data-placeholder]:empty:focus::before {
-  display: none;
-}
