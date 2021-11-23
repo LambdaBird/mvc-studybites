@@ -18,8 +18,10 @@ const interactiveBlocks = getInteractiveBlocks(() => {});
 
 const filterBlocks = ({ block, value, t }) => {
   const blockKey = getTranslationKey(block);
-  const name = t(`tools.${blockKey}.title`);
-  return name.toLowerCase().includes(value.toLowerCase());
+  const name = t(`tools.${blockKey}.title`).toLowerCase();
+  const description = t(`tools.${blockKey}.description`).toLowerCase();
+  const lowerCaseValue = value.toLowerCase();
+  return name.includes(lowerCaseValue) || description.includes(lowerCaseValue);
 };
 
 const Toolbar = ({ isOpen, handlePlusClick, handleInsertBlockClick }) => {

@@ -34,6 +34,9 @@ export const GlobalStylesEditorPage = createGlobalStyle`
   }
 
   @media (min-width: 651px) {
+    .ce-settings {
+      right: unset;  
+    }
     .ce-toolbox-active{
       color: ${variables['editorjs-primary-color']}
     }
