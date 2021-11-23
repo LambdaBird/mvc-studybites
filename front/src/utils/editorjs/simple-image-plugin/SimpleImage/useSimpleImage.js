@@ -1,19 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react';
 
-import { moveCaretToEnd } from '@sb-ui/utils/editorjs/toolsHelper';
-import { setPropsInTool } from '@sb-ui/utils/editorjs/utils';
-
-const isEmpty = (event, input) =>
-  event.code === 'Backspace' && input?.innerText?.trim?.()?.length === 0;
-
-const stopRepeating = (event) => {
-  if (event.repeat) {
-    event.preventDefault();
-    event.stopPropagation();
-    return true;
-  }
-  return false;
-};
+import { moveCaretToEnd } from '../../toolsHelper';
+import { isDivInputEmpty, setPropsInTool, stopRepeating } from '../../utils';
 
 export const useSimpleImage = ({ tool, loaded, error, src, setSrc }) => {
   const linkInputRef = useRef(null);
@@ -21,7 +9,7 @@ export const useSimpleImage = ({ tool, loaded, error, src, setSrc }) => {
 
   const handleInputLinkKeyDown = useCallback(
     (event) => {
-      if (isEmpty(event, linkInputRef.current)) {
+      if (isDivInputEmpty(event, linkInputRef.current)) {
         if (stopRepeating(event)) {
           return;
         }
@@ -32,7 +20,7 @@ export const useSimpleImage = ({ tool, loaded, error, src, setSrc }) => {
   );
 
   const handleInputCaptionKeyDown = useCallback((event) => {
-    if (isEmpty(event, captionInputRef.current)) {
+    if (isDivInputEmpty(event, captionInputRef.current)) {
       if (stopRepeating(event)) {
         return;
       }

@@ -1,5 +1,5 @@
 /* eslint-disable no-useless-escape */
-export default {
+export const SERVICES = {
   vimeo: {
     regex:
       /(?:http[s]?:\/\/)?(?:www.)?(?:player.)?vimeo\.co(?:.+\/([^\/]\d+)(?:#t=[\d]+)?s?$)/,
@@ -170,3 +170,9 @@ export default {
     width: 600,
   },
 };
+
+export const PATTERNS = Object.keys(SERVICES).reduce((prev, current) => {
+  // eslint-disable-next-line no-param-reassign
+  prev[current] = SERVICES[current].regex;
+  return prev;
+}, {});
