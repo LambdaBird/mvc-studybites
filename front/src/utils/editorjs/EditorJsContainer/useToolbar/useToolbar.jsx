@@ -101,19 +101,32 @@ export const useToolbar = ({ editor }) => {
     [editor, handlePlusClick, isOpen],
   );
 
+  useEffect(() => {
+    if (isMobile) {
+      return;
+    }
+
+    if (isOpen) {
+      toolbarRef.current?.classList?.add?.('none-events');
+    } else {
+      toolbarRef.current?.classList?.remove?.('none-events');
+    }
+  }, [isMobile, isOpen]);
+
   const renderToolbar = useCallback(() => {
     ReactDOM.render(
       <Toolbar
         handlePlusClick={handlePlusClick}
         handleInsertBlockClick={handleInsertBlockClick}
         isOpen={isOpen}
+        isMobile={isMobile}
       />,
       toolbarRef.current,
       () => {
         moveActionsButtonsToMobile();
       },
     );
-  }, [handleInsertBlockClick, handlePlusClick, isOpen]);
+  }, [handleInsertBlockClick, handlePlusClick, isMobile, isOpen]);
 
   useEffect(() => {
     if (!isReady) {

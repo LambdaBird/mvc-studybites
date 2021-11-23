@@ -10,6 +10,11 @@ import {
 import * as S from '@sb-ui/utils/editorjs/EditorJsContainer/EditorJsContainer.styled';
 import { getTranslationKey } from '@sb-ui/utils/editorjs/EditorJsContainer/useToolbox/toolboxItemsHelpers';
 
+import {
+  getElementOverlapsPosition,
+  toggleToolboxPosition,
+} from '../useToolbox/domToolboxHelpers';
+
 import { Block } from './Block';
 import { useSearch } from './useSearch';
 
@@ -24,8 +29,14 @@ const filterBlocks = ({ block, value, t }) => {
   return name.includes(lowerCaseValue) || description.includes(lowerCaseValue);
 };
 
-const Toolbar = ({ isOpen, handlePlusClick, handleInsertBlockClick }) => {
+const Toolbar = ({
+  isMobile,
+  isOpen,
+  handlePlusClick,
+  handleInsertBlockClick,
+}) => {
   const { t } = useTranslation('editorjs');
+  const toolbarRef = useRef(null);
   const inputRef = useRef(null);
   const [value, setValue] = useState('');
 
@@ -66,8 +77,15 @@ const Toolbar = ({ isOpen, handlePlusClick, handleInsertBlockClick }) => {
     handleInsertBlockClick,
   });
 
+  useEffect(() => {
+    if (toolbarRef.current && !isMobile) {
+      const position = getElementOverlapsPosition(toolbarRef.current);
+      toggleToolboxPosition(toolbarRef.current, position);
+    }
+  }, [isMobile, isOpen]);
+
   return (
-    <S.Wrapper>
+    <S.Wrapper ref={toolbarRef}>
       <S.PlusToolbar active={isOpen} onClick={handlePlusClick}>
         <PlusOutlined />
       </S.PlusToolbar>
@@ -113,6 +131,7 @@ const Toolbar = ({ isOpen, handlePlusClick, handleInsertBlockClick }) => {
 };
 
 Toolbar.propTypes = {
+  isMobile: T.bool,
   isOpen: T.bool,
   handlePlusClick: T.func,
   handleInsertBlockClick: T.func,
