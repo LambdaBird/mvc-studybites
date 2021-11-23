@@ -1,7 +1,6 @@
 import { Button, Col, Progress as AntdProgress, Row as AntdRow } from 'antd';
 import styled, { createGlobalStyle } from 'styled-components';
 
-import { HEADER_HEIGHT } from '@sb-ui/components/molecules/Header/Header.styled';
 import variables from '@sb-ui/theme/variables';
 
 export const Progress = styled(AntdProgress).attrs({
@@ -33,7 +32,6 @@ export const LearnWrapper = styled.div`
 
 export const Wrapper = styled.div`
   height: 100%;
-  margin-top: ${HEADER_HEIGHT}px;
 `;
 
 export const BlockCell = styled(Col).attrs(() => ({
@@ -42,14 +40,13 @@ export const BlockCell = styled(Col).attrs(() => ({
   md: { span: 16 },
   lg: { span: 14 },
 }))`
-  padding-bottom: 1rem;
   display: flex;
   justify-content: center;
 `;
 
 export const Row = styled(AntdRow)`
   height: 100%;
-  padding-top: 2rem;
+  padding: 2rem 0;
   justify-content: center;
 `;
 
@@ -58,6 +55,11 @@ export const ChunkWrapper = styled.div`
   background-color: ${variables['learn-chunk-background']};
   border-radius: 8px;
   padding: 1rem;
+
+  // TODO: check if any problem will appear
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 
   @media (max-width: 767px) {
     margin-top: ${(props) => (props.isBottom ? 'auto' : '')};
