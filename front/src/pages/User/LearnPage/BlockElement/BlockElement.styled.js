@@ -11,7 +11,7 @@ export const BlockElementWrapperWhite = styled(Row)`
   border-radius: 8px;
   max-width: 614px;
   display: flex;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 2rem;
 
   @media (max-width: 767px) {
     box-shadow: 0px -4px 10px rgba(231, 231, 231, 0.5);

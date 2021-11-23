@@ -9,11 +9,15 @@ export const AnswerWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 0.5rem;
+  align-items: flex-start;
 `;
 
 export const ColumnCheckbox = styled(Checkbox.Group)`
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
 `;
 
 export const Question = styled(Text)`
@@ -22,17 +26,16 @@ export const Question = styled(Text)`
 
 export const BlockWrapperWhite = styled(BlockElementWrapperWhite)`
   flex-direction: column;
+  margin-top: auto;
 `;
 
 export const LessonButtonSend = styled(Button).attrs({
   size: 'large',
 })`
-  width: 100%;
-  @media (max-width: 767px) {
-    width: 150px;
+  width: 150px;
+  @media (min-width: 768px) {
+    margin-bottom: 1rem;
   }
-
-  margin-bottom: 1rem;
 `;
 
 export const ButtonWrapper = styled.div`
