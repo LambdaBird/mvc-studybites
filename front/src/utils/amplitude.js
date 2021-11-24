@@ -7,23 +7,22 @@ export const initAmplitude = () => {
 };
 
 export const AMPLITUDE_EVENTS = {
-  CREATE_LESSON: 'create_lesson',
-  OPEN_LESSON: 'open_lesson',
-  PREVIEW: 'open_preview',
-  BLOCK_ADDED: 'block_added',
-  SHARE_TO_WEB: 'share_to_web',
-  OPEN_ANALYTICS: 'open_analytics',
-  START_LESSON: 'start_lesson',
-  ANSWER_INTERACTIVE: 'answer_interactive',
-  COMPLETE_LESSON: 'complete_lesson',
+  CREATE_LESSON: 'Create Lesson',
+  OPEN_LESSON: 'Open Lesson',
+  PREVIEW: 'Open Preview',
+  BLOCK_ADDED: 'Block Added',
+  SHARE_TO_WEB: 'Share to Web',
+  OPEN_ANALYTICS: 'Open Analytics',
+  START_LESSON: 'Start Lesson',
+  ANSWER_INTERACTIVE: 'Answer Interactive',
+  COMPLETE_LESSON: 'Complete Lesson',
 };
 
-export const amplitudeLogEvent = (event, meta) => {
-  const eventMessage = meta ? `${event}-${meta}` : event;
+export const amplitudeLogEvent = (event, eventProperties) => {
   if (process.env.NODE_ENV === 'production') {
-    amplitude.getInstance().logEvent(eventMessage);
+    amplitude.getInstance().logEvent(event, eventProperties);
   } else {
     // eslint-disable-next-line no-console
-    console.log(`[AMPLITUDE]: ${eventMessage}`);
+    console.log(`[AMPLITUDE]: ${event}, ${eventProperties}`);
   }
 };

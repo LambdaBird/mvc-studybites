@@ -53,7 +53,7 @@ export const useToolbar = ({ editor }) => {
       blocks.delete(currentIndex - 1);
       caret.setToBlock(currentIndex - 1);
       handleFocus();
-      amplitudeLogEvent(AMPLITUDE_EVENTS.BLOCK_ADDED, block);
+      amplitudeLogEvent(AMPLITUDE_EVENTS.BLOCK_ADDED, { type: block });
     },
     [handleFocus, editor],
   );
