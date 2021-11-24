@@ -4,7 +4,12 @@ import ReactDOM from 'react-dom';
 import { AMPLITUDE_EVENTS, amplitudeLogEvent } from '@sb-ui/utils/amplitude';
 import { getToolboxItems } from '@sb-ui/utils/editorjs/EditorJsContainer/useToolbox/domToolboxHelpers';
 
-import { CODEX_EDITOR, CODEX_EDITOR_REDACTOR, DISPLAY_NONE } from './constants';
+import {
+  CODEX_EDITOR,
+  CODEX_EDITOR_REDACTOR,
+  DISPLAY_NONE,
+  LEFT_PLUS_POS,
+} from './constants';
 import {
   createToolbar,
   moveActionsButtonsToMobile,
@@ -12,6 +17,7 @@ import {
 } from './domToolbarHelpers';
 import Toolbar from './Toolbar';
 import { getCurrentBlock } from './toolbarHelpers';
+import { destroyObserver, initObserver } from './toolbarObserver';
 import { useEditorMobile } from './useEditorMobile';
 
 const toolbarWrapper = createToolbar();
@@ -33,10 +39,13 @@ export const useToolbar = ({ editor }) => {
       const block = getCurrentBlock(editor.current);
       const bodyRect = editorElementRef.current.getBoundingClientRect();
       const elemRect = block?.holder?.getBoundingClientRect();
-      const offset = elemRect.top - bodyRect.top;
+      if (!elemRect) {
+        return;
+      }
+      const offset = elemRect?.top - bodyRect?.top;
       const realOffset = offset + 2;
       setTransform3d(toolbarWrapper, {
-        x: -25,
+        x: -LEFT_PLUS_POS,
         y: realOffset,
         z: 0,
       });
@@ -134,12 +143,14 @@ export const useToolbar = ({ editor }) => {
     editorElementRef.current = editorElement;
     toolbarRef.current = toolbarWrapper;
     itemsRef.current = Array.from(getToolboxItems(editorElement));
+    const observer = initObserver(toolbarWrapper);
     renderToolbar();
     parent?.insertAdjacentElement('beforeend', toolbarWrapper);
     parent?.addEventListener?.('keydown', handleKeyDown);
     editorElement?.addEventListener('mousedown', handleFocus);
     editorElement?.addEventListener('keydown', handleFocus);
     return () => {
+      destroyObserver(observer);
       editorElement?.removeEventListener('mousedown', handleFocus);
       editorElement?.removeEventListener('keydown', handleFocus);
       parent?.removeEventListener?.('keydown', handleKeyDown);

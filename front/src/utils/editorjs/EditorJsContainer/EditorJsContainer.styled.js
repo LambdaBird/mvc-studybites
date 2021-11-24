@@ -204,6 +204,9 @@ export const GlobalStylesEditorPage = createGlobalStyle`
     .editor-plus-toolbar{
       margin-left: 15px;
     }
+    .undo-margin{
+      margin-left: 0;
+    }
     .ce-toolbar__actions{
       position: initial;
       opacity: 1;
