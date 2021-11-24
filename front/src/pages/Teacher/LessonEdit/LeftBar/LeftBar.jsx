@@ -8,6 +8,7 @@ import Button from '@sb-ui/components/atoms/Button';
 import MobileContext from '@sb-ui/contexts/MobileContext';
 import { PlusOutlined } from '@sb-ui/resources/icons';
 import logo from '@sb-ui/resources/img/logo.svg';
+import { AMPLITUDE_EVENTS, amplitudeLogEvent } from '@sb-ui/utils/amplitude';
 import { LESSONS_NEW } from '@sb-ui/utils/paths';
 
 import LessonList from './LessonList';
@@ -19,6 +20,7 @@ const LeftBar = ({ isOpen, lessons, handleHideLeftBar, handleShowLeftBar }) => {
   const isMobile = useContext(MobileContext);
 
   const handleNewLessonClick = useCallback(() => {
+    amplitudeLogEvent(AMPLITUDE_EVENTS.CREATE_LESSON);
     history.push(LESSONS_NEW);
     if (isMobile) {
       handleHideLeftBar();

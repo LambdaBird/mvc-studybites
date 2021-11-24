@@ -1,12 +1,14 @@
 /* eslint no-use-before-define: "off" */
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 import Header from '@sb-ui/components/molecules/Header';
 import LearnContext from '@sb-ui/contexts/LearnContext';
+import { BLOCKS_TYPE } from '@sb-ui/pages/User/LearnPage/BlockElement/types';
 import InfoBlock from '@sb-ui/pages/User/LearnPage/InfoBlock';
+import { AMPLITUDE_EVENTS, amplitudeLogEvent } from '@sb-ui/utils/amplitude';
 import { getEnrolledLesson, postLessonById } from '@sb-ui/utils/api/v1/student';
 import { sbPostfix } from '@sb-ui/utils/constants';
 import { HOME } from '@sb-ui/utils/paths';
@@ -38,11 +40,29 @@ const LearnPage = () => {
 
   useEffect(
     () => () => {
-      if (location.state.fromEnroll && history.action === HISTORY_BACK) {
+      if (location.state?.fromEnroll && history.action === HISTORY_BACK) {
         history.replace(HOME);
       }
     },
     [history, location],
+  );
+
+  const handleInteractiveClickWrapper = useCallback(
+    (param) => {
+      switch (param.action) {
+        case BLOCKS_TYPE.START:
+          amplitudeLogEvent(AMPLITUDE_EVENTS.START_LESSON);
+          break;
+        case BLOCKS_TYPE.FINISH:
+          amplitudeLogEvent(AMPLITUDE_EVENTS.COMPLETE_LESSON);
+          break;
+        default:
+          amplitudeLogEvent(AMPLITUDE_EVENTS.ANSWER_INTERACTIVE);
+          break;
+      }
+      handleInteractiveClick(param);
+    },
+    [handleInteractiveClick],
   );
 
   return (
@@ -63,7 +83,7 @@ const LearnPage = () => {
           <S.BlockCell>
             <LearnContext.Provider
               value={{
-                handleInteractiveClick,
+                handleInteractiveClick: handleInteractiveClickWrapper,
                 chunks,
                 id: lessonId,
               }}

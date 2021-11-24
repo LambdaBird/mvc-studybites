@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 
+import { AMPLITUDE_EVENTS, amplitudeLogEvent } from '@sb-ui/utils/amplitude';
 import { getToolboxItems } from '@sb-ui/utils/editorjs/EditorJsContainer/useToolbox/domToolboxHelpers';
 
 import { CODEX_EDITOR, CODEX_EDITOR_REDACTOR, DISPLAY_NONE } from './constants';
@@ -52,6 +53,7 @@ export const useToolbar = ({ editor }) => {
       blocks.delete(currentIndex - 1);
       caret.setToBlock(currentIndex - 1);
       handleFocus();
+      amplitudeLogEvent(AMPLITUDE_EVENTS.BLOCK_ADDED, { type: block });
     },
     [handleFocus, editor],
   );

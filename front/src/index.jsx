@@ -5,7 +5,10 @@ import * as Sentry from '@sentry/browser';
 import './theme/main.less';
 import './i18n';
 
+import { initAmplitude } from './utils/amplitude';
 import App from './App';
+
+initAmplitude();
 
 if (process.env.NODE_ENV === 'production') {
   Sentry.init({

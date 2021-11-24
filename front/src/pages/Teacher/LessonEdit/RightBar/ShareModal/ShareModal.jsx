@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 
 import { queryClient } from '@sb-ui/query';
 import { GlobalOutlined } from '@sb-ui/resources/icons';
+import { AMPLITUDE_EVENTS, amplitudeLogEvent } from '@sb-ui/utils/amplitude';
 import { postShareLesson } from '@sb-ui/utils/api/v1/teacher';
 import { Statuses } from '@sb-ui/utils/constants';
 import { setStorageLesson } from '@sb-ui/utils/lessonsStorage';
@@ -38,6 +39,9 @@ const ShareModal = ({ publicId, opened, setOpened }) => {
 
   const handleSwitchChange = (isEnabled) => {
     setIsShareAnyone(isEnabled);
+    if (isEnabled) {
+      amplitudeLogEvent(AMPLITUDE_EVENTS.SHARE_TO_WEB);
+    }
     shareLesson({
       id: lessonId,
       status: isEnabled ? Statuses.PUBLIC : Statuses.DRAFT,
