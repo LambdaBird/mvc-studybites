@@ -70,11 +70,14 @@ export const useLessonEdit = () => {
           history.push(LESSONS_NEW);
         }
       },
-      onSuccess: () => {
-        amplitudeLogEvent(AMPLITUDE_EVENTS.OPEN_LESSON, lessonId);
-      },
     },
   );
+
+  useEffect(() => {
+    if (lessonId !== 'new' && lessonData) {
+      amplitudeLogEvent(AMPLITUDE_EVENTS.OPEN_LESSON, lessonId);
+    }
+  }, [lessonId, lessonData]);
 
   const createLessonMutation = useMutation(createLesson, {
     onSuccess: (data) => {
