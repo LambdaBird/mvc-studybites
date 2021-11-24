@@ -38,7 +38,6 @@ const RightBar = ({
       <Button
         iconComponent={<SaveOutlined />}
         bold
-        disabled={isPublic}
         type="primary"
         onClick={handleSave}
       >

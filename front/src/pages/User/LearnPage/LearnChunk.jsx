@@ -1,5 +1,4 @@
 import * as T from 'prop-types';
-import { useEffect, useRef } from 'react';
 
 import BlockElement from '@sb-ui/pages/User/LearnPage/BlockElement';
 
@@ -9,16 +8,10 @@ const LearnChunk = ({ chunk }) => {
   const staticBlocks = chunk?.slice(0, -1);
   const interactiveBlock = chunk?.[chunk.length - 1];
 
-  const wrapperRef = useRef(null);
-
-  useEffect(() => {
-    wrapperRef?.current?.scrollIntoView({ behavior: 'smooth' });
-  }, []);
-
   return (
     <>
       {staticBlocks?.length > 0 && (
-        <S.ChunkWrapper ref={wrapperRef}>
+        <S.ChunkWrapper>
           {staticBlocks.map((block) => (
             <BlockElement key={block.blockId} element={block} />
           ))}

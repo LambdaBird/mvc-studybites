@@ -29,22 +29,23 @@ const ShareModal = ({ publicId, opened, setOpened }) => {
   const { mutate: shareLesson } = useMutation(postShareLesson, {
     onSuccess: () => {
       setStorageLesson({
-        status: Statuses.PUBLIC,
         id: lessonId,
+        status: isShareAnyone ? Statuses.PUBLIC : Statuses.DRAFT,
       });
       queryClient.invalidateQueries(TEACHER_LESSON_BASE_KEY);
     },
   });
 
-  const handleSwitchChange = (value) => {
-    if (value) {
-      setIsShareAnyone(value);
-      shareLesson({ id: lessonId });
-    }
+  const handleSwitchChange = (isEnabled) => {
+    setIsShareAnyone(isEnabled);
+    shareLesson({
+      id: lessonId,
+      status: isEnabled ? Statuses.PUBLIC : Statuses.DRAFT,
+    });
   };
 
   const fullLink = useMemo(
-    () => publicId && `${HOST}/learn/${publicId}`,
+    () => (publicId ? `${HOST}/learn/${publicId}` : ''),
     [publicId],
   );
 
@@ -83,11 +84,7 @@ const ShareModal = ({ publicId, opened, setOpened }) => {
               </S.ShareDescription>
             </S.ShareText>
           </S.ShareLeft>
-          <Switch
-            disabled={isShareAnyone}
-            checked={isShareAnyone}
-            onChange={handleSwitchChange}
-          />
+          <Switch checked={isShareAnyone} onChange={handleSwitchChange} />
         </S.ShareWrapper>
 
         <S.InputWrapper showShareAnyone={isShareAnyone}>

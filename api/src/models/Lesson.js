@@ -183,6 +183,7 @@ class Lesson extends BaseModel {
       .first()
       .where({
         public_id: lessonPublicId,
+        status: 'Public',
       })
       .throwIfNotFound({
         error: new NotFoundError(errors.LESSON_ERR_LESSON_NOT_FOUND),

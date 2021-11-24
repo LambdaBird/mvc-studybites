@@ -110,7 +110,7 @@ export const useLessonEdit = () => {
       }
       setStorageLesson({
         name: data.lesson.name,
-        status: Statuses.DRAFT,
+        status: lessonData?.lesson?.status,
         id: lessonId,
       });
       queryClient.invalidateQueries([
@@ -152,7 +152,6 @@ export const useLessonEdit = () => {
             !isCurrentlyEditing && name?.trim()?.length === 0
               ? 'Untitled'
               : name,
-          status: Statuses.DRAFT,
         },
         blocks: prepareBlocksForApi(blocks),
       };
@@ -260,7 +259,10 @@ export const useLessonEdit = () => {
           undoPluginRef.current?.initialize?.({ blocks });
         }
       }
-      if (!lessonData.lesson.status || lessonData?.lesson.status === 'Draft') {
+      if (
+        !lessonData.lesson.status ||
+        lessonData?.lesson.status === Statuses.DRAFT
+      ) {
         setIsEditorDisabled(false);
       } else {
         setIsEditorDisabled(true);
