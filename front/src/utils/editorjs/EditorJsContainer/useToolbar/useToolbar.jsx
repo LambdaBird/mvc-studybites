@@ -85,7 +85,6 @@ export const useToolbar = ({ editor }) => {
 
   const handleKeyDown = useCallback(
     (event) => {
-      event.stopImmediatePropagation();
       switch (event.key) {
         case 'Tab':
           if (!isOpen) {
@@ -157,5 +156,5 @@ export const useToolbar = ({ editor }) => {
     setIsReady(true);
   }, []);
 
-  return { prepareToolbar };
+  return { prepareToolbar, handleFocus };
 };

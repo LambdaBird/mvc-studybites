@@ -11,3 +11,9 @@
   border-radius: 2px;
   background: inherit;
 }
+
+.next-tool__input{
+  height: 0;
+  border: 0;
+  padding: 0;
+}
