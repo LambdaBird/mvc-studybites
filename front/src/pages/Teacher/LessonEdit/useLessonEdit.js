@@ -15,6 +15,7 @@ import {
   prepareEditorData,
 } from '@sb-ui/pages/Teacher/LessonEdit/utils';
 import { queryClient } from '@sb-ui/query';
+import { AMPLITUDE_EVENTS, amplitudeLogEvent } from '@sb-ui/utils/amplitude';
 import {
   createLesson,
   getLesson,
@@ -68,6 +69,9 @@ export const useLessonEdit = () => {
           clearNonexistentStorageLessons(lessonId);
           history.push(LESSONS_NEW);
         }
+      },
+      onSuccess: () => {
+        amplitudeLogEvent(AMPLITUDE_EVENTS.OPEN_LESSON, lessonId);
       },
     },
   );
@@ -131,8 +135,11 @@ export const useLessonEdit = () => {
   });
 
   const handleAnalytics = useCallback(() => {
+    if (isShowAnalytics === false) {
+      amplitudeLogEvent(AMPLITUDE_EVENTS.OPEN_ANALYTICS);
+    }
     setIsShowAnalytics((prev) => !prev);
-  }, []);
+  }, [isShowAnalytics]);
 
   const handleHideLeftBar = useCallback(() => {
     setIsLeftBarOpen(false);
@@ -208,6 +215,7 @@ export const useLessonEdit = () => {
   };
 
   const handlePreview = () => {
+    amplitudeLogEvent(AMPLITUDE_EVENTS.PREVIEW);
     history.push(LESSONS_PREVIEW.replace(':id', lessonId));
   };
 
