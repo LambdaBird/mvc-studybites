@@ -32,7 +32,14 @@ export default class Undo {
   /**
    * @param options — Plugin custom options.
    */
-  constructor({ editor, onUpdate, maxLength, undoButton, redoButton }) {
+  constructor({
+    editor,
+    onUpdate,
+    maxLength,
+    undoButton,
+    redoButton,
+    handleFocus,
+  }) {
     const defaultOptions = {
       maxLength: 50,
       onUpdate() {},
@@ -48,6 +55,7 @@ export default class Undo {
     this.redoButton = redoButton;
     this.undoStack = [];
     this.redoStack = [];
+    this.handleFocus = handleFocus;
 
     const observer = new Observer(
       () => this.registerChange(),
@@ -213,9 +221,11 @@ export default class Undo {
         realElement?.focus();
       }
       realElement?.scrollIntoViewIfNeeded?.(true);
+      this.handleFocus();
     } else {
       this.editor.caret.setToBlock(correctIndex, 'start');
       holder?.scrollIntoViewIfNeeded?.(true);
+      this.handleFocus();
     }
   }
 
@@ -231,6 +241,7 @@ export default class Undo {
     }
     if (state.length === 0) {
       this.editor.clear();
+      this.editor.caret?.focus?.();
       return;
     }
 
