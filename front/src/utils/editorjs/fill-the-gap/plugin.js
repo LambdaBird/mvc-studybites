@@ -134,6 +134,16 @@ export default class FillTheGap extends PluginBase {
       if (event.code === 'Backspace') {
         this.backspacePressed(event);
       }
+      if (event.code === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        event.stopPropagation();
+        const index = this.api.blocks.getCurrentBlockIndex();
+        const nextBlock = this.api.blocks.getBlockByIndex(index + 1);
+        if (!nextBlock) {
+          this.api.blocks.insert('paragraph');
+        }
+        this.api.caret.setToBlock(index + 1, 'start');
+      }
     });
 
     return container;
