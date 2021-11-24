@@ -45,7 +45,7 @@ const ShareModal = ({ publicId, opened, setOpened }) => {
   };
 
   const fullLink = useMemo(
-    () => publicId && `${HOST}/learn/${publicId}`,
+    () => (publicId ? `${HOST}/learn/${publicId}` : ''),
     [publicId],
   );
 
