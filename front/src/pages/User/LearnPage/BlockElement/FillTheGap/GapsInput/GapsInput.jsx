@@ -1,11 +1,14 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useRef } from 'react';
 
 import { htmlToReact } from '@sb-ui/pages/User/LearnPage/utils';
 
+import { getNextInputByIndex } from './getNextInputByIndex';
 import * as S from './GapsInput.styled';
 
 const GapsInput = ({ gaps, setGaps, disabled, result }) => {
+  const inputsRef = useRef(new Array(gaps.length).fill(null));
+
   const handleInputChange = (id, value) => {
     setGaps((prev) => {
       const newGaps = [...prev];
@@ -14,9 +17,21 @@ const GapsInput = ({ gaps, setGaps, disabled, result }) => {
     });
   };
 
+  const handleKeyDown = (event, id) => {
+    if (event.key === 'Enter') {
+      const inputIndex = gaps.findIndex((input) => input.id === id);
+      const input = getNextInputByIndex(
+        inputsRef.current,
+        inputIndex,
+        event.shiftKey,
+      );
+      input?.focus?.();
+    }
+  };
+
   return (
     <S.Wrapper>
-      {gaps?.map(({ value, id, type }) => {
+      {gaps?.map(({ value, id, type }, index) => {
         if (type === 'text') {
           return <span key={id}>{htmlToReact(value)}</span>;
         }
@@ -37,8 +52,12 @@ const GapsInput = ({ gaps, setGaps, disabled, result }) => {
 
         return (
           <S.Input
+            ref={(el) => {
+              inputsRef.current[index] = el;
+            }}
             key={id}
             value={value}
+            onKeyDown={disabled ? null : (e) => handleKeyDown(e, id)}
             onChange={(e) => handleInputChange(id, e.target.value)}
             disabled={disabled}
           />

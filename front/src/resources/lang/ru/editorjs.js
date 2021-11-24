@@ -19,7 +19,7 @@ export default {
     },
   },
   tools: {
-    search_placeholder: 'Введите название блока',
+    search_placeholder: 'Начните вводить название блока',
     hint: 'Нажмите "Tab" для комманд',
     basic_blocks: 'Базовые блоки',
     interactive_blocks: 'Интерактивные блоки',

@@ -15,6 +15,7 @@ import {
   prepareEditorData,
 } from '@sb-ui/pages/Teacher/LessonEdit/utils';
 import { queryClient } from '@sb-ui/query';
+import { AMPLITUDE_EVENTS, amplitudeLogEvent } from '@sb-ui/utils/amplitude';
 import {
   createLesson,
   getLesson,
@@ -72,6 +73,12 @@ export const useLessonEdit = () => {
     },
   );
 
+  useEffect(() => {
+    if (lessonId !== 'new' && lessonData) {
+      amplitudeLogEvent(AMPLITUDE_EVENTS.OPEN_LESSON, lessonId);
+    }
+  }, [lessonId, lessonData]);
+
   const createLessonMutation = useMutation(createLesson, {
     onSuccess: (data) => {
       const { editId, name: lessonName } = data?.lesson;
@@ -110,7 +117,7 @@ export const useLessonEdit = () => {
       }
       setStorageLesson({
         name: data.lesson.name,
-        status: Statuses.DRAFT,
+        status: lessonData?.lesson?.status,
         id: lessonId,
       });
       queryClient.invalidateQueries([
@@ -131,8 +138,11 @@ export const useLessonEdit = () => {
   });
 
   const handleAnalytics = useCallback(() => {
+    if (isShowAnalytics === false) {
+      amplitudeLogEvent(AMPLITUDE_EVENTS.OPEN_ANALYTICS);
+    }
     setIsShowAnalytics((prev) => !prev);
-  }, []);
+  }, [isShowAnalytics]);
 
   const handleHideLeftBar = useCallback(() => {
     setIsLeftBarOpen(false);
@@ -152,7 +162,6 @@ export const useLessonEdit = () => {
             !isCurrentlyEditing && name?.trim()?.length === 0
               ? 'Untitled'
               : name,
-          status: Statuses.DRAFT,
         },
         blocks: prepareBlocksForApi(blocks),
       };
@@ -209,6 +218,7 @@ export const useLessonEdit = () => {
   };
 
   const handlePreview = () => {
+    amplitudeLogEvent(AMPLITUDE_EVENTS.PREVIEW);
     history.push(LESSONS_PREVIEW.replace(':id', lessonId));
   };
 
@@ -260,7 +270,10 @@ export const useLessonEdit = () => {
           undoPluginRef.current?.initialize?.({ blocks });
         }
       }
-      if (!lessonData.lesson.status || lessonData?.lesson.status === 'Draft') {
+      if (
+        !lessonData.lesson.status ||
+        lessonData?.lesson.status === Statuses.DRAFT
+      ) {
         setIsEditorDisabled(false);
       } else {
         setIsEditorDisabled(true);

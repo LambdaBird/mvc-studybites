@@ -47,6 +47,7 @@ services:
       REACT_APP_SB_HOST: https://studybites.app
       REACT_APP_SELF_HOST: https://studybites.app
       NODE_ENV: production
+      REACT_APP_AMPLITUDE_KEY: 92d390dadd16e1d67e3e7bbfead14b7b
 
 volumes:
   postgres-prod: {}

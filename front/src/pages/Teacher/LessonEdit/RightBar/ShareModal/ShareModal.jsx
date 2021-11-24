@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 
 import { queryClient } from '@sb-ui/query';
 import { GlobalOutlined } from '@sb-ui/resources/icons';
+import { AMPLITUDE_EVENTS, amplitudeLogEvent } from '@sb-ui/utils/amplitude';
 import { postShareLesson } from '@sb-ui/utils/api/v1/teacher';
 import { Statuses } from '@sb-ui/utils/constants';
 import { setStorageLesson } from '@sb-ui/utils/lessonsStorage';
@@ -29,22 +30,26 @@ const ShareModal = ({ publicId, opened, setOpened }) => {
   const { mutate: shareLesson } = useMutation(postShareLesson, {
     onSuccess: () => {
       setStorageLesson({
-        status: Statuses.PUBLIC,
         id: lessonId,
+        status: isShareAnyone ? Statuses.PUBLIC : Statuses.DRAFT,
       });
       queryClient.invalidateQueries(TEACHER_LESSON_BASE_KEY);
     },
   });
 
-  const handleSwitchChange = (value) => {
-    if (value) {
-      setIsShareAnyone(value);
-      shareLesson({ id: lessonId });
+  const handleSwitchChange = (isEnabled) => {
+    setIsShareAnyone(isEnabled);
+    if (isEnabled) {
+      amplitudeLogEvent(AMPLITUDE_EVENTS.SHARE_TO_WEB);
     }
+    shareLesson({
+      id: lessonId,
+      status: isEnabled ? Statuses.PUBLIC : Statuses.DRAFT,
+    });
   };
 
   const fullLink = useMemo(
-    () => publicId && `${HOST}/learn/${publicId}`,
+    () => (publicId ? `${HOST}/learn/${publicId}` : ''),
     [publicId],
   );
 
@@ -83,11 +88,7 @@ const ShareModal = ({ publicId, opened, setOpened }) => {
               </S.ShareDescription>
             </S.ShareText>
           </S.ShareLeft>
-          <Switch
-            disabled={isShareAnyone}
-            checked={isShareAnyone}
-            onChange={handleSwitchChange}
-          />
+          <Switch checked={isShareAnyone} onChange={handleSwitchChange} />
         </S.ShareWrapper>
 
         <S.InputWrapper showShareAnyone={isShareAnyone}>

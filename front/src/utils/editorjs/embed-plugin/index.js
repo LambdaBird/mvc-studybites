@@ -1,1 +1,1 @@
-export { default } from './embed';
+export { default } from './plugin';

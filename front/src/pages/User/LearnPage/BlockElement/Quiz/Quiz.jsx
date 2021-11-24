@@ -39,7 +39,7 @@ const Quiz = ({ blockId, revision, answer, content, reply, isSolved }) => {
 
   return (
     <>
-      <ChunkWrapper isBottom={!isSolved}>
+      <ChunkWrapper>
         <S.Question>{htmlToReact(question)}</S.Question>
       </ChunkWrapper>
       {isSolved ? (

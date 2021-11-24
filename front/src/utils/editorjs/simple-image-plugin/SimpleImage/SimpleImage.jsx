@@ -19,7 +19,6 @@ const SimpleImage = ({ tool }) => {
     handleInputCaptionKeyDown,
     handleInputLinkKeyDown,
     handleLinkInput,
-    handleCaptionInput,
     linkSrc,
   } = useSimpleImage({ tool, data, loaded, src, setSrc, error });
 
@@ -43,13 +42,14 @@ const SimpleImage = ({ tool }) => {
           onLoad={handleLoad}
           src={src}
         />
-        <S.Input
-          isShow={isShow}
-          onInput={handleCaptionInput}
-          onKeyDown={handleInputCaptionKeyDown}
-          ref={captionInputRef}
-          placeholder={t('tools.image.caption')}
-        />
+        {loaded && !error && (
+          <S.Input
+            isShow={isShow}
+            onKeyDown={handleInputCaptionKeyDown}
+            ref={captionInputRef}
+            placeholder={t('tools.image.caption')}
+          />
+        )}
       </S.Bottom>
     </>
   );

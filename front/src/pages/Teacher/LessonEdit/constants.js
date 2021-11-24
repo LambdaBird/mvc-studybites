@@ -1,2 +1,5 @@
 export const LEFT_BAR_WIDTH = 250;
 export const RIGHT_BAR_WIDTH = 500;
+
+export const LEFT_PADDING = 2.5;
+export const RIGHT_PADDING = 2.5;

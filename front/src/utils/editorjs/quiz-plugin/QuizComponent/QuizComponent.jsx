@@ -7,6 +7,7 @@ import {
   deletePropsFromTool,
   moveCaret,
   setPropsInTool,
+  stopRepeating,
 } from '@sb-ui/utils/editorjs/utils';
 
 import BaseHeader from '../../PluginBase/BaseHeader';
@@ -94,16 +95,29 @@ const Quiz = ({ tool }) => {
       event.stopPropagation();
       items[0].ref.current.focus();
     }
-    if (event.code === 'Backspace' && inputRef.current.innerText.length === 0) {
+    if (
+      event.code === 'Backspace' &&
+      inputRef.current.innerText.length === 0 &&
+      !stopRepeating(event)
+    ) {
+      if (
+        items.length === 1 &&
+        items?.[0]?.ref?.current?.innerText?.length === 0
+      ) {
+        tool.api.blocks.delete();
+      }
       event.stopPropagation();
-      tool.api.blocks.delete();
     }
   };
 
   const handleKeyDown = (event, id) => {
     if (event.code === 'Backspace') {
       const range = window.getSelection().getRangeAt(0);
-      if (range.startOffset === range.endOffset && range.endOffset === 0) {
+      if (
+        range.startOffset === range.endOffset &&
+        range.endOffset === 0 &&
+        !stopRepeating(event)
+      ) {
         event.preventDefault();
 
         if (items.findIndex((x) => x.id === id) === 0) {

@@ -2,7 +2,9 @@ import styled from 'styled-components';
 
 import {
   LEFT_BAR_WIDTH,
+  LEFT_PADDING,
   RIGHT_BAR_WIDTH,
+  RIGHT_PADDING,
 } from '@sb-ui/pages/Teacher/LessonEdit/constants';
 
 export const Page = styled.div`
@@ -16,14 +18,18 @@ export const Page = styled.div`
   align-items: center;
   transition: padding 0.3s ease 0.1s;
   padding-right: ${(props) =>
-    props.isRightOpen ? `${RIGHT_BAR_WIDTH}px` : '2rem'};
+    props.isRightOpen
+      ? `calc(${RIGHT_BAR_WIDTH}px + ${RIGHT_PADDING}rem)`
+      : `${RIGHT_PADDING}rem`};
 
   padding-left: ${(props) =>
-    props.isLeftOpen ? `calc(${LEFT_BAR_WIDTH}px + 2rem)` : '2rem'};
+    props.isLeftOpen
+      ? `calc(${LEFT_BAR_WIDTH}px + ${LEFT_PADDING}rem)`
+      : `${LEFT_PADDING}rem`};
 
   @media (max-width: 767px) {
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
+    padding-left: ${LEFT_PADDING}rem;
+    padding-right: ${RIGHT_PADDING}rem;
   }
 `;
 

@@ -37,3 +37,13 @@ export const setTransform3d = (element, { x = 0, y = 0, z = 0 }) => {
     0,
   )}px,${z.toFixed(0)}px)`;
 };
+
+export const isHaveParentElement = (element, parentElement) => {
+  if (!element) {
+    return false;
+  }
+  if (element === parentElement) {
+    return true;
+  }
+  return isHaveParentElement(element?.parentElement, parentElement);
+};

@@ -19,7 +19,7 @@ const EditorJsContainer = forwardRef((props, ref) => {
     editor: instance,
   });
 
-  const { prepareToolbar } = useToolbar({ editor: instance });
+  const { prepareToolbar, handleFocus } = useToolbar({ editor: instance });
 
   const { children, language } = props;
   const holder = useMemo(
@@ -51,29 +51,33 @@ const EditorJsContainer = forwardRef((props, ref) => {
     [props],
   );
 
-  const handleReady = useCallback(async (editor) => {
-    if (editor) {
-      prepareToolbox();
-      prepareToolbar();
-      try {
-        // eslint-disable-next-line no-param-reassign
-        ref.current = new Undo({
-          editor,
-          redoButton: 'redo-button',
-          undoButton: 'undo-button',
-        });
-        // eslint-disable-next-line no-new
-        new DragDrop(editor);
-        ref.current.initialize(props.data);
-      } catch (e) {
-        // eslint-disable-next-line no-param-reassign
-        ref.current = null;
+  const handleReady = useCallback(
+    async (editor) => {
+      if (editor) {
+        prepareToolbox();
+        prepareToolbar();
+        try {
+          // eslint-disable-next-line no-param-reassign
+          ref.current = new Undo({
+            editor,
+            handleFocus,
+            redoButton: 'redo-button',
+            undoButton: 'undo-button',
+          });
+          // eslint-disable-next-line no-new
+          new DragDrop(editor);
+          ref.current.initialize(props.data);
+        } catch (e) {
+          // eslint-disable-next-line no-param-reassign
+          ref.current = null;
+        }
       }
-    }
+    },
     // Ref is passing through forwardRef and creating with useRef()
     // No need passing to useCallback dependencies
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    [handleFocus],
+  );
 
   const initEditor = useCallback(
     async (data) => {

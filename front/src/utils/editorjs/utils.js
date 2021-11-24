@@ -94,3 +94,20 @@ export const moveCaret = (win, charCount) => {
     selection.collapse(textNode, Math.min(textNode.length, newOffset));
   }
 };
+
+export const stopRepeating = (event) => {
+  if (event.repeat) {
+    event.preventDefault();
+    event.stopPropagation();
+    return true;
+  }
+  return false;
+};
+
+const isEventBackspace = (event) => event.code === 'Backspace';
+
+export const isDivInputEmpty = (event, input) =>
+  isEventBackspace(event) && input?.innerText?.trim?.()?.length === 0;
+
+export const isRealInputEmpty = (event, input) =>
+  isEventBackspace(event) && input?.value?.trim?.()?.length === 0;

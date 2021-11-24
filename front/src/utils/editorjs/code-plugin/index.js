@@ -3,6 +3,7 @@
  * Build styles
  */
 import { isBackspaceValid } from '@sb-ui/utils/editorjs/toolsHelper';
+import { stopRepeating } from '@sb-ui/utils/editorjs/utils';
 
 import PluginBase from '../PluginBase';
 
@@ -143,7 +144,10 @@ export default class CodeTool extends PluginBase {
   }
 
   backspaceHandler(event) {
-    if (isBackspaceValid(event, this.nodes.textarea.value)) {
+    if (
+      isBackspaceValid(event, this.nodes.textarea.value) &&
+      !stopRepeating(event)
+    ) {
       this.api.blocks.delete();
     }
   }

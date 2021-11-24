@@ -1,4 +1,4 @@
-import { stripHTML } from '@sb-ui/utils/editorjs/utils';
+import { stopRepeating, stripHTML } from '@sb-ui/utils/editorjs/utils';
 
 import PluginBase from '../PluginBase';
 
@@ -87,8 +87,7 @@ export default class FillTheGap extends PluginBase {
   }
 
   backspacePressed(event) {
-    event.stopPropagation();
-    if (this.input.innerText.trim().length === 0) {
+    if (this.input.innerText.trim().length === 0 && !stopRepeating(event)) {
       this.api.blocks.delete();
     }
   }
@@ -134,6 +133,16 @@ export default class FillTheGap extends PluginBase {
     this.input.addEventListener('keydown', (event) => {
       if (event.code === 'Backspace') {
         this.backspacePressed(event);
+      }
+      if (event.code === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        event.stopPropagation();
+        const index = this.api.blocks.getCurrentBlockIndex();
+        const nextBlock = this.api.blocks.getBlockByIndex(index + 1);
+        if (!nextBlock) {
+          this.api.blocks.insert('paragraph');
+        }
+        this.api.caret.setToBlock(index + 1, 'start');
       }
     });
 

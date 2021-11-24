@@ -1,5 +1,6 @@
 .cdx-warning {
   position: relative;
+  padding: 0;
 }
 
 .cdx-warning [contentEditable='true'][data-placeholder]::before {
