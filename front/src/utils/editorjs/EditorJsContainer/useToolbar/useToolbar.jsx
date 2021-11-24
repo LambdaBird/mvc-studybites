@@ -9,9 +9,11 @@ import {
   CODEX_EDITOR_REDACTOR,
   DISPLAY_NONE,
   LEFT_PLUS_POS,
+  NONE_EVENTS,
 } from './constants';
 import {
   createToolbar,
+  isHaveParentElement,
   moveActionsButtonsToMobile,
   setTransform3d,
 } from './domToolbarHelpers';
@@ -69,6 +71,9 @@ export const useToolbar = ({ editor }) => {
 
   const handlePlusClick = useCallback(
     ({ forceClose } = {}) => {
+      if (!editor.current) {
+        return;
+      }
       setIsOpen((prev) => {
         if (prev === false && !forceClose) {
           const { blocks, caret } = editor.current;
@@ -92,6 +97,18 @@ export const useToolbar = ({ editor }) => {
     [editor, handleFocus],
   );
 
+  const handleMouseDown = useCallback(
+    (event) => {
+      if (toolbarWrapper.classList.contains('none-events')) {
+        const isInToolbar = isHaveParentElement(event.target, toolbarWrapper);
+        if (event.target.parentElement === toolbarWrapper || !isInToolbar) {
+          handlePlusClick({ forceClose: true });
+        }
+      }
+    },
+    [handlePlusClick],
+  );
+
   const handleKeyDown = useCallback(
     (event) => {
       switch (event.key) {
@@ -113,9 +130,9 @@ export const useToolbar = ({ editor }) => {
 
   useEffect(() => {
     if (isOpen) {
-      toolbarRef.current?.classList?.add?.('none-events');
+      toolbarRef.current?.classList?.add?.(NONE_EVENTS);
     } else {
-      toolbarRef.current?.classList?.remove?.('none-events');
+      toolbarRef.current?.classList?.remove?.(NONE_EVENTS);
     }
   }, [isMobile, isOpen]);
 
@@ -145,17 +162,26 @@ export const useToolbar = ({ editor }) => {
     itemsRef.current = Array.from(getToolboxItems(editorElement));
     const observer = initObserver(toolbarWrapper);
     renderToolbar();
+    window.addEventListener('mousedown', handleMouseDown);
     parent?.insertAdjacentElement('beforeend', toolbarWrapper);
     parent?.addEventListener?.('keydown', handleKeyDown);
     editorElement?.addEventListener('mousedown', handleFocus);
     editorElement?.addEventListener('keydown', handleFocus);
     return () => {
       destroyObserver(observer);
+      window.removeEventListener('mousedown', handleMouseDown);
       editorElement?.removeEventListener('mousedown', handleFocus);
       editorElement?.removeEventListener('keydown', handleFocus);
       parent?.removeEventListener?.('keydown', handleKeyDown);
     };
-  }, [isReady, editor, handleFocus, renderToolbar, handleKeyDown]);
+  }, [
+    isReady,
+    editor,
+    handleFocus,
+    renderToolbar,
+    handleKeyDown,
+    handleMouseDown,
+  ]);
 
   useEffect(() => {
     if (toolbarRef.current) {

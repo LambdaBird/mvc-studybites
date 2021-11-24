@@ -8,3 +8,4 @@ export const CODEX_EDITOR = 'codex-editor';
 export const CODEX_EDITOR_REDACTOR = 'codex-editor__redactor';
 export const DISPLAY_NONE = 'd-none';
 export const UNDO_MARGIN = 'undo-margin';
+export const NONE_EVENTS = 'none-events';
