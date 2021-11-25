@@ -318,7 +318,7 @@ class Lesson extends BaseModel {
 
   static getLessonWithProgress({ lessonId, userId }) {
     const rawBlocksType = blockConstants.INTERACTIVE_BLOCKS.map(
-      (x) => `'${x}'`,
+      (block) => `'${block}'`,
     ).join(', ');
     return this.query()
       .select(

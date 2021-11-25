@@ -4,7 +4,6 @@ import { forwardRef, useCallback, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import EditorJS from '@editorjs/editorjs';
 
-import { useToolbox } from '@sb-ui/utils/editorjs/EditorJsContainer/useToolbox';
 import Undo from '@sb-ui/utils/editorjs/undo-plugin';
 
 import { useToolbar } from './useToolbar';
@@ -14,10 +13,6 @@ const EditorJsContainer = forwardRef((props, ref) => {
   const mounted = useRef();
   const { t } = useTranslation('editorjs');
   const instance = useRef(null);
-
-  const { prepareToolbox, updateLanguage, isOpen } = useToolbox({
-    editor: instance,
-  });
 
   const { prepareToolbar, handleFocus } = useToolbar({ editor: instance });
 
@@ -54,7 +49,6 @@ const EditorJsContainer = forwardRef((props, ref) => {
   const handleReady = useCallback(
     async (editor) => {
       if (editor) {
-        prepareToolbox();
         prepareToolbar();
         try {
           // eslint-disable-next-line no-param-reassign
@@ -352,12 +346,9 @@ const EditorJsContainer = forwardRef((props, ref) => {
     }
   }, [destroyEditor, initEditor, language, renderEditorWithBlocks]);
 
-  useEffect(() => {
-    updateLanguage();
-  }, [language, updateLanguage]);
   return (
     <>
-      <S.GlobalStylesEditorPage isOpen={isOpen} toolbarHint={t('tools.hint')} />
+      <S.GlobalStylesEditorPage toolbarHint={t('tools.hint')} />
       {children || <S.Container id={holder} />}
     </>
   );
