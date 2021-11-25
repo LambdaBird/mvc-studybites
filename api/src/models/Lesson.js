@@ -317,6 +317,9 @@ class Lesson extends BaseModel {
   }
 
   static getLessonWithProgress({ lessonId, userId }) {
+    const rawBlocksType = blockConstants.INTERACTIVE_BLOCKS.map(
+      (x) => `'${x}'`,
+    ).join(', ');
     return this.query()
       .select(
         'lessons.*',
@@ -328,7 +331,7 @@ class Lesson extends BaseModel {
         ),
         this.knex().raw(`
           (select count(*) from lesson_block_structure join blocks on blocks.block_id = lesson_block_structure.block_id
-          where blocks.type in ('next', 'quiz') and lesson_block_structure.lesson_id = lessons.id) interactive_total
+          where blocks.type in (${rawBlocksType}) and lesson_block_structure.lesson_id = lessons.id) interactive_total
         `),
       )
       .findById(lessonId)
