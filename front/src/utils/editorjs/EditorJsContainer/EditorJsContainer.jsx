@@ -278,18 +278,19 @@ const EditorJsContainer = forwardRef((props, ref) => {
   );
 
   const destroyEditor = useCallback(async () => {
+    const currentInstance = instance.current;
+    instance.current = null;
+
     Array.from(document.querySelectorAll('.ct--bottom')).forEach(
       (codexTooltip) => codexTooltip.remove(),
     );
-
-    if (!instance.current) {
+    if (!currentInstance) {
       return;
     }
 
-    await instance.current.isReady;
-    if (instance.current.destroy) {
-      await instance.current.destroy();
-      instance.current = null;
+    await currentInstance.isReady;
+    if (currentInstance.destroy) {
+      await currentInstance.destroy();
     }
   }, []);
 

@@ -235,6 +235,14 @@ export const useToolbar = ({ editor }) => {
     }
   }, [isMobile, renderToolbar]);
 
+  useEffect(
+    () => () => {
+      // when toolbar unmounted set isReady to false, need for React hotReload works properly
+      setIsReady(false);
+    },
+    [],
+  );
+
   const prepareToolbar = useCallback(() => {
     setIsReady(true);
   }, []);
