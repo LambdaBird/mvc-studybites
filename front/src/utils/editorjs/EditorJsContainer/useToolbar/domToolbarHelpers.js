@@ -1,4 +1,5 @@
 import {
+  CE_INLINE_TOOLBAR,
   CE_TOOLBAR_ACTIONS,
   DISPLAY_NONE,
   EDITOR_PLUS_TOOLBAR,
@@ -22,6 +23,7 @@ export const createToolbar = () => {
   const wrapper = document.createElement('div');
   wrapper.classList.add(DISPLAY_NONE);
   wrapper.classList.add(EDITOR_PLUS_TOOLBAR);
+  wrapper.classList.add(CE_INLINE_TOOLBAR);
   return wrapper;
 };
 
@@ -43,17 +45,10 @@ export const isHaveParentElement = (element, parentElement) => {
 };
 
 export const focusElement = (element) => {
-  const s = window.getSelection();
-  const r = document.createRange();
-  if (element?.innerText?.trim?.()?.length === 0) {
-    // eslint-disable-next-line no-param-reassign
-    element.innerHTML = '\u00a0';
-    r.selectNodeContents(element);
-    document.execCommand('delete', false, null);
-  } else {
-    r.setStart(element, 0);
-    r.setEnd(element, 0);
-  }
-  s.removeAllRanges();
-  s.addRange(r);
+  const selection = window.getSelection();
+  const range = document.createRange();
+  range.setStart(element, 0);
+  range.setEnd(element, 0);
+  selection.removeAllRanges();
+  selection.addRange(range);
 };

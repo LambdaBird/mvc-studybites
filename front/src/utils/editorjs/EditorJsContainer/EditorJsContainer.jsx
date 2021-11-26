@@ -1,9 +1,9 @@
-import DragDrop from 'editorjs-drag-drop';
 import PropTypes from 'prop-types';
 import { forwardRef, useCallback, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import EditorJS from '@editorjs/editorjs';
 
+import DragDrop from '@sb-ui/utils/editorjs/drag-drop-plugin';
 import Undo from '@sb-ui/utils/editorjs/undo-plugin';
 
 import { useToolbar } from './useToolbar';
@@ -59,7 +59,7 @@ const EditorJsContainer = forwardRef((props, ref) => {
             undoButton: 'undo-button',
           });
           // eslint-disable-next-line no-new
-          new DragDrop(editor);
+          new DragDrop({ editor, focusToolbar: handleFocus });
           ref.current.initialize(props.data);
         } catch (e) {
           // eslint-disable-next-line no-param-reassign

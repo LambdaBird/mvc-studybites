@@ -33,7 +33,6 @@ export const GlobalStylesEditorPage = createGlobalStyle`
     padding-bottom: 1rem;
   }
   
-  
 
   @media (min-width: 651px) {
     .ce-settings {
@@ -152,6 +151,14 @@ export const GlobalStylesEditorPage = createGlobalStyle`
     justify-content: center;
     gap: 0.5rem;
     width: calc(100% + 25px);
+    opacity: 1;
+    visibility: visible;
+    background-color: unset;
+    border: 0;
+    box-shadow: unset;
+    border-radius: 0;
+    z-index: unset;
+
   }
   
   @media (max-width: 650px){
