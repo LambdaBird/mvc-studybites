@@ -11,9 +11,12 @@ import LearnPageWrapper from '@sb-ui/pages/User/LearnPage/LearnPageWrapper';
 import * as paths from '../utils/paths';
 
 import AuthRoute from './AuthRoute';
+import { useFirstNavigation } from './useFirstNavigation';
 
-const Routes = () => (
-  <Router>
+const SwitchWrapper = () => {
+  useFirstNavigation();
+
+  return (
     <Switch>
       <AuthRoute isPublic path={paths.LEARN_PAGE}>
         <LearnPageWrapper />
@@ -26,6 +29,12 @@ const Routes = () => (
       </Route>
       <Redirect to={paths.LESSONS_NEW} />
     </Switch>
+  );
+};
+
+const Routes = () => (
+  <Router>
+    <SwitchWrapper />
   </Router>
 );
 
