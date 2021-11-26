@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 
+import LearnFooter from '@sb-ui/components/atoms/LearnFooter';
 import Header from '@sb-ui/components/molecules/Header';
 import LearnContext from '@sb-ui/contexts/LearnContext';
 import {
@@ -54,6 +55,7 @@ const LessonPreview = () => {
     lesson,
     total,
     learnProgress,
+    isFinishedLesson,
   } = useLearnChunks({
     lessonId,
     getEnrolledLesson: getLessonByIdPreview,
@@ -94,6 +96,7 @@ const LessonPreview = () => {
             </LearnContext.Provider>
           </S.BlockCell>
         </S.Row>
+        {isFinishedLesson && <LearnFooter />}
       </S.Wrapper>
     </>
   );
