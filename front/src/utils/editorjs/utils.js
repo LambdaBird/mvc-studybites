@@ -18,14 +18,6 @@ export const createInput = ({
   return input;
 };
 
-export const fileToBase64 = (file) =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
-  });
-
 export const stripHTML = (html) => {
   const tmp = document.createElement('div');
   tmp.innerHTML = html;
@@ -111,3 +103,6 @@ export const isDivInputEmpty = (event, input) =>
 
 export const isRealInputEmpty = (event, input) =>
   isEventBackspace(event) && input?.value?.trim?.()?.length === 0;
+
+export const findFirstInput = (element) =>
+  element?.querySelector('input,textarea,[contenteditable]');

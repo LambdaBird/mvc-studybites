@@ -1,4 +1,4 @@
-import { useCallback, useContext, useState } from 'react';
+import { useCallback, useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import LearnContext from '@sb-ui/contexts/LearnContext';
@@ -13,7 +13,10 @@ import {
   SolvedType,
 } from '@sb-ui/pages/User/LearnPage/BlockElement/types';
 import { ChunkWrapper } from '@sb-ui/pages/User/LearnPage/LearnPage.styled';
-import { RESPONSE_TYPE } from '@sb-ui/pages/User/LearnPage/utils';
+import {
+  interactiveEnter,
+  RESPONSE_TYPE,
+} from '@sb-ui/pages/User/LearnPage/utils';
 
 import GapsInput from './GapsInput';
 import * as S from './FillTheGap.styled';
@@ -27,6 +30,8 @@ const FillTheGap = ({
   isSolved,
 }) => {
   const { t } = useTranslation('user');
+  const sendButtonRef = useRef(null);
+  const lastInputRef = useRef(null);
   const { handleInteractiveClick, id } = useContext(LearnContext);
 
   const { tokens } = content.data || {};
@@ -53,6 +58,10 @@ const FillTheGap = ({
     });
   }, [blockId, gapsInput, handleInteractiveClick, id, revision]);
 
+  const handleKeyDown = (event) => {
+    interactiveEnter(event, lastInputRef.current, false);
+  };
+
   const { results } = answer;
 
   const { correct, result } = verifyAnswers(results, reply.response);
@@ -61,6 +70,8 @@ const FillTheGap = ({
     <>
       <ChunkWrapper>
         <GapsInput
+          sendButtonRef={sendButtonRef}
+          lastInputRef={lastInputRef}
           gaps={gapsInput}
           setGaps={setGapsInput}
           disabled={isSolved}
@@ -71,7 +82,11 @@ const FillTheGap = ({
           <Result correct={correct} result={result} gaps={gapsInput} />
         </ChunkWrapper>
       ) : (
-        <S.LessonButton onClick={handleSendClick}>
+        <S.LessonButton
+          ref={sendButtonRef}
+          onClick={handleSendClick}
+          onKeyDown={handleKeyDown}
+        >
           {t('lesson.send')}
         </S.LessonButton>
       )}

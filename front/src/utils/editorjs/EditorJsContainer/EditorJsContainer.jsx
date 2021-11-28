@@ -1,10 +1,9 @@
-import DragDrop from 'editorjs-drag-drop';
 import PropTypes from 'prop-types';
 import { forwardRef, useCallback, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import EditorJS from '@editorjs/editorjs';
 
-import { useToolbox } from '@sb-ui/utils/editorjs/EditorJsContainer/useToolbox';
+import DragDrop from '@sb-ui/utils/editorjs/drag-drop-plugin';
 import Undo from '@sb-ui/utils/editorjs/undo-plugin';
 
 import { useToolbar } from './useToolbar';
@@ -14,10 +13,6 @@ const EditorJsContainer = forwardRef((props, ref) => {
   const mounted = useRef();
   const { t } = useTranslation('editorjs');
   const instance = useRef(null);
-
-  const { prepareToolbox, updateLanguage, isOpen } = useToolbox({
-    editor: instance,
-  });
 
   const { prepareToolbar, handleFocus } = useToolbar({ editor: instance });
 
@@ -54,7 +49,6 @@ const EditorJsContainer = forwardRef((props, ref) => {
   const handleReady = useCallback(
     async (editor) => {
       if (editor) {
-        prepareToolbox();
         prepareToolbar();
         try {
           // eslint-disable-next-line no-param-reassign
@@ -65,7 +59,7 @@ const EditorJsContainer = forwardRef((props, ref) => {
             undoButton: 'undo-button',
           });
           // eslint-disable-next-line no-new
-          new DragDrop(editor);
+          new DragDrop({ editor, focusToolbar: handleFocus });
           ref.current.initialize(props.data);
         } catch (e) {
           // eslint-disable-next-line no-param-reassign
@@ -284,18 +278,19 @@ const EditorJsContainer = forwardRef((props, ref) => {
   );
 
   const destroyEditor = useCallback(async () => {
+    const currentInstance = instance.current;
+    instance.current = null;
+
     Array.from(document.querySelectorAll('.ct--bottom')).forEach(
       (codexTooltip) => codexTooltip.remove(),
     );
-
-    if (!instance.current) {
+    if (!currentInstance) {
       return;
     }
 
-    await instance.current.isReady;
-    if (instance.current.destroy) {
-      await instance.current.destroy();
-      instance.current = null;
+    await currentInstance.isReady;
+    if (currentInstance.destroy) {
+      await currentInstance.destroy();
     }
   }, []);
 
@@ -352,12 +347,9 @@ const EditorJsContainer = forwardRef((props, ref) => {
     }
   }, [destroyEditor, initEditor, language, renderEditorWithBlocks]);
 
-  useEffect(() => {
-    updateLanguage();
-  }, [language, updateLanguage]);
   return (
     <>
-      <S.GlobalStylesEditorPage isOpen={isOpen} toolbarHint={t('tools.hint')} />
+      <S.GlobalStylesEditorPage toolbarHint={t('tools.hint')} />
       {children || <S.Container id={holder} />}
     </>
   );
