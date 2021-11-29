@@ -10,9 +10,8 @@ export const Footer = styled.div`
   padding: 1rem;
   background-color: ${variables['geekblue-1']};
   width: 100%;
-  font-style: italic;
   & > * + * {
-    margin-left: 0.5rem;
+    margin-left: 0.25rem;
   }
 `;
 

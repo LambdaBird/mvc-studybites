@@ -18,7 +18,7 @@ const LearnFooter = () => {
     <S.Footer>
       <span>{t('learn_footer.text_before_link')}</span>
       <S.Link href={LESSONS_NEW} onClick={handleLinkClick}>
-        {t('learn_footer.create_link')}
+        {t('learn_footer.create_link')}.
       </S.Link>
       <span>{t('learn_footer.text_after_link')}</span>
     </S.Footer>
