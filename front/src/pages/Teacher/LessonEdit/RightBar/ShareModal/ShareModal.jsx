@@ -10,7 +10,7 @@ import { GlobalOutlined } from '@sb-ui/resources/icons';
 import { AMPLITUDE_EVENTS, amplitudeLogEvent } from '@sb-ui/utils/amplitude';
 import { postShareLesson } from '@sb-ui/utils/api/v1/teacher';
 import { Statuses } from '@sb-ui/utils/constants';
-import { setStorageLesson } from '@sb-ui/utils/lessonsStorage';
+import { LessonsStorage } from '@sb-ui/utils/lessonsStorage';
 import { TEACHER_LESSON_BASE_KEY } from '@sb-ui/utils/queries';
 
 import * as S from './ShareModal.styled';
@@ -29,7 +29,7 @@ const ShareModal = ({ publicId, opened, setOpened }) => {
 
   const { mutate: shareLesson } = useMutation(postShareLesson, {
     onSuccess: () => {
-      setStorageLesson({
+      LessonsStorage.setLesson({
         id: lessonId,
         status: isShareAnyone ? Statuses.PUBLIC : Statuses.DRAFT,
       });

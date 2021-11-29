@@ -1,5 +1,5 @@
 import T from 'prop-types';
-import { useCallback, useContext } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { DoubleLeftOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
@@ -9,16 +9,17 @@ import MobileContext from '@sb-ui/contexts/MobileContext';
 import { PlusOutlined } from '@sb-ui/resources/icons';
 import logo from '@sb-ui/resources/img/logo.svg';
 import { AMPLITUDE_EVENTS, amplitudeLogEvent } from '@sb-ui/utils/amplitude';
+import { LessonsStorage } from '@sb-ui/utils/lessonsStorage';
 import { LESSONS_NEW } from '@sb-ui/utils/paths';
 
 import LessonList from './LessonList';
 import * as S from './LeftBar.styled';
 
-const LeftBar = ({ isOpen, lessons, handleHideLeftBar, handleShowLeftBar }) => {
+const LeftBar = ({ isOpen, handleHideLeftBar, handleShowLeftBar }) => {
   const { t } = useTranslation('teacher');
   const history = useHistory();
   const isMobile = useContext(MobileContext);
-
+  const [lessons, setLessons] = useState(LessonsStorage.getLessons());
   const handleNewLessonClick = useCallback(() => {
     amplitudeLogEvent(AMPLITUDE_EVENTS.CREATE_LESSON);
     history.push(LESSONS_NEW);
@@ -34,6 +35,16 @@ const LeftBar = ({ isOpen, lessons, handleHideLeftBar, handleShowLeftBar }) => {
     },
     [handleHideLeftBar],
   );
+
+  useEffect(() => {
+    const handleChangeLessons = (newLessons) => {
+      setLessons(newLessons);
+    };
+    LessonsStorage.addChangeHandler(handleChangeLessons);
+    return () => {
+      LessonsStorage.removeChangeHandler(handleChangeLessons);
+    };
+  }, []);
 
   return (
     <>
@@ -67,7 +78,6 @@ LeftBar.propTypes = {
   handleHideLeftBar: T.func,
   handleShowLeftBar: T.func,
   isOpen: T.bool,
-  lessons: T.arrayOf(T.shape({})),
 };
 
 export default LeftBar;
