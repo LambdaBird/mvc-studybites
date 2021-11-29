@@ -37,6 +37,7 @@ export const CLIENT_ERROR_STARTS = '4';
 export const useLessonEdit = () => {
   const { id: lessonId } = useParams();
   const { t, i18n } = useTranslation('teacher');
+  const toolbarRef = useRef({});
 
   const { language } = i18n;
   const isCurrentlyEditing = useMemo(() => lessonId !== 'new', [lessonId]);
@@ -212,8 +213,10 @@ export const useLessonEdit = () => {
   }, []);
 
   const handleNextLine = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' || (e.key === 'Tab' && !e.shiftKey)) {
       editorJSRef.current?.focus?.();
+      toolbarRef.current?.removeHideTitle?.();
+      toolbarRef.current?.handleFocus?.();
     }
   };
 
@@ -293,6 +296,7 @@ export const useLessonEdit = () => {
       data: dataBlocks,
       language,
       lessonId,
+      toolbarRef,
       instanceRef: (instance) => {
         editorJSRef.current = instance;
       },
@@ -332,5 +336,6 @@ export const useLessonEdit = () => {
     setIsShowShare,
     editorJsProps,
     studentsCount: lessonData?.lesson?.studentsCount,
+    toolbarRef,
   };
 };

@@ -1,4 +1,5 @@
 export default {
+  start_title: 'Press Enter to continue with the empty page',
   toolbar: {
     toolbox: {
       add: 'Add',
