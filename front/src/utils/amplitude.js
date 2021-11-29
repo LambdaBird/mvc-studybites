@@ -23,6 +23,6 @@ export const amplitudeLogEvent = (event, eventProperties) => {
     amplitude.getInstance().logEvent(event, eventProperties);
   } else {
     // eslint-disable-next-line no-console
-    console.log(`[AMPLITUDE]: ${event}, ${eventProperties}`);
+    console.log(`[AMPLITUDE]: ${event}`, eventProperties || '');
   }
 };

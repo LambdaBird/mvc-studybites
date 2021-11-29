@@ -1,12 +1,19 @@
 import PropTypes from 'prop-types';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import { htmlToReact } from '@sb-ui/pages/User/LearnPage/utils';
 
 import { getNextInputByIndex } from './getNextInputByIndex';
 import * as S from './GapsInput.styled';
 
-const GapsInput = ({ gaps, setGaps, disabled, result }) => {
+const GapsInput = ({
+  lastInputRef,
+  sendButtonRef,
+  gaps,
+  setGaps,
+  disabled,
+  result,
+}) => {
   const inputsRef = useRef(new Array(gaps.length).fill(null));
 
   const handleInputChange = (id, value) => {
@@ -25,9 +32,21 @@ const GapsInput = ({ gaps, setGaps, disabled, result }) => {
         inputIndex,
         event.shiftKey,
       );
+      if (!event.shiftKey && !input) {
+        sendButtonRef.current?.focus?.();
+        event.preventDefault();
+      }
       input?.focus?.();
     }
   };
+
+  useEffect(() => {
+    if (lastInputRef) {
+      const inputElement = inputsRef.current.filter(Boolean).at(-1);
+      // eslint-disable-next-line no-param-reassign
+      lastInputRef.current = inputElement?.input;
+    }
+  }, [lastInputRef]);
 
   return (
     <S.Wrapper>
@@ -68,6 +87,14 @@ const GapsInput = ({ gaps, setGaps, disabled, result }) => {
 };
 
 GapsInput.propTypes = {
+  lastInputRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  ]),
+  sendButtonRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  ]),
   gaps: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.string,
