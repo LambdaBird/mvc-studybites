@@ -4,7 +4,7 @@ import { deleteIfBackspace } from '@sb-ui/utils/editorjs/toolsHelper';
 import PluginBase from '../PluginBase';
 import * as Utils from '../utils';
 
-import { icon, plusIcon } from './resources';
+import { icon, plusIcon, removeIcon } from './resources';
 
 import './match.css';
 
@@ -37,6 +37,7 @@ export default class Match extends PluginBase {
       input: 'match-tool__input',
       inputsWrapper: 'match-tool__inputsWrapper',
       addLineButton: 'match-tool__addLineButton',
+      removeLineButton: 'match-tool__removeLineButton',
       matchLine: 'match-tool__line',
     };
   }
@@ -91,6 +92,14 @@ export default class Match extends PluginBase {
     );
   }
 
+  createRemoveButton() {
+    return Utils.createElementFromHTML(`
+      <span role="img" aria-label="close" class="anticon anticon-close ${this.CSS.removeLineButton}">
+        ${removeIcon}
+      </span>
+    `);
+  }
+
   createAddButton() {
     return Utils.createElementFromHTML(`
       <button type="button" class="ant-btn ant-btn-link ${
@@ -119,6 +128,15 @@ export default class Match extends PluginBase {
     return input;
   }
 
+  removeBlockLine(number) {
+    this.data.values = this.prepareInputs();
+    this.data.values.splice(number - 1, 1);
+    if (this.data.values.length === 0) {
+      this.api.blocks.delete();
+    }
+    this.renderNew();
+  }
+
   createBlockLine({ number = 1, left = '', right = '' }) {
     const wrapper = document.createElement('div');
     wrapper.classList.add(this.CSS.matchLine);
@@ -129,9 +147,16 @@ export default class Match extends PluginBase {
     const leftInput = this.createInput(left, 'input_left_placeholder');
     const rightInput = this.createInput(right, 'input_right_placeholder');
 
+    const closeElement = this.createRemoveButton();
+    closeElement.addEventListener('click', () => {
+      this.removeBlockLine(number);
+    });
+
     wrapper.appendChild(numberElement);
     wrapper.appendChild(leftInput);
     wrapper.appendChild(rightInput);
+    wrapper.appendChild(closeElement);
+
     this.prepareInputs();
     return wrapper;
   }

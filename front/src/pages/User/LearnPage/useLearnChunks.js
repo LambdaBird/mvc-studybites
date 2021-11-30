@@ -119,6 +119,7 @@ export const useLearnChunks = ({
 
   const onSuccess = useCallback(
     (data) => {
+      setIsFinishedLesson(data.isFinished);
       setChunks((prevChunks) => handleAnswer({ data, prevChunks }));
     },
     [setChunks],
@@ -185,6 +186,7 @@ export const useLearnChunks = ({
   }, [isFinalChunk, isFinishedLesson, passedBlocks, lesson]);
 
   return {
+    isFinishedLesson,
     handleInteractiveClick,
     chunks,
     total,
