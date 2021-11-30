@@ -16,8 +16,7 @@
 }
 
 .match-tool__inputsWrapper {
-  display: flex;
-  flex-direction: column;
+  display: grid;
   gap: 1rem;
   width: 100%;
 }
@@ -30,7 +29,8 @@
 }
 
 .match-tool__line {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1rem 1fr 1fr;
   align-items: center;
   gap: 1rem;
 }

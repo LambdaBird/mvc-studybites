@@ -43,7 +43,6 @@ export const FunnelTitle = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 0.5rem;
   align-items: center;
   padding: 1rem;
   font-size: 12px;
@@ -53,6 +52,7 @@ export const FunnelTitle = styled.div`
 export const FunnelTitleHeader = styled.span`
   font-size: 14px;
   line-height: 22px;
+  margin-bottom: 0.5rem;
   color: black;
 `;
 

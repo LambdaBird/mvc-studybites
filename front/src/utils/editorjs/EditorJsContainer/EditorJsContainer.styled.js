@@ -91,22 +91,7 @@ export const GlobalStylesEditorPage = createGlobalStyle`
       -webkit-animation: none;
       animation:  none;
     }
-
-    .toolbox-basic-items-title, .toolbox-interactive-items-title{
-      user-select: none;
-      color: rgba(0, 0, 0, 0.45);
-      font-style: normal;
-      font-weight: normal;
-      font-size: 14px;
-      margin-bottom: 0.5rem;
-    }
-
-    .toolbox-interactive-items, .toolbox-basic-items{
-      display: flex;
-      flex-direction: column;
-      align-items: start;
-      gap: 1rem;
-    }
+    
     .toolbox-basic-items{
       margin-bottom: 1rem;
     }
@@ -123,21 +108,7 @@ export const GlobalStylesEditorPage = createGlobalStyle`
         width: 20px;
       }
     }
-
-    .toolbox-item-wrapper{
-      display: flex;
-      margin-left: 1rem;
-      align-items: center;
-      user-select: none;
-      .toolbox-item-data-name{
-        font-size: 14px;
-        color: rgba(0, 0, 0, 0.85);
-      }
-      .toolbox-item-data-description{
-        font-size: 12px;
-        color: rgba(0, 0, 0, 0.45);
-      }
-    }
+    
   }
 
   .ce-toolbar{
@@ -149,7 +120,6 @@ export const GlobalStylesEditorPage = createGlobalStyle`
     position : absolute;
     display: flex;
     justify-content: center;
-    gap: 0.5rem;
     width: calc(100% + 25px);
     opacity: 1;
     visibility: visible;
@@ -252,8 +222,7 @@ export const PlusToolbar = styled.div`
 export const Wrapper = styled.div`
   display: flex;
   width: 100%;
-  gap: 0.5rem;
-
+  margin-right: 0.5rem;
   @media (min-width: 651px) {
     pointer-events: all;
     max-width: 650px;
@@ -263,6 +232,7 @@ export const Wrapper = styled.div`
 export const ToolbarWrapper = styled.div`
   height: 400px;
   width: 100%;
+  margin-left: 0.5rem;
   padding: 1rem;
   background-color: white;
   box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%), 0px 6px 16px rgb(0 0 0 / 8%),
@@ -302,9 +272,7 @@ export const InteractiveBlocksTitle = styled(BlocksTitle)`
 `;
 
 export const Blocks = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: start;
+  display: grid;
   gap: 1rem;
 `;
 

@@ -38,6 +38,5 @@ export const AnswerWrapperWrongTitle = styled(AnswerWrapperWrong)`
 export const MatchWrapper = styled(ChunkWrapper)`
   display: flex;
   flex-direction: column;
-  gap: 2rem;
   padding: 0;
 `;

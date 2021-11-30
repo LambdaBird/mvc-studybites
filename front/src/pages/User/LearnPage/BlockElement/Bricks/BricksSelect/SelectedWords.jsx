@@ -17,9 +17,9 @@ const SelectedWords = ({
   return selectedWordsId.map((wordId) => {
     const { id, value } = words.find((x) => x.id === wordId);
     return (
-      <S.Word key={id} onClick={() => handleWordRemoveClick(wordId)}>
+      <S.SelectedWord key={id} onClick={() => handleWordRemoveClick(wordId)}>
         {value}
-      </S.Word>
+      </S.SelectedWord>
     );
   });
 };
