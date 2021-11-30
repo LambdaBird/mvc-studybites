@@ -61,7 +61,7 @@ export const BiteBar = styled.div`
   justify-content: flex-end;
   width: ${countWidthPercent}%;
 
-  ${barColor},
+  ${barColor};
   div {
     flex-grow: 1;
   }
