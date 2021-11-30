@@ -1,51 +1,21 @@
-import { useMemo } from 'react';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
-import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 
 import Header from '@sb-ui/components/molecules/Header';
 import LearnContext from '@sb-ui/contexts/LearnContext';
-import {
-  apiInteractiveBlocks,
-  postLessonByIdPreview,
-} from '@sb-ui/pages/Teacher/LessonPreview/utils';
+import { useLessonLearn } from '@sb-ui/pages/Teacher/LessonPreview/useLessonLearn';
 import InfoBlock from '@sb-ui/pages/User/LearnPage/InfoBlock';
 import LearnChunk from '@sb-ui/pages/User/LearnPage/LearnChunk';
 import * as S from '@sb-ui/pages/User/LearnPage/LearnPage.styled';
 import { useLearnChunks } from '@sb-ui/pages/User/LearnPage/useLearnChunks';
-import { getLesson } from '@sb-ui/utils/api/v1/teacher';
 import { sbPostfix } from '@sb-ui/utils/constants';
-import { TEACHER_LESSON_BASE_KEY } from '@sb-ui/utils/queries';
-
-const getLessonByIdPreview = async ({ queryKey }) => {
-  const data = await getLesson({ queryKey });
-  return {
-    lesson: {
-      ...data.lesson,
-      blocks: [],
-      interactivePassed: 0,
-      interactiveTotal: data.lesson.blocks.filter((block) =>
-        apiInteractiveBlocks.includes(block.type),
-      ).length,
-    },
-    total: data.lesson.blocks.length,
-  };
-};
 
 const LessonPreview = () => {
   const { t } = useTranslation('teacher');
   const { id: lessonId } = useParams();
 
-  const { data: lessonData } = useQuery(
-    [TEACHER_LESSON_BASE_KEY, { id: lessonId }],
-    getLesson,
-  );
-
-  const postLessonByIdPreviewNew = useMemo(
-    () => postLessonByIdPreview(lessonData),
-    [lessonData],
-  );
+  const { postLessonByIdPreviewNew, getLessonByIdPreview } = useLessonLearn();
 
   const {
     handleInteractiveClick,
