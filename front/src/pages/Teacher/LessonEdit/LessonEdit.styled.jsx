@@ -6,6 +6,7 @@ import {
   RIGHT_BAR_WIDTH,
   RIGHT_PADDING,
 } from '@sb-ui/pages/Teacher/LessonEdit/constants';
+import variables from '@sb-ui/theme/variables';
 
 export const Page = styled.div`
   height: 100%;
@@ -38,6 +39,9 @@ export const InputTitle = styled.input`
   margin-bottom: 1rem;
   &:focus {
     outline: none;
+  }
+  &::placeholder {
+    color: ${variables['gray-6']};
   }
   max-width: 650px;
   font-size: 1.5rem;

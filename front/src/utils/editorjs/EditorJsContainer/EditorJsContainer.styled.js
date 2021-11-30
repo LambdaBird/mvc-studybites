@@ -2,7 +2,7 @@ import styled, { createGlobalStyle } from 'styled-components';
 
 import variables from '@sb-ui/theme/variables';
 
-import { BLOCK_BUTTONS } from './useToolbar/constants';
+import { BLOCK_BUTTONS, START_TITLE } from './useToolbar/constants';
 
 export const Container = styled.div`
   width: 100%;
@@ -31,9 +31,13 @@ export const GlobalStylesEditorPage = createGlobalStyle`
 
   .ce-block{
     padding-bottom: 1rem;
+    &:only-child{
+      .${START_TITLE}:before{
+        content: '${(props) => props.startTitle || ''}';
+      }
+    }
   }
   
-
   @media (min-width: 651px) {
     .ce-settings {
       right: unset;  
