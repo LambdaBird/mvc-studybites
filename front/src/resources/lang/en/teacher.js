@@ -184,7 +184,7 @@ export default {
       not_found: 'Not found',
     },
     title: {
-      placeholder: 'Lesson title',
+      placeholder: 'Untitled',
     },
     links: {
       invite: 'Invite Collaborators',
