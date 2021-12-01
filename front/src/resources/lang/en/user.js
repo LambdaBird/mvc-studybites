@@ -86,4 +86,9 @@ export default {
     finished: 'Lesson is finished',
     back: 'Go back',
   },
+  learn_footer: {
+    text_before_link: 'Like what you see?',
+    create_link: 'Try to create your own lesson',
+    text_after_link: 'Free and no sign up 🐸',
+  },
 };

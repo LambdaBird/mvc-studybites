@@ -9,7 +9,7 @@ import MobileContext from '@sb-ui/contexts/MobileContext';
 import { PlusOutlined } from '@sb-ui/resources/icons';
 import logo from '@sb-ui/resources/img/logo.svg';
 import { AMPLITUDE_EVENTS, amplitudeLogEvent } from '@sb-ui/utils/amplitude';
-import { LessonsStorage } from '@sb-ui/utils/lessonsStorage';
+import { LessonsStorage } from '@sb-ui/utils/LessonsStorage';
 import { LESSONS_NEW } from '@sb-ui/utils/paths';
 
 import LessonList from './LessonList';

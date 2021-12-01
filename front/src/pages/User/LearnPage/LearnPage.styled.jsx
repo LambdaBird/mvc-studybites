@@ -32,6 +32,8 @@ export const LearnWrapper = styled.div`
 
 export const Wrapper = styled.div`
   height: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const BlockCell = styled(Col).attrs(() => ({
@@ -45,9 +47,9 @@ export const BlockCell = styled(Col).attrs(() => ({
 `;
 
 export const Row = styled(AntdRow)`
-  height: 100%;
   padding: 2rem 0;
   justify-content: center;
+  flex: 1 1 auto;
 `;
 
 export const ChunkWrapper = styled.div`

@@ -3,7 +3,7 @@ import { useMutation } from 'react-query';
 
 import { postShareLesson } from '@sb-ui/utils/api/v1/teacher';
 import { Statuses } from '@sb-ui/utils/constants';
-import { LessonsStorage } from '@sb-ui/utils/lessonsStorage';
+import { LessonsStorage } from '@sb-ui/utils/LessonsStorage';
 
 export const useLessonRemove = ({ handleLessonClick }) => {
   const { mutate: shareLesson } = useMutation(postShareLesson);

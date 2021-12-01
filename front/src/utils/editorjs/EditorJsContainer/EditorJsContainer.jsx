@@ -5,6 +5,7 @@ import EditorJS from '@editorjs/editorjs';
 
 import DragDrop from '@sb-ui/utils/editorjs/drag-drop-plugin';
 import Undo from '@sb-ui/utils/editorjs/undo-plugin';
+import { RefType } from '@sb-ui/utils/types';
 
 import { useToolbar } from './useToolbar';
 import * as S from './EditorJsContainer.styled';
@@ -14,9 +15,17 @@ const EditorJsContainer = forwardRef((props, ref) => {
   const { t } = useTranslation('editorjs');
   const instance = useRef(null);
 
-  const { prepareToolbar, handleFocus } = useToolbar({ editor: instance });
+  const { children, language, toolbarRef } = props;
 
-  const { children, language } = props;
+  const { prepareToolbar, handleFocus, hideToolbar } = useToolbar({
+    editor: instance,
+    toolbarRef,
+  });
+
+  useEffect(() => {
+    hideToolbar();
+  }, [hideToolbar, props.lessonId]);
+
   const holder = useMemo(
     () =>
       `editor-js-${(Math.floor(Math.random() * 1000) + Date.now()).toString(
@@ -349,7 +358,10 @@ const EditorJsContainer = forwardRef((props, ref) => {
 
   return (
     <>
-      <S.GlobalStylesEditorPage toolbarHint={t('tools.hint')} />
+      <S.GlobalStylesEditorPage
+        startTitle={t('start_title')}
+        toolbarHint={t('tools.hint')}
+      />
       {children || <S.Container id={holder} />}
     </>
   );
@@ -360,6 +372,8 @@ EditorJsContainer.propTypes = {
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
   ]),
+  toolbarRef: RefType,
+  lessonId: PropTypes.string,
   language: PropTypes.string,
   children: PropTypes.node,
   enableReInitialize: PropTypes.bool,

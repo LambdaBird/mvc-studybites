@@ -78,7 +78,13 @@ const LessonEdit = () => {
           onChange={handleInputTitle}
           onKeyDown={handleNextLine}
         />
-        {isRenderEditor && <EditorJs {...editorJsProps} readOnly={false} />}
+        {isRenderEditor && (
+          <EditorJs
+            key={editorJsProps.lessonId}
+            {...editorJsProps}
+            readOnly={false}
+          />
+        )}
       </S.Page>
     </>
   );

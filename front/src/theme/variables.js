@@ -28,6 +28,10 @@ const variables = {
   'gray-5': '#d9d9d9',
   'gray-6': '#bfbfbf',
   'neutral-8': '#595959',
+  'blue-4': '#69c0ff',
+  'blue-6': '#1890FF',
+  'blue-7': '#096dd9',
+  'geekblue-1': '#f0f5ff',
 };
 
 module.exports = variables;

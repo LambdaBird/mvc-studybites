@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
+import LearnFooter from '@sb-ui/components/atoms/LearnFooter';
 import Header from '@sb-ui/components/molecules/Header';
 import LearnContext from '@sb-ui/contexts/LearnContext';
 import { BLOCKS_TYPE } from '@sb-ui/pages/User/LearnPage/BlockElement/types';
@@ -30,6 +31,7 @@ const LearnPage = () => {
     total,
     learnProgress,
     progressStatus,
+    isFinishedLesson,
   } = useLearnChunks({
     lessonId,
     getEnrolledLesson,
@@ -102,6 +104,7 @@ const LearnPage = () => {
             </LearnContext.Provider>
           </S.BlockCell>
         </S.Row>
+        {isFinishedLesson && <LearnFooter />}
       </S.Wrapper>
     </>
   );

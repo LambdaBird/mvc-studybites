@@ -22,7 +22,7 @@ import {
   putLesson,
 } from '@sb-ui/utils/api/v1/teacher';
 import { Statuses } from '@sb-ui/utils/constants';
-import { LessonsStorage } from '@sb-ui/utils/lessonsStorage';
+import { LessonsStorage } from '@sb-ui/utils/LessonsStorage';
 import { LESSONS_EDIT, LESSONS_NEW, LESSONS_PREVIEW } from '@sb-ui/utils/paths';
 import { TEACHER_LESSON_BASE_KEY } from '@sb-ui/utils/queries';
 
@@ -35,6 +35,7 @@ import {
 export const useLessonEdit = () => {
   const { id: lessonId } = useParams();
   const { t, i18n } = useTranslation('teacher');
+  const toolbarRef = useRef({});
 
   const { language } = i18n;
   const isCurrentlyEditing = useMemo(
@@ -212,8 +213,10 @@ export const useLessonEdit = () => {
   }, []);
 
   const handleNextLine = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' || (e.key === 'Tab' && !e.shiftKey)) {
       editorJSRef.current?.focus?.();
+      toolbarRef.current?.removeHideTitle?.();
+      toolbarRef.current?.handleFocus?.();
     }
   };
 
@@ -304,6 +307,7 @@ export const useLessonEdit = () => {
       data: dataBlocks,
       language,
       lessonId,
+      toolbarRef,
       instanceRef: (instance) => {
         editorJSRef.current = instance;
       },
@@ -342,5 +346,6 @@ export const useLessonEdit = () => {
     setIsShowShare,
     editorJsProps,
     studentsCount: lessonData?.lesson?.studentsCount,
+    toolbarRef,
   };
 };

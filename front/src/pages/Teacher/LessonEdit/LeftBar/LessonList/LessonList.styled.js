@@ -118,4 +118,5 @@ export const Text = styled(TextAntd).attrs({
 })`
   width: 90%;
   color: ${variables['neutral-8']};
+  overflow-x: hidden;
 `;

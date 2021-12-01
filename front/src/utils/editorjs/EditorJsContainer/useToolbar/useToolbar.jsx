@@ -18,7 +18,12 @@ import {
   moveActionsButtonsToMobile,
   setTransform3d,
 } from './domToolbarHelpers';
-import { focusAfterDeletion, getCorrectBlockIndex } from './editorHelpers';
+import {
+  addStartTitle,
+  focusAfterDeletion,
+  getCorrectBlockIndex,
+  removeStartTitle,
+} from './editorHelpers';
 import Toolbar from './Toolbar';
 import { getCurrentBlock } from './toolbarHelpers';
 import { destroyObserver, initObserver } from './toolbarObserver';
@@ -26,7 +31,7 @@ import { useEditorMobile } from './useEditorMobile';
 
 const toolbarWrapper = createToolbar();
 
-export const useToolbar = ({ editor }) => {
+export const useToolbar = ({ editor, toolbarRef: toolbarTool }) => {
   const isMobile = useEditorMobile();
   const [isReady, setIsReady] = useState(false);
   const editorElementRef = useRef(null);
@@ -59,9 +64,23 @@ export const useToolbar = ({ editor }) => {
     [editor],
   );
 
+  useEffect(() => {
+    // eslint-disable-next-line no-param-reassign
+    toolbarTool.current.handleFocus = handleFocus;
+    // eslint-disable-next-line no-param-reassign
+    toolbarTool.current.removeHideTitle = () => {
+      removeStartTitle(editorElementRef.current);
+    };
+  }, [handleFocus, toolbarTool]);
+
+  const hideToolbar = useCallback(() => {
+    toolbarWrapper.classList.add(DISPLAY_NONE);
+  }, []);
+
   const editorMouseDown = useCallback(() => {
     setImmediate(() => {
       handleFocus({ forceBlock: document.activeElement });
+      removeStartTitle(editorElementRef.current);
     });
   }, [handleFocus]);
 
@@ -230,6 +249,16 @@ export const useToolbar = ({ editor }) => {
   ]);
 
   useEffect(() => {
+    if (!isReady) {
+      return;
+    }
+
+    if (editorElementRef.current) {
+      addStartTitle(editorElementRef.current);
+    }
+  }, [isReady]);
+
+  useEffect(() => {
     if (toolbarRef.current) {
       renderToolbar();
     }
@@ -247,5 +276,5 @@ export const useToolbar = ({ editor }) => {
     setIsReady(true);
   }, []);
 
-  return { prepareToolbar, handleFocus };
+  return { prepareToolbar, handleFocus, hideToolbar };
 };
