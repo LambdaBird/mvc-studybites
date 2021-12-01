@@ -25,13 +25,14 @@ export const LearnWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 32px;
   margin: 0 auto;
   max-width: 614px;
 `;
 
 export const Wrapper = styled.div`
   height: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const BlockCell = styled(Col).attrs(() => ({
@@ -45,19 +46,20 @@ export const BlockCell = styled(Col).attrs(() => ({
 `;
 
 export const Row = styled(AntdRow)`
-  height: 100%;
   padding: 2rem 0;
   justify-content: center;
+  flex: 1 1 auto;
 `;
 
 export const ChunkWrapper = styled.div`
   width: 100%;
+  margin-bottom: 2rem;
   background-color: ${variables['learn-chunk-background']};
   border-radius: 8px;
   padding: 1rem;
 
   // TODO: check if any problem will appear
-  display: flex;
+  display: grid;
   flex-direction: column;
   gap: 0.5rem;
 

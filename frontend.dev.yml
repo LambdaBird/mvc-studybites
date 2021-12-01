@@ -6,8 +6,8 @@ services:
       context: ./front
       dockerfile: .docker/Dockerfile.dev
     volumes:
-        - ./front:/front
-        - /front/node_modules
+      - ./front:/front
+      - /front/node_modules
     ports:
       - '3018:3018'
     environment:
@@ -16,4 +16,3 @@ services:
       REACT_APP_SB_HOST: ${REACT_APP_SB_HOST}
       REACT_APP_SELF_HOST: ${REACT_APP_SELF_HOST}
       NODE_ENV: development
-      REACT_APP_AMPLITUDE_KEY: ${REACT_APP_AMPLITUDE_KEY}

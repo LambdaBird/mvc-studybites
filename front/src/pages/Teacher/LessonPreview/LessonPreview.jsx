@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
+import LearnFooter from '@sb-ui/components/atoms/LearnFooter';
 import Header from '@sb-ui/components/molecules/Header';
 import LearnContext from '@sb-ui/contexts/LearnContext';
 import { useLessonLearn } from '@sb-ui/pages/Teacher/LessonPreview/useLessonLearn';
@@ -24,6 +25,7 @@ const LessonPreview = () => {
     lesson,
     total,
     learnProgress,
+    isFinishedLesson,
   } = useLearnChunks({
     lessonId,
     getEnrolledLesson: getLessonByIdPreview,
@@ -64,6 +66,7 @@ const LessonPreview = () => {
             </LearnContext.Provider>
           </S.BlockCell>
         </S.Row>
+        {isFinishedLesson && <LearnFooter />}
       </S.Wrapper>
     </>
   );

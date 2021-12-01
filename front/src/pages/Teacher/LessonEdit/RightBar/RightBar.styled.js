@@ -8,12 +8,14 @@ export const Wrapper = styled.div`
   position: fixed;
   right: 0;
   top: 0;
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
   gap: 0.25rem;
   padding: 1rem;
   z-index: 2;
   width: 100%;
   justify-content: flex-end;
+  justify-items: end;
   background-color: white;
   color: ${variables['neutral-8']};
 

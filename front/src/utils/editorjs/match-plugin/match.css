@@ -1,3 +1,7 @@
+:root{
+  --gray-5: #d9d9d9
+}
+
 .match-tool {
   display: flex;
   flex-direction: column;
@@ -16,8 +20,7 @@
 }
 
 .match-tool__inputsWrapper {
-  display: flex;
-  flex-direction: column;
+  display: grid;
   gap: 1rem;
   width: 100%;
 }
@@ -29,8 +32,18 @@
   align-items: center;
 }
 
+.match-tool__removeLineButton{
+  position: absolute;
+  right: -1.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--gray-5);
+}
+
+
 .match-tool__line {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1rem 1fr 1fr;
   align-items: center;
   gap: 1rem;
 }

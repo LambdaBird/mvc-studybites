@@ -184,7 +184,7 @@ export default {
       not_found: 'Not found',
     },
     title: {
-      placeholder: 'Lesson title',
+      placeholder: 'Untitled',
     },
     links: {
       invite: 'Invite Collaborators',
@@ -245,5 +245,12 @@ export default {
     buttons: {
       invite_student: 'Invite student',
     },
+  },
+  lesson_list: {
+    untitled: 'Untitled',
+    title: 'LESSONS',
+    confirm_title: 'Are you sure?',
+    confirm_ok: 'Yes',
+    confirm_cancel: 'No',
   },
 };

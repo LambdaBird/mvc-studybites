@@ -22,24 +22,26 @@ import {
   putLesson,
 } from '@sb-ui/utils/api/v1/teacher';
 import { Statuses } from '@sb-ui/utils/constants';
-import {
-  clearNonexistentStorageLessons,
-  getStorageLessons,
-  setStorageLesson,
-} from '@sb-ui/utils/lessonsStorage';
+import { LessonsStorage } from '@sb-ui/utils/LessonsStorage';
 import { LESSONS_EDIT, LESSONS_NEW, LESSONS_PREVIEW } from '@sb-ui/utils/paths';
 import { TEACHER_LESSON_BASE_KEY } from '@sb-ui/utils/queries';
 
-const MAX_NAME_LENGTH = 255;
-
-export const CLIENT_ERROR_STARTS = '4';
+import {
+  CLIENT_ERROR_STARTS,
+  MAX_NAME_LENGTH,
+  NEW_LESSON_ID,
+} from './constants';
 
 export const useLessonEdit = () => {
   const { id: lessonId } = useParams();
   const { t, i18n } = useTranslation('teacher');
+  const toolbarRef = useRef({});
 
   const { language } = i18n;
-  const isCurrentlyEditing = useMemo(() => lessonId !== 'new', [lessonId]);
+  const isCurrentlyEditing = useMemo(
+    () => lessonId !== NEW_LESSON_ID,
+    [lessonId],
+  );
   const history = useHistory();
   const editorJSRef = useRef(null);
   const undoPluginRef = useRef(null);
@@ -55,8 +57,6 @@ export const useLessonEdit = () => {
 
   const inputTitle = useRef(null);
 
-  const lessons = getStorageLessons();
-
   const { data: lessonData, isLoading } = useQuery(
     [TEACHER_LESSON_BASE_KEY, { id: lessonId }],
     getLesson,
@@ -66,7 +66,7 @@ export const useLessonEdit = () => {
       enabled: isCurrentlyEditing,
       onError: (error) => {
         if (error.response.status.toString().startsWith(CLIENT_ERROR_STARTS)) {
-          clearNonexistentStorageLessons(lessonId);
+          LessonsStorage.clearNonexistentLessons(lessonId);
           history.push(LESSONS_NEW);
         }
       },
@@ -74,7 +74,7 @@ export const useLessonEdit = () => {
   );
 
   useEffect(() => {
-    if (lessonId !== 'new' && lessonData) {
+    if (lessonId !== NEW_LESSON_ID && lessonData) {
       amplitudeLogEvent(AMPLITUDE_EVENTS.OPEN_LESSON, lessonId);
     }
   }, [lessonId, lessonData]);
@@ -82,7 +82,8 @@ export const useLessonEdit = () => {
   const createLessonMutation = useMutation(createLesson, {
     onSuccess: (data) => {
       const { editId, name: lessonName } = data?.lesson;
-      setStorageLesson({
+      LessonsStorage.removeLesson(NEW_LESSON_ID);
+      LessonsStorage.setLesson({
         name: lessonName,
         status: Statuses.DRAFT,
         id: editId,
@@ -115,7 +116,7 @@ export const useLessonEdit = () => {
         }
         undoPluginRef.current?.initialize(editorToRender);
       }
-      setStorageLesson({
+      LessonsStorage.setLesson({
         name: data.lesson.name,
         status: lessonData?.lesson?.status,
         id: lessonId,
@@ -160,7 +161,7 @@ export const useLessonEdit = () => {
           editId: lessonId,
           name:
             !isCurrentlyEditing && name?.trim()?.length === 0
-              ? 'Untitled'
+              ? t('lesson_list.untitled')
               : name,
         },
         blocks: prepareBlocksForApi(blocks),
@@ -212,8 +213,10 @@ export const useLessonEdit = () => {
   }, []);
 
   const handleNextLine = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' || (e.key === 'Tab' && !e.shiftKey)) {
       editorJSRef.current?.focus?.();
+      toolbarRef.current?.removeHideTitle?.();
+      toolbarRef.current?.handleFocus?.();
     }
   };
 
@@ -226,7 +229,7 @@ export const useLessonEdit = () => {
     const lessonName = lessonData?.lesson?.name;
     if (lessonName) {
       setName(lessonName);
-      setStorageLesson({
+      LessonsStorage.setLesson({
         name: lessonName,
         status: lessonData?.lesson?.status,
         id: lessonId,
@@ -286,6 +289,17 @@ export const useLessonEdit = () => {
     [dataBlocks, isCurrentlyEditing],
   );
 
+  useEffect(() => {
+    if (!isCurrentlyEditing) {
+      const lessonName = name || t('lesson_list.untitled');
+      LessonsStorage.setLesson({
+        name: lessonName,
+        status: Statuses.UNSAVED,
+        id: NEW_LESSON_ID,
+      });
+    }
+  }, [isCurrentlyEditing, name, t]);
+
   const editorJsProps = useMemo(
     () => ({
       ref: undoPluginRef,
@@ -293,6 +307,7 @@ export const useLessonEdit = () => {
       data: dataBlocks,
       language,
       lessonId,
+      toolbarRef,
       instanceRef: (instance) => {
         editorJSRef.current = instance;
       },
@@ -321,7 +336,6 @@ export const useLessonEdit = () => {
     handleHideLeftBar,
     handleShowLeftBar,
     isLeftBarOpen,
-    lessons,
     publicId,
     isPublic,
     inputTitle,
@@ -332,5 +346,6 @@ export const useLessonEdit = () => {
     setIsShowShare,
     editorJsProps,
     studentsCount: lessonData?.lesson?.studentsCount,
+    toolbarRef,
   };
 };

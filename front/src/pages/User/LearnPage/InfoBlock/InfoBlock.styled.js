@@ -8,6 +8,7 @@ export const BlockWrapper = styled(Row)`
   padding: 2rem;
   background-color: rgba(245, 245, 245, 1);
   border-radius: 8px;
+  margin-bottom: 2rem;
 `;
 
 export const StyledRow = styled(Row)`

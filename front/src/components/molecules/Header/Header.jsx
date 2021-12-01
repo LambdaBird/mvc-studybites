@@ -16,14 +16,7 @@ import {
 import * as S from './Header.styled';
 import { HEADER_HEIGHT } from './Header.styled';
 
-const Header = ({
-  isFixed,
-  className,
-  hideOnScroll,
-  bottom,
-  children,
-  handleHide,
-}) => {
+const Header = ({ isFixed, className, hideOnScroll, bottom, handleHide }) => {
   const isMobile = useMobile();
   const history = useHistory();
   const headerRef = useRef(null);
@@ -84,7 +77,6 @@ const Header = ({
             <S.LogoLink onClick={handleHomeClick}>
               <S.Logo src={logo} alt="Logo" />
             </S.LogoLink>
-            <S.ChildrenWrapper>{children}</S.ChildrenWrapper>
           </Col>
         </S.RowMain>
         {bottom}
@@ -94,7 +86,6 @@ const Header = ({
 };
 
 Header.propTypes = {
-  children: ChildrenType,
   className: ClassNameType,
   isFixed: IsFixedType,
   bottom: ChildrenType,
