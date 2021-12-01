@@ -22,7 +22,7 @@ import {
   putLesson,
 } from '@sb-ui/utils/api/v1/teacher';
 import { Statuses } from '@sb-ui/utils/constants';
-import { LessonsStorage } from '@sb-ui/utils/lessonsStorage';
+import { LessonsStorage } from '@sb-ui/utils/LessonsStorage';
 import { LESSONS_EDIT, LESSONS_NEW, LESSONS_PREVIEW } from '@sb-ui/utils/paths';
 import { TEACHER_LESSON_BASE_KEY } from '@sb-ui/utils/queries';
 
