@@ -30,6 +30,15 @@ export const LessonsStorage = {
 
     this.setLessons(newLessons);
   },
+  getNearestLesson(lessonId) {
+    const lessons = this.getLessons();
+    const index = lessons.findIndex((lesson) => lesson.id === lessonId);
+
+    return {
+      prevLesson: lessons[index - 1] || null,
+      nextLesson: lessons[index + 1] || null,
+    };
+  },
   clearNonexistentLessons(lessonId) {
     const lessons = this.getLessons();
     const newLessons = lessons.filter((lesson) => lesson.id !== lessonId);

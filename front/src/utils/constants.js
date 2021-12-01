@@ -23,4 +23,5 @@ export const Statuses = {
   PUBLIC: 'Public',
   DRAFT: 'Draft',
   UNSAVED: 'Unsaved',
+  ARCHIVED: 'Archived',
 };
