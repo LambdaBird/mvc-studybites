@@ -246,4 +246,10 @@ export default {
       invite_student: 'Пригласить студента',
     },
   },
+  lesson_list: {
+    title: 'УРОКИ',
+    confirm_title: 'Вы уверены?',
+    confirm_ok: 'Да',
+    confirm_cancel: 'Нет',
+  },
 };

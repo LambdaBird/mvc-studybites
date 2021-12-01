@@ -246,4 +246,10 @@ export default {
       invite_student: 'Invite student',
     },
   },
+  lesson_list: {
+    title: 'LESSONS',
+    confirm_title: 'Are you sure?',
+    confirm_ok: 'Yes',
+    confirm_cancel: 'No',
+  },
 };
