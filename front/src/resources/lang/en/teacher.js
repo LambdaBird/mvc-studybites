@@ -247,6 +247,7 @@ export default {
     },
   },
   lesson_list: {
+    untitled: 'Untitled',
     title: 'LESSONS',
     confirm_title: 'Are you sure?',
     confirm_ok: 'Yes',

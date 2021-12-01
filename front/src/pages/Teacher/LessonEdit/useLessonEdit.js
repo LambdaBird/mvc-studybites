@@ -160,7 +160,7 @@ export const useLessonEdit = () => {
           editId: lessonId,
           name:
             !isCurrentlyEditing && name?.trim()?.length === 0
-              ? 'Untitled'
+              ? t('lesson_list.untitled')
               : name,
         },
         blocks: prepareBlocksForApi(blocks),
@@ -288,14 +288,14 @@ export const useLessonEdit = () => {
 
   useEffect(() => {
     if (!isCurrentlyEditing) {
-      const lessonName = name || 'Untitled';
+      const lessonName = name || t('lesson_list.untitled');
       LessonsStorage.setLesson({
         name: lessonName,
         status: Statuses.UNSAVED,
         id: NEW_LESSON_ID,
       });
     }
-  }, [isCurrentlyEditing, name]);
+  }, [isCurrentlyEditing, name, t]);
 
   const editorJsProps = useMemo(
     () => ({

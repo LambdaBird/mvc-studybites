@@ -247,6 +247,7 @@ export default {
     },
   },
   lesson_list: {
+    untitled: 'Без названия',
     title: 'УРОКИ',
     confirm_title: 'Вы уверены?',
     confirm_ok: 'Да',
