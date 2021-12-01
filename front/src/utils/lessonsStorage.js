@@ -36,8 +36,9 @@ export const LessonsStorage = {
     this.setLessons(newLessons);
   },
   onChangeLessons() {
+    const lessons = this.getLessons();
     this.handlers.forEach((handler) => {
-      handler?.(this.getLessons());
+      handler?.(lessons);
     });
   },
   addChangeHandler(func) {
