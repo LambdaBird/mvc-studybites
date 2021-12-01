@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { HEADER_HEIGHT } from '@sb-ui/components/molecules/Header/Header.styled';
 import variables from '@sb-ui/theme/variables';
+import { Statuses } from '@sb-ui/utils/constants';
 
 const { Text: TextAntd } = Typography;
 
@@ -58,8 +59,20 @@ export const Lesson = styled.div`
   }
 `;
 
+const getStatus = (status) => {
+  switch (status) {
+    case Statuses.PUBLIC:
+      return 'success';
+    case Statuses.DRAFT:
+      return 'warning';
+    case Statuses.UNSAVED:
+    default:
+      return 'default';
+  }
+};
+
 export const Badge = styled(BadgeAntd).attrs(({ status }) => ({
-  status: status === 'Public' ? 'success' : 'warning',
+  status: getStatus(status),
 }))``;
 
 export const Text = styled(TextAntd).attrs({

@@ -246,4 +246,7 @@ export default {
       invite_student: 'Invite student',
     },
   },
+  lesson_list: {
+    untitled: 'Untitled',
+  },
 };

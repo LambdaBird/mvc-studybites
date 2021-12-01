@@ -20,7 +20,6 @@ const LessonEdit = () => {
     handleInputTitle,
     handleNextLine,
     handleButtons,
-    lessons,
     isPublic,
     publicId,
     inputTitle,
@@ -53,7 +52,6 @@ const LessonEdit = () => {
         handleShowLeftBar={handleShowLeftBar}
         handleHideLeftBar={handleHideLeftBar}
         isOpen={isLeftBarOpen}
-        lessons={lessons}
       />
       <RightBar
         isLoading={isLoading}

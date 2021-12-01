@@ -22,4 +22,5 @@ export const sbPostfix = ' · StudyBites';
 export const Statuses = {
   PUBLIC: 'Public',
   DRAFT: 'Draft',
+  UNSAVED: 'Unsaved',
 };
