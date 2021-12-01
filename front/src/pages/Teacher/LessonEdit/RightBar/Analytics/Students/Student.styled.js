@@ -4,19 +4,22 @@ import styled from 'styled-components';
 import variables from '@sb-ui/theme/variables';
 
 export const Wrapper = styled.div`
-  display: flex;
+  display: grid;
+  grid-auto-flow: row;
+  row-gap: 0.5rem;
   flex-direction: column;
-  padding: 1rem;
+  padding: 1rem 0;
 `;
 
 export const Student = styled.div`
-  display: flex;
-  gap: 1rem;
-  padding: 0.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 4fr 3fr 2fr;
+  column-gap: 0.25rem;
   &:hover {
     background-color: ${variables['gray-4']};
     cursor: pointer;
   }
+  justify-items: start;
   align-items: center;
 `;
 

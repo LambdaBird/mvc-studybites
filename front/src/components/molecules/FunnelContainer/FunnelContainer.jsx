@@ -97,8 +97,8 @@ const FunnelContainer = ({ lessonId }) => {
             }
 
             return (
-              new Date(student.results[theResultIndex].createdAt) -
-              new Date(student.results[theResultIndex - 1].createdAt)
+              new Date(student.results[theResultIndex]?.createdAt) -
+              new Date(student.results[theResultIndex - 1]?.createdAt)
             );
           }),
         };
