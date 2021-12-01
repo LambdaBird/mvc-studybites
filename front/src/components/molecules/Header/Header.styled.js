@@ -51,20 +51,6 @@ export const Logo = styled.img`
   cursor: pointer;
 `;
 
-export const Profile = styled.div`
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-`;
-
-export const ChildrenWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-`;
-
 export const LogoLink = styled.div`
   cursor: pointer;
 `;

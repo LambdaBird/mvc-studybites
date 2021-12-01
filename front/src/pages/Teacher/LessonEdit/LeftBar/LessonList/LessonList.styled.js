@@ -26,6 +26,7 @@ export const LessonsTitle = styled.div`
   font-size: 14px;
   line-height: 22px;
   margin-top: 1rem;
+  margin-bottom: 1rem;
   color: rgba(0, 0, 0, 0.45);
   user-select: none;
 `;
@@ -40,7 +41,6 @@ export const Wrapper = styled.div`
   display: flex;
   height: calc(100% - 2 * ${HEADER_HEIGHT}px);
   flex-direction: column;
-  gap: 0.5rem;
   padding-left: 1rem;
   padding-right: 1rem;
 `;

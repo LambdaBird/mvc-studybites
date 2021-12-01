@@ -6,7 +6,6 @@ import { DoubleLeftOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 
 import Button from '@sb-ui/components/atoms/Button';
 import MobileContext from '@sb-ui/contexts/MobileContext';
-import { PlusOutlined } from '@sb-ui/resources/icons';
 import logo from '@sb-ui/resources/img/logo.svg';
 import { AMPLITUDE_EVENTS, amplitudeLogEvent } from '@sb-ui/utils/amplitude';
 import { LessonsStorage } from '@sb-ui/utils/LessonsStorage';
@@ -57,7 +56,7 @@ const LeftBar = ({ isOpen, handleHideLeftBar, handleShowLeftBar }) => {
         </S.LogoLink>
         <LessonList lessons={lessons} handleHideLeftBar={handleHideLeftBar} />
         <S.AddNewLessonWrapper onClick={handleNewLessonClick}>
-          <PlusOutlined />
+          <S.PlusIcon />
           <div>{t('left_bar.add_new_lesson')}</div>
         </S.AddNewLessonWrapper>
       </S.Wrapper>

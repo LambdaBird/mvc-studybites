@@ -75,8 +75,8 @@ export const ShareDescription = styled.span`
 `;
 
 export const ShareLeft = styled.div`
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-auto-flow: column;
   align-items: center;
   gap: 1rem;
 `;

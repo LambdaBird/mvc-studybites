@@ -20,9 +20,16 @@ export const Input = styled.div.attrs({
   ${(props) => (props.isError ? `border: 1px solid red;` : '')}
 `;
 
+export const InputLink = styled(Input)`
+  margin-bottom: 1rem;
+`;
+
+export const InputCaption = styled(Input)`
+  margin-top: 1rem;
+`;
+
 export const Bottom = styled.div`
   display: flex;
-  gap: 0.5rem;
   flex-direction: column;
   margin-top: 0.5rem;
   align-items: center;

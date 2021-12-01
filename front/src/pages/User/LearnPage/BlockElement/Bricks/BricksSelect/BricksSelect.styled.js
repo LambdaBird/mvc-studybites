@@ -11,30 +11,35 @@ export const HEIGHT_GAP_SELECTED = 24;
 export const LineWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
   margin: 1rem 0 2rem 0;
 `;
 
 export const Line = styled.div`
   width: 100%;
+  margin-bottom: 1rem;
   height: 2rem;
   border-bottom: 1px solid ${variables['lesson-block-bricks-word-underline']};
+  z-index: 1;
+`;
+
+export const FirstLine = styled(Line)`
+  z-index: 2;
 `;
 
 export const WordsWrapperSelected = styled.div`
-  gap: ${HEIGHT_GAP_SELECTED}px 0.5rem;
   display: flex;
   flex-wrap: wrap;
 `;
 
 export const WordsWrapper = styled.div`
-  gap: ${HEIGHT_GAP}px 0.5rem;
   display: flex;
   flex-wrap: wrap;
 `;
 
 export const Word = styled.div`
   display: inline-block;
+  margin-bottom: ${HEIGHT_GAP}px;
+  margin-right: 0.5rem;
   border-radius: 2px;
   border: ${BORDER}px solid ${variables['border-color-base']};
   background-color: ${(props) =>
@@ -50,6 +55,11 @@ export const Word = styled.div`
   user-select: none;
 `;
 
-export const WordDisabled = styled(Word)`
+export const SelectedWord = styled(Word)`
+  margin-right: 0.5rem;
+  margin-bottom: ${HEIGHT_GAP_SELECTED}px;
+`;
+
+export const WordDisabled = styled(SelectedWord)`
   cursor: default;
 `;

@@ -9,7 +9,7 @@ export const MatchWrapper = styled.div`
 `;
 
 export const MatchMiddle = styled.div`
-  display: flex;
+  display: grid;
   gap: 1rem;
   flex-direction: column;
   width: 20%;
@@ -24,7 +24,6 @@ export const MatchColumn = styled(FlipMove)`
   flex-direction: column;
   display: flex;
   justify-content: space-between;
-  gap: 1rem;
 `;
 
 export const ArrowConnectWrapper = styled.div`

@@ -8,13 +8,11 @@ const { Text } = Typography;
 export const AnswerWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  gap: 0.5rem;
   align-items: flex-start;
 `;
 
 export const ColumnCheckbox = styled(Checkbox.Group)`
-  display: flex;
+  display: grid;
   flex-direction: column;
   gap: 0.5rem;
   margin-top: 1rem;
