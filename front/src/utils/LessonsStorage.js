@@ -1,5 +1,8 @@
 export const LessonsStorage = {
   handlers: [],
+  getLesson(id) {
+    return this.getLessons().find((lesson) => lesson.id === id);
+  },
   getLessons() {
     return JSON.parse(localStorage.getItem('lessons') || '[]');
   },
@@ -16,6 +19,9 @@ export const LessonsStorage = {
       }
       if (lesson.status) {
         storageLesson.status = lesson.status;
+      }
+      if (lesson.blocks) {
+        storageLesson.blocks = lesson.blocks;
       }
     } else {
       lessons.unshift(lesson);

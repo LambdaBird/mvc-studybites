@@ -119,6 +119,7 @@ export default {
       error_updated: 'Ошибка при обновлении',
       error_lesson_name: 'Отсутствует название урока',
       error_empty_blocks: 'Отсутствуют блоки урока',
+      error_lesson_not_found: 'Урок не найден',
     },
     header: {
       placeholder: 'Введите заголовок',

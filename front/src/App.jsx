@@ -4,6 +4,7 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 
 import ErrorBoundary from '@sb-ui/components/ErrorBoundary';
 import MobileContext from '@sb-ui/contexts/MobileContext';
+import { useFirstAppNavigation } from '@sb-ui/hooks/useFirstAppNavigation/useFirstAppNavigation';
 import useMobile from '@sb-ui/hooks/useMobile';
 import Routes from '@sb-ui/routes/Routes';
 
@@ -12,7 +13,7 @@ import { GlobalStyles } from './resources/styles/Global.styled';
 
 const App = () => {
   const isMobile = useMobile();
-
+  useFirstAppNavigation();
   return (
     <>
       <Helmet>
