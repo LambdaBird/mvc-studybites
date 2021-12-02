@@ -28,12 +28,13 @@ export const useLessonRemove = ({ handleLessonClick }) => {
     event.stopPropagation();
     const { prevLesson, nextLesson } = LessonsStorage.getNearestLesson(id);
 
+    const state = { force: true };
     if (prevLesson) {
-      handleLessonClick(prevLesson.id);
+      handleLessonClick(prevLesson.id, state);
     } else if (nextLesson) {
-      handleLessonClick(nextLesson.id);
+      handleLessonClick(nextLesson.id, state);
     } else {
-      handleLessonClick('new');
+      handleLessonClick('new', state);
     }
     shareLesson({
       id,

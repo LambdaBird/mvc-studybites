@@ -1,5 +1,6 @@
 import { message } from 'antd';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import equal from 'fast-deep-equal';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from 'react-query';
 import { useHistory, useParams } from 'react-router-dom';
@@ -36,6 +37,9 @@ export const useLessonEdit = () => {
   const history = useHistory();
   const editorJSRef = useRef(null);
   const undoPluginRef = useRef(null);
+  const currentBlocksRef = useRef({ blocks: null });
+  const [blocksTrigger, setBlocksTrigger] = useState(null);
+  const [isNavigationAllowed, setIsNavigationAllowed] = useState(false);
 
   const {
     lesson,
@@ -75,8 +79,16 @@ export const useLessonEdit = () => {
     language,
     lessonId,
     toolbarRef,
-    instanceRef: (instance) => {
+    onChange: (api, dataBlocks) => {
+      currentBlocksRef.current.blocks = dataBlocks.blocks;
+      setBlocksTrigger(dataBlocks.blocks);
+    },
+
+    instanceRef: async (instance) => {
       editorJSRef.current = instance;
+      await instance.isReady;
+      const saveData = await instance.save();
+      currentBlocksRef.current.blocks = saveData.blocks;
     },
   });
 
@@ -84,13 +96,24 @@ export const useLessonEdit = () => {
     if (lesson?.blocks) {
       setName(lesson?.name);
       editorJsPropsRef.current.name = lesson?.name;
-      editorJsPropsRef.current.data = {
+      const data = {
         blocks: prepareEditorData(lesson?.blocks) || [],
       };
+      editorJsPropsRef.current.data = data;
+      currentBlocksRef.current.blocks = data.blocks;
+      setBlocksTrigger(data.blocks);
       setIsRenderEditor(true);
       setLessonIdKey(lesson?.id);
     }
   }, [lesson, setIsRenderEditor, setLessonIdKey, setName]);
+
+  const isBlocksChanged = useCallback((lessonBlocks) => {
+    const oldBlocks = prepareEditorData(lessonBlocks);
+    if (!currentBlocksRef.current?.blocks || !oldBlocks) {
+      return false;
+    }
+    return !equal(oldBlocks, currentBlocksRef.current.blocks);
+  }, []);
 
   const createLessonMutation = useMutation(createLesson, {
     onSuccess: (data, params) => {
@@ -101,7 +124,9 @@ export const useLessonEdit = () => {
         status: Statuses.DRAFT,
         id: editId,
       });
-      history.replace(LESSONS_EDIT.replace(':id', editId));
+      history.replace(LESSONS_EDIT.replace(':id', editId), {
+        force: true,
+      });
       message.success({
         content: t('editor_js.message.success_created'),
         duration: 2,
@@ -182,7 +207,7 @@ export const useLessonEdit = () => {
         });
         return;
       }
-
+      currentBlocksRef.current.blocks = params.blocks;
       if (isCurrentlyEditing) updateLessonMutation.mutate(params);
       else createLessonMutation.mutate(params);
     } catch (e) {
@@ -200,6 +225,14 @@ export const useLessonEdit = () => {
     t,
     updateLessonMutation,
   ]);
+
+  useEffect(() => {
+    if (isBlocksChanged(lesson?.blocks)) {
+      setIsNavigationAllowed(false);
+    } else {
+      setIsNavigationAllowed(true);
+    }
+  }, [blocksTrigger, isBlocksChanged, lesson?.blocks]);
 
   return {
     isCurrentlyEditing,
@@ -221,6 +254,8 @@ export const useLessonEdit = () => {
     handleShowLeftBar,
     name,
     inputTitle,
+    isNavigationAllowed,
+    setIsNavigationAllowed,
     lessonIdKey,
     setIsShowShare,
     editorJsPropsRef,
