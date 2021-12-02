@@ -1,6 +1,1 @@
-import {
-  createFirstLesson,
-  useFirstAppNavigation,
-} from './useFirstAppNavigation';
-
-export { createFirstLesson, useFirstAppNavigation };
+export * from './useFirstAppNavigation';

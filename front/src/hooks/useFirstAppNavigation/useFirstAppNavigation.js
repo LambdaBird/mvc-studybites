@@ -6,11 +6,11 @@ import { LessonsStorage } from '@sb-ui/utils/LessonsStorage';
 
 import { defaultLesson } from './defaultLesson';
 
-const IS_ALREADY_SITE_VISITED = 'isAlreadySiteVisited';
+const IS_VISITED = 'isVisited';
 
 export const createFirstLesson = () => {
-  const firstNavigationSite = localStorage.getItem(IS_ALREADY_SITE_VISITED);
-  localStorage.setItem(IS_ALREADY_SITE_VISITED, '1');
+  const firstNavigationSite = localStorage.getItem(IS_VISITED);
+  localStorage.setItem(IS_VISITED, true);
   if (!firstNavigationSite) {
     LessonsStorage.setLesson({
       id: EXAMPLE_LESSON_ID,
