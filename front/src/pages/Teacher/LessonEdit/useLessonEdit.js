@@ -1,93 +1,107 @@
 import { message } from 'antd';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation } from 'react-query';
 import { useHistory, useParams } from 'react-router-dom';
 import * as Sentry from '@sentry/browser';
 
-import {
-  DESKTOP_WIDTH,
-  getCurrentWidth,
-} from '@sb-ui/hooks/useMobile/useMobile';
+import { useBars } from '@sb-ui/pages/Teacher/LessonEdit/useBars';
+import { useGetLesson } from '@sb-ui/pages/Teacher/LessonEdit/useGetLesson';
+import { useInput } from '@sb-ui/pages/Teacher/LessonEdit/useInput';
 import {
   getConfig,
   prepareBlocksForApi,
   prepareEditorData,
 } from '@sb-ui/pages/Teacher/LessonEdit/utils';
 import { queryClient } from '@sb-ui/query';
-import { AMPLITUDE_EVENTS, amplitudeLogEvent } from '@sb-ui/utils/amplitude';
-import {
-  createLesson,
-  getLesson,
-  putLesson,
-} from '@sb-ui/utils/api/v1/teacher';
+import { createLesson, putLesson } from '@sb-ui/utils/api/v1/teacher';
 import { Statuses } from '@sb-ui/utils/constants';
-import {
-  clearNonexistentStorageLessons,
-  getStorageLessons,
-  setStorageLesson,
-} from '@sb-ui/utils/lessonsStorage';
-import { LESSONS_EDIT, LESSONS_NEW, LESSONS_PREVIEW } from '@sb-ui/utils/paths';
+import { LessonsStorage } from '@sb-ui/utils/LessonsStorage';
+import { LESSONS_EDIT } from '@sb-ui/utils/paths';
 import { TEACHER_LESSON_BASE_KEY } from '@sb-ui/utils/queries';
 
-const MAX_NAME_LENGTH = 255;
-
-export const CLIENT_ERROR_STARTS = '4';
+import { EXAMPLE_LESSON_ID, NEW_LESSON_ID } from './constants';
 
 export const useLessonEdit = () => {
   const { id: lessonId } = useParams();
   const { t, i18n } = useTranslation('teacher');
-
+  const toolbarRef = useRef({});
   const { language } = i18n;
-  const isCurrentlyEditing = useMemo(() => lessonId !== 'new', [lessonId]);
+
+  const isCurrentlyEditing = useMemo(
+    () => lessonId !== NEW_LESSON_ID && lessonId !== EXAMPLE_LESSON_ID,
+    [lessonId],
+  );
+
   const history = useHistory();
   const editorJSRef = useRef(null);
   const undoPluginRef = useRef(null);
-  const [name, setName] = useState('');
-  const [dataBlocks, setDataBlocks] = useState(null);
-  const [isEditorDisabled, setIsEditorDisabled] = useState(false);
-  const [isShowAnalytics, setIsShowAnalytics] = useState(false);
 
-  const [isLeftBarOpen, setIsLeftBarOpen] = useState(
-    getCurrentWidth() >= DESKTOP_WIDTH,
-  );
-  const [isShowShare, setIsShowShare] = useState(false);
+  const {
+    lesson,
+    isLoading,
+    isRenderEditor,
+    setIsRenderEditor,
+    lessonIdKey,
+    setLessonIdKey,
+  } = useGetLesson({ lessonId });
 
-  const inputTitle = useRef(null);
+  const { inputTitle, handleInputTitle, handleNextLine, name, setName } =
+    useInput({
+      isLoading,
+      lesson,
+      toolbarRef,
+      editorJSRef,
+      lessonId,
+    });
+  const {
+    isShowAnalytics,
+    isLeftBarOpen,
+    isShowShare,
+    setIsShowShare,
+    handlePreview,
+    handleShare,
+    handleShowLeftBar,
+    handleHideLeftBar,
+    handleAnalytics,
+  } = useBars({ lessonId });
 
-  const lessons = getStorageLessons();
-
-  const { data: lessonData, isLoading } = useQuery(
-    [TEACHER_LESSON_BASE_KEY, { id: lessonId }],
-    getLesson,
-    {
-      refetchOnWindowFocus: false,
-      retry: 2,
-      enabled: isCurrentlyEditing,
-      onError: (error) => {
-        if (error.response.status.toString().startsWith(CLIENT_ERROR_STARTS)) {
-          clearNonexistentStorageLessons(lessonId);
-          history.push(LESSONS_NEW);
-        }
-      },
+  const editorJsPropsRef = useRef({
+    ref: undoPluginRef,
+    tools: getConfig(t).tools,
+    data: {
+      blocks: prepareEditorData(lesson?.blocks),
     },
-  );
+    language,
+    lessonId,
+    toolbarRef,
+    instanceRef: (instance) => {
+      editorJSRef.current = instance;
+    },
+  });
 
   useEffect(() => {
-    if (lessonId !== 'new' && lessonData) {
-      amplitudeLogEvent(AMPLITUDE_EVENTS.OPEN_LESSON, lessonId);
+    if (lesson?.blocks) {
+      setName(lesson?.name);
+      editorJsPropsRef.current.name = lesson?.name;
+      editorJsPropsRef.current.data = {
+        blocks: prepareEditorData(lesson?.blocks) || [],
+      };
+      setIsRenderEditor(true);
+      setLessonIdKey(lesson?.id);
     }
-  }, [lessonId, lessonData]);
+  }, [lesson, setIsRenderEditor, setLessonIdKey, setName]);
 
   const createLessonMutation = useMutation(createLesson, {
-    onSuccess: (data) => {
+    onSuccess: (data, params) => {
       const { editId, name: lessonName } = data?.lesson;
-      setStorageLesson({
+      LessonsStorage.removeLesson(params?.lesson?.editId);
+      LessonsStorage.setLesson({
         name: lessonName,
         status: Statuses.DRAFT,
         id: editId,
       });
-      history.replace(LESSONS_EDIT.replace(':id', editId), { newLesson: true });
+      history.replace(LESSONS_EDIT.replace(':id', editId));
       message.success({
         content: t('editor_js.message.success_created'),
         duration: 2,
@@ -107,7 +121,6 @@ export const useLessonEdit = () => {
         const editorToRender = {
           blocks: prepareEditorData(data?.lesson?.blocks),
         };
-
         if (editorToRender.blocks.length === 0) {
           editorJSRef.current?.clear();
         } else {
@@ -115,9 +128,9 @@ export const useLessonEdit = () => {
         }
         undoPluginRef.current?.initialize(editorToRender);
       }
-      setStorageLesson({
+      LessonsStorage.setLesson({
         name: data.lesson.name,
-        status: lessonData?.lesson?.status,
+        status: lesson?.status,
         id: lessonId,
       });
       queryClient.invalidateQueries([
@@ -137,31 +150,19 @@ export const useLessonEdit = () => {
     },
   });
 
-  const handleAnalytics = useCallback(() => {
-    if (isShowAnalytics === false) {
-      amplitudeLogEvent(AMPLITUDE_EVENTS.OPEN_ANALYTICS);
-    }
-    setIsShowAnalytics((prev) => !prev);
-  }, [isShowAnalytics]);
-
-  const handleHideLeftBar = useCallback(() => {
-    setIsLeftBarOpen(false);
-  }, []);
-
-  const handleShowLeftBar = useCallback(() => {
-    setIsLeftBarOpen(true);
-  }, []);
-
   const handleSave = useCallback(async () => {
     try {
       const { blocks } = await editorJSRef.current.save();
+      const paramsName =
+        (lessonId === NEW_LESSON_ID || lessonId === EXAMPLE_LESSON_ID) &&
+        name?.trim()?.length === 0
+          ? t('lesson_list.untitled')
+          : name;
+
       const params = {
         lesson: {
           editId: lessonId,
-          name:
-            !isCurrentlyEditing && name?.trim()?.length === 0
-              ? 'Untitled'
-              : name,
+          name: paramsName,
         },
         blocks: prepareBlocksForApi(blocks),
       };
@@ -200,116 +201,14 @@ export const useLessonEdit = () => {
     updateLessonMutation,
   ]);
 
-  const handleShare = useCallback(async () => {
-    setIsShowShare((prev) => !prev);
-  }, []);
-
-  const handleInputTitle = useCallback((e) => {
-    const newText = e.target.value;
-    if (newText.length < MAX_NAME_LENGTH) {
-      setName(newText);
-    }
-  }, []);
-
-  const handleNextLine = (e) => {
-    if (e.key === 'Enter') {
-      editorJSRef.current?.focus?.();
-    }
-  };
-
-  const handlePreview = () => {
-    amplitudeLogEvent(AMPLITUDE_EVENTS.PREVIEW);
-    history.push(LESSONS_PREVIEW.replace(':id', lessonId));
-  };
-
-  useEffect(() => {
-    const lessonName = lessonData?.lesson?.name;
-    if (lessonName) {
-      setName(lessonName);
-      setStorageLesson({
-        name: lessonName,
-        status: lessonData?.lesson?.status,
-        id: lessonId,
-      });
-    }
-    // Should setStorageLesson only when lesson data changes only
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lessonData?.lesson]);
-
-  useEffect(() => {
-    if (!isCurrentlyEditing) {
-      setName('');
-      setDataBlocks(null);
-      editorJSRef.current?.clear?.();
-      setIsEditorDisabled(false);
-    }
-  }, [editorJSRef, isCurrentlyEditing, setName]);
-
-  const isPublic = lessonData?.lesson?.status === Statuses.PUBLIC;
-
-  useEffect(() => {
-    if (inputTitle.current && !isLoading && !lessonData?.lesson.name) {
-      setTimeout(() => {
-        inputTitle.current.focus();
-      }, 0);
-    }
-  }, [inputTitle, isLoading, lessonData?.lesson.name]);
-
-  useEffect(() => {
-    if (lessonData) {
-      const blocks = prepareEditorData(lessonData?.lesson?.blocks);
-      setDataBlocks({
-        blocks,
-      });
-      if (blocks.length === 0) {
-        editorJSRef.current?.clear();
-      } else {
-        editorJSRef.current?.render?.({ blocks });
-
-        if (editorJSRef?.current?.render) {
-          undoPluginRef.current?.initialize?.({ blocks });
-        }
-      }
-      if (
-        !lessonData.lesson.status ||
-        lessonData?.lesson.status === Statuses.DRAFT
-      ) {
-        setIsEditorDisabled(false);
-      } else {
-        setIsEditorDisabled(true);
-      }
-    }
-  }, [editorJSRef, lessonData]);
-
-  const isRenderEditor = useMemo(
-    () => !isCurrentlyEditing || dataBlocks,
-    [dataBlocks, isCurrentlyEditing],
-  );
-
-  const editorJsProps = useMemo(
-    () => ({
-      ref: undoPluginRef,
-      tools: getConfig(t).tools,
-      data: dataBlocks,
-      language,
-      lessonId,
-      instanceRef: (instance) => {
-        editorJSRef.current = instance;
-      },
-    }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [dataBlocks, language, t],
-  );
-
-  const publicId = useMemo(
-    () => lessonData?.lesson?.publicId,
-    [lessonData?.lesson?.publicId],
-  );
-
   return {
-    isLoading,
     isCurrentlyEditing,
-    name,
+    isRenderEditor,
+    isShowAnalytics,
+    isLeftBarOpen,
+    isLoading,
+    isShowShare,
+    isPublic: lesson?.status === Statuses.PUBLIC,
     handleNextLine,
     handleInputTitle,
     handleButtons: {
@@ -320,17 +219,12 @@ export const useLessonEdit = () => {
     },
     handleHideLeftBar,
     handleShowLeftBar,
-    isLeftBarOpen,
-    lessons,
-    publicId,
-    isPublic,
+    name,
     inputTitle,
-    isEditorDisabled,
-    isRenderEditor,
-    isShowAnalytics,
-    isShowShare,
+    lessonIdKey,
     setIsShowShare,
-    editorJsProps,
-    studentsCount: lessonData?.lesson?.studentsCount,
+    editorJsPropsRef,
+    publicId: lesson?.publicId,
+    studentsCount: lesson?.studentsCount,
   };
 };

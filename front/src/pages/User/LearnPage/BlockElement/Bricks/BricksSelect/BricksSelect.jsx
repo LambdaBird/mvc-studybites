@@ -30,7 +30,7 @@ const BricksSelect = ({
       Math.ceil(
         (currentWords?.clientHeight + heightGap) /
           (HEIGHT_WORD + 2 * BORDER + heightGap),
-      ) || 1
+      ) - 1 || 1
     );
   }, []);
 
@@ -84,7 +84,7 @@ const BricksSelect = ({
   return (
     <>
       <S.LineWrapper>
-        <S.Line>
+        <S.FirstLine>
           <S.WordsWrapperSelected ref={selectedWordsRef}>
             <SelectedWords
               words={words}
@@ -93,7 +93,7 @@ const BricksSelect = ({
               disabled={disabled}
             />
           </S.WordsWrapperSelected>
-        </S.Line>
+        </S.FirstLine>
         {additionalLines?.map((line) => (
           <S.Line key={line} />
         ))}

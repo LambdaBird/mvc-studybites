@@ -6,3 +6,8 @@ export const IsFixedType = PropTypes.bool;
 export const HideOnScrollType = PropTypes.bool;
 export const IsPublicType = PropTypes.bool;
 export const HandleHideType = PropTypes.func;
+
+export const RefType = PropTypes.oneOfType([
+  PropTypes.func,
+  PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+]);

@@ -1,8 +1,10 @@
 import amplitude from 'amplitude-js';
 
+const AMPLITUDE_KEY = '92d390dadd16e1d67e3e7bbfead14b7b';
+
 export const initAmplitude = () => {
   if (process.env.NODE_ENV === 'production') {
-    amplitude.getInstance().init(process.env.REACT_APP_AMPLITUDE_KEY);
+    amplitude.getInstance().init(AMPLITUDE_KEY);
   }
 };
 
@@ -23,6 +25,6 @@ export const amplitudeLogEvent = (event, eventProperties) => {
     amplitude.getInstance().logEvent(event, eventProperties);
   } else {
     // eslint-disable-next-line no-console
-    console.log(`[AMPLITUDE]: ${event}, ${eventProperties}`);
+    console.log(`[AMPLITUDE]: ${event}`, eventProperties || '');
   }
 };

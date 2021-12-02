@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import { HEADER_HEIGHT } from '@sb-ui/components/molecules/Header/Header.styled';
+import { PlusOutlined } from '@sb-ui/resources/icons';
 import variables from '@sb-ui/theme/variables';
 
 import { LEFT_BAR_WIDTH } from '../constants';
@@ -61,7 +62,6 @@ export const ShowWrapper = styled.div`
 export const LogoLink = styled.div`
   display: flex;
   align-items: center;
-  gap: 1rem;
   padding: 1rem;
   cursor: pointer;
   height: ${HEADER_HEIGHT}px;
@@ -81,7 +81,6 @@ export const AddNewLessonWrapper = styled.div`
   cursor: pointer;
   padding: 1rem;
   display: flex;
-  gap: 10px;
   align-items: center;
   font-size: 0.875rem;
   color: ${variables['secondary-text-color']};
@@ -90,4 +89,8 @@ export const AddNewLessonWrapper = styled.div`
   &:hover {
     background-color: ${variables['gray-4']};
   }
+`;
+
+export const PlusIcon = styled(PlusOutlined)`
+  margin-right: 0.625rem;
 `;

@@ -16,24 +16,24 @@ const LessonEdit = () => {
 
   const {
     isCurrentlyEditing,
-    name,
+    isRenderEditor,
+    isShowAnalytics,
+    isLeftBarOpen,
+    isPublic,
+    isLoading,
+    isShowShare,
     handleInputTitle,
     handleNextLine,
     handleButtons,
-    lessons,
-    isPublic,
-    publicId,
-    inputTitle,
-    isRenderEditor,
-    isShowAnalytics,
-    isLoading,
-    isShowShare,
-    setIsShowShare,
-    editorJsProps,
-    studentsCount,
     handleHideLeftBar,
     handleShowLeftBar,
-    isLeftBarOpen,
+    name,
+    inputTitle,
+    lessonIdKey,
+    publicId,
+    setIsShowShare,
+    studentsCount,
+    editorJsPropsRef,
   } = useLessonEdit();
 
   const isMobile = useContext(MobileContext);
@@ -53,7 +53,6 @@ const LessonEdit = () => {
         handleShowLeftBar={handleShowLeftBar}
         handleHideLeftBar={handleHideLeftBar}
         isOpen={isLeftBarOpen}
-        lessons={lessons}
       />
       <RightBar
         isLoading={isLoading}
@@ -80,7 +79,13 @@ const LessonEdit = () => {
           onChange={handleInputTitle}
           onKeyDown={handleNextLine}
         />
-        {isRenderEditor && <EditorJs {...editorJsProps} readOnly={false} />}
+        {isRenderEditor && (
+          <EditorJs
+            key={lessonIdKey}
+            {...editorJsPropsRef.current}
+            readOnly={false}
+          />
+        )}
       </S.Page>
     </>
   );

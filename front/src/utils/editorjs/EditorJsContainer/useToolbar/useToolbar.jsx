@@ -5,6 +5,7 @@ import { AMPLITUDE_EVENTS, amplitudeLogEvent } from '@sb-ui/utils/amplitude';
 import { getToolboxItems } from '@sb-ui/utils/editorjs/EditorJsContainer/useToolbox/domToolboxHelpers';
 
 import {
+  CE_BLOCK_SELECTED,
   CODEX_EDITOR,
   CODEX_EDITOR_REDACTOR,
   DISPLAY_NONE,
@@ -17,6 +18,12 @@ import {
   moveActionsButtonsToMobile,
   setTransform3d,
 } from './domToolbarHelpers';
+import {
+  addStartTitle,
+  focusAfterDeletion,
+  getCorrectBlockIndex,
+  removeStartTitle,
+} from './editorHelpers';
 import Toolbar from './Toolbar';
 import { getCurrentBlock } from './toolbarHelpers';
 import { destroyObserver, initObserver } from './toolbarObserver';
@@ -24,7 +31,7 @@ import { useEditorMobile } from './useEditorMobile';
 
 const toolbarWrapper = createToolbar();
 
-export const useToolbar = ({ editor }) => {
+export const useToolbar = ({ editor, toolbarRef: toolbarTool }) => {
   const isMobile = useEditorMobile();
   const [isReady, setIsReady] = useState(false);
   const editorElementRef = useRef(null);
@@ -34,11 +41,12 @@ export const useToolbar = ({ editor }) => {
   const itemsRef = useRef(null);
 
   const handleFocus = useCallback(
-    ({ stayOpen } = {}) => {
+    ({ stayOpen, forceBlock } = {}) => {
       if (!stayOpen) {
         setIsOpen(false);
       }
-      const block = getCurrentBlock(editor.current);
+      const editorCurrentIndex = getCorrectBlockIndex(editor, forceBlock);
+      const block = editor.current.blocks.getBlockByIndex(editorCurrentIndex);
       const bodyRect = editorElementRef.current.getBoundingClientRect();
       const elemRect = block?.holder?.getBoundingClientRect();
       if (!elemRect) {
@@ -55,6 +63,26 @@ export const useToolbar = ({ editor }) => {
     },
     [editor],
   );
+
+  useEffect(() => {
+    // eslint-disable-next-line no-param-reassign
+    toolbarTool.current.handleFocus = handleFocus;
+    // eslint-disable-next-line no-param-reassign
+    toolbarTool.current.removeHideTitle = () => {
+      removeStartTitle(editorElementRef.current);
+    };
+  }, [handleFocus, toolbarTool]);
+
+  const hideToolbar = useCallback(() => {
+    toolbarWrapper.classList.add(DISPLAY_NONE);
+  }, []);
+
+  const editorMouseDown = useCallback(() => {
+    setImmediate(() => {
+      handleFocus({ forceBlock: document.activeElement });
+      removeStartTitle(editorElementRef.current);
+    });
+  }, [handleFocus]);
 
   const handleInsertBlockClick = useCallback(
     (block) => {
@@ -109,7 +137,40 @@ export const useToolbar = ({ editor }) => {
     [handlePlusClick],
   );
 
-  const handleKeyDown = useCallback(
+  const handleBackspace = useCallback((event) => {
+    if (event.key === 'Backspace') {
+      const selectedBlocks = [
+        ...editorElementRef.current.querySelectorAll(`.${CE_BLOCK_SELECTED}`),
+      ].map((element) => {
+        const index = [...editorElementRef.current.childNodes].findIndex(
+          (x) => x === element,
+        );
+        return { block: editor.current.blocks.getBlockByIndex(index), index };
+      });
+      if (selectedBlocks.length > 0) {
+        event.stopPropagation();
+      }
+
+      if (selectedBlocks.length === editor.current.blocks.getBlocksCount()) {
+        editor.current.clear();
+        toolbarWrapper.classList.add(DISPLAY_NONE);
+        return;
+      }
+
+      const indexAfterDeletion = selectedBlocks?.[0]?.index;
+      selectedBlocks
+        .reverse()
+        .forEach(({ index }) => editor.current.blocks.delete(index));
+      if (indexAfterDeletion >= 0) {
+        focusAfterDeletion({ editor, indexAfterDeletion, event, handleFocus });
+      }
+    }
+    // EditorJS instance ref is passing (creating with useRef())
+    // No need passing to useCallback dependencies
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleEditorKeyDown = useCallback(
     (event) => {
       switch (event.key) {
         case 'Tab':
@@ -162,26 +223,40 @@ export const useToolbar = ({ editor }) => {
     itemsRef.current = Array.from(getToolboxItems(editorElement));
     const observer = initObserver(toolbarWrapper);
     renderToolbar();
-    window.addEventListener('mousedown', handleMouseDown);
     parent?.insertAdjacentElement('beforeend', toolbarWrapper);
-    parent?.addEventListener?.('keydown', handleKeyDown);
-    editorElement?.addEventListener('mousedown', handleFocus);
+    window.addEventListener('mousedown', handleMouseDown);
+    window?.addEventListener?.('keydown', handleBackspace, true);
+    parent?.addEventListener?.('keydown', handleEditorKeyDown);
+    editorElement?.addEventListener('mousedown', editorMouseDown);
     editorElement?.addEventListener('keydown', handleFocus);
     return () => {
       destroyObserver(observer);
       window.removeEventListener('mousedown', handleMouseDown);
-      editorElement?.removeEventListener('mousedown', handleFocus);
+      window?.addEventListener?.('keydown', handleBackspace, true);
+      parent?.removeEventListener?.('keydown', handleEditorKeyDown);
+      editorElement?.removeEventListener('mousedown', editorMouseDown);
       editorElement?.removeEventListener('keydown', handleFocus);
-      parent?.removeEventListener?.('keydown', handleKeyDown);
     };
   }, [
     isReady,
     editor,
     handleFocus,
     renderToolbar,
-    handleKeyDown,
+    handleBackspace,
+    handleEditorKeyDown,
     handleMouseDown,
+    editorMouseDown,
   ]);
+
+  useEffect(() => {
+    if (!isReady) {
+      return;
+    }
+
+    if (editorElementRef.current) {
+      addStartTitle(editorElementRef.current);
+    }
+  }, [isReady]);
 
   useEffect(() => {
     if (toolbarRef.current) {
@@ -189,9 +264,17 @@ export const useToolbar = ({ editor }) => {
     }
   }, [isMobile, renderToolbar]);
 
+  useEffect(
+    () => () => {
+      // when toolbar unmounted set isReady to false, need for React hotReload works properly
+      setIsReady(false);
+    },
+    [],
+  );
+
   const prepareToolbar = useCallback(() => {
     setIsReady(true);
   }, []);
 
-  return { prepareToolbar, handleFocus };
+  return { prepareToolbar, handleFocus, hideToolbar };
 };

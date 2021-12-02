@@ -28,7 +28,7 @@ const SimpleImage = ({ tool }) => {
     <>
       <BaseHeader noHint toolName={block?.name} />
       <S.Bottom>
-        <S.Input
+        <S.InputLink
           isShow
           isError={isError}
           onInput={handleLinkInput}
@@ -43,7 +43,7 @@ const SimpleImage = ({ tool }) => {
           src={src}
         />
         {loaded && !error && (
-          <S.Input
+          <S.InputCaption
             isShow={isShow}
             onKeyDown={handleInputCaptionKeyDown}
             ref={captionInputRef}

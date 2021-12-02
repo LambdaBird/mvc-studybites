@@ -1,6 +1,6 @@
 import {
+  CE_INLINE_TOOLBAR,
   CE_TOOLBAR_ACTIONS,
-  CE_TOOLBAR_CONTENT,
   DISPLAY_NONE,
   EDITOR_PLUS_TOOLBAR,
 } from './constants';
@@ -19,15 +19,11 @@ export const moveActionsButtonsToMobile = () => {
   moveActionsButtons(parent);
 };
 
-export const moveActionsButtonsToDesktop = () => {
-  const parent = document.querySelector(`.${CE_TOOLBAR_CONTENT}`);
-  moveActionsButtons(parent);
-};
-
 export const createToolbar = () => {
   const wrapper = document.createElement('div');
   wrapper.classList.add(DISPLAY_NONE);
   wrapper.classList.add(EDITOR_PLUS_TOOLBAR);
+  wrapper.classList.add(CE_INLINE_TOOLBAR);
   return wrapper;
 };
 
@@ -46,4 +42,13 @@ export const isHaveParentElement = (element, parentElement) => {
     return true;
   }
   return isHaveParentElement(element?.parentElement, parentElement);
+};
+
+export const focusElement = (element) => {
+  const selection = window.getSelection();
+  const range = document.createRange();
+  range.setStart(element, 0);
+  range.setEnd(element, 0);
+  selection.removeAllRanges();
+  selection.addRange(range);
 };
