@@ -119,6 +119,7 @@ export default {
       error_updated: 'Update error',
       error_lesson_name: 'Missing lesson name',
       error_empty_blocks: 'Missing lesson blocks',
+      error_lesson_not_found: 'Lesson not found',
     },
     header: {
       placeholder: 'Enter a header',
