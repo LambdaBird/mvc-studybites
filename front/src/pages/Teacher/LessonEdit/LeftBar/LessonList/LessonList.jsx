@@ -18,8 +18,8 @@ const LessonList = ({ lessons, handleHideLeftBar }) => {
 
   const selectedLessonRef = useRef(null);
   const handleLessonClick = useCallback(
-    (id) => {
-      history.push(LESSONS_EDIT.replace(':id', id));
+    (id, state) => {
+      history.push(LESSONS_EDIT.replace(':id', id, state));
       if (isMobile) {
         handleHideLeftBar();
       }
