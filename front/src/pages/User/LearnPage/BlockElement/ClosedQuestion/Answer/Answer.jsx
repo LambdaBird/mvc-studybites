@@ -46,7 +46,7 @@ const Answer = ({ blockId, revision, question }) => {
 
   return (
     <>
-      <ChunkWrapper isBottom>
+      <ChunkWrapper>
         <S.Question>{question}</S.Question>
       </ChunkWrapper>
       <S.BlockWrapperWhite>
