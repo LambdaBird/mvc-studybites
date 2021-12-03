@@ -1,3 +1,4 @@
+import { Tooltip } from 'antd';
 import T from 'prop-types';
 import { useCallback, useContext, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -52,7 +53,9 @@ const LessonList = ({ lessons, handleHideLeftBar }) => {
             status={status}
             onClick={() => handleLessonClick(id)}
           >
-            <S.Badge status={status} />
+            <Tooltip arrowPointAtCenter title={status} placement="topLeft">
+              <S.Badge status={status} />
+            </Tooltip>
             <S.Text>{name}</S.Text>
             <S.Popover
               onVisibleChange={handleVisibleChange}
@@ -61,15 +64,15 @@ const LessonList = ({ lessons, handleHideLeftBar }) => {
               content={
                 <S.ButtonsWrapper>
                   <S.PopoverStyles />
+                  <S.Button onClick={(e) => handleCopyLink(e, id)}>
+                    <CopyOutlined />
+                    <S.ButtonText>{t('lesson_list.copy_link')}</S.ButtonText>
+                  </S.Button>
                   <S.Button onClick={(e) => handleDeleteLesson(e, id)}>
                     <DeleteOutlined />
                     <S.ButtonText>
                       {t('lesson_list.delete_lesson')}
                     </S.ButtonText>
-                  </S.Button>
-                  <S.Button onClick={(e) => handleCopyLink(e, id)}>
-                    <CopyOutlined />
-                    <S.ButtonText>{t('lesson_list.copy_link')}</S.ButtonText>
                   </S.Button>
                 </S.ButtonsWrapper>
               }

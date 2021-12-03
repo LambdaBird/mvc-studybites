@@ -54,6 +54,15 @@ export const useGetLesson = ({ lessonId }) => {
   }, [lessonData?.lesson]);
 
   useEffect(() => {
+    if (lessonId === EXAMPLE_LESSON_ID) {
+      const exampleLesson = LessonsStorage.getLesson(EXAMPLE_LESSON_ID);
+      if (!exampleLesson) {
+        history.push(HOME);
+        return;
+      }
+      setLesson(exampleLesson);
+      LessonsStorage.removeLesson(NEW_LESSON_ID);
+    }
     if (lessonId === NEW_LESSON_ID) {
       setLesson({
         id: lessonId,
@@ -66,23 +75,6 @@ export const useGetLesson = ({ lessonId }) => {
         status: Statuses.UNSAVED,
         id: NEW_LESSON_ID,
       });
-      return;
-    }
-
-    if (lessonId === EXAMPLE_LESSON_ID) {
-      const exampleLesson = LessonsStorage.getLesson(EXAMPLE_LESSON_ID);
-      if (!exampleLesson) {
-        history.push(HOME);
-        return;
-      }
-      const { blocks, name } = exampleLesson || {};
-      setLesson({
-        id: lessonId,
-        name,
-        blocks,
-        status: EXAMPLE_LESSON_ID,
-      });
-      LessonsStorage.removeLesson(NEW_LESSON_ID);
     }
   }, [t, lessonId, history]);
 
