@@ -42,7 +42,7 @@ const GapsInput = ({
 
   useEffect(() => {
     if (lastInputRef) {
-      const inputElement = inputsRef.current.filter(Boolean).at(-1);
+      const inputElement = inputsRef.current.filter(Boolean).slice(-1)?.[0];
       // eslint-disable-next-line no-param-reassign
       lastInputRef.current = inputElement?.input;
     }
