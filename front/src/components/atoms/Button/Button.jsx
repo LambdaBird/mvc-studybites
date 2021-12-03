@@ -12,6 +12,7 @@ const Button = ({
   disabled,
   children,
   onClick,
+  className,
 }) => {
   const isMobile = useContext(MobileContext);
 
@@ -22,6 +23,7 @@ const Button = ({
         bold={bold}
         disabled={disabled}
         onClick={disabled ? null : onClick}
+        className={className}
       >
         {iconComponent}
       </S.IconButton>
@@ -34,6 +36,7 @@ const Button = ({
       bold={bold}
       disabled={disabled}
       onClick={disabled ? null : onClick}
+      className={className}
     >
       <div>{children}</div>
     </S.Button>
@@ -47,6 +50,7 @@ Button.propTypes = {
   disabled: T.bool,
   children: T.oneOfType([T.arrayOf(T.node), T.node]).isRequired,
   onClick: T.func,
+  className: T.string,
 };
 
 export default Button;
