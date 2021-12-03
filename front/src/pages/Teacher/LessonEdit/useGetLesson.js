@@ -47,6 +47,7 @@ export const useGetLesson = ({ lessonId }) => {
 
   useEffect(() => {
     setLesson(lessonData?.lesson);
+    LessonsStorage.removeLesson(NEW_LESSON_ID);
   }, [lessonData?.lesson]);
 
   useEffect(() => {
@@ -78,6 +79,7 @@ export const useGetLesson = ({ lessonId }) => {
         blocks,
         status: EXAMPLE_LESSON_ID,
       });
+      LessonsStorage.removeLesson(NEW_LESSON_ID);
     }
   }, [t, lessonId, history]);
 
