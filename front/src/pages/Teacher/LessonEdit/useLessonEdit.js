@@ -68,7 +68,7 @@ export const useLessonEdit = () => {
     handleShowLeftBar,
     handleHideLeftBar,
     handleAnalytics,
-  } = useBars({ lessonId });
+  } = useBars({ editorJSRef, lessonId, name });
 
   const editorJsPropsRef = useRef({
     ref: undoPluginRef,
