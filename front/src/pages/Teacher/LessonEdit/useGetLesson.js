@@ -16,6 +16,9 @@ import { LessonsStorage } from '@sb-ui/utils/LessonsStorage';
 import { HOME, LESSONS_NEW } from '@sb-ui/utils/paths';
 import { TEACHER_LESSON_BASE_KEY } from '@sb-ui/utils/queries';
 
+export const isLessonIdCorrect = (lessonId) =>
+  lessonId !== NEW_LESSON_ID && lessonId !== EXAMPLE_LESSON_ID;
+
 export const useGetLesson = ({ lessonId }) => {
   const { t } = useTranslation('teacher');
   const history = useHistory();
@@ -31,7 +34,7 @@ export const useGetLesson = ({ lessonId }) => {
     {
       refetchOnWindowFocus: false,
       retry: 2,
-      enabled: lessonId !== NEW_LESSON_ID && lessonId !== EXAMPLE_LESSON_ID,
+      enabled: isLessonIdCorrect(lessonId),
       onError: (error) => {
         if (error.response.status.toString().startsWith(CLIENT_ERROR_STARTS)) {
           message.error({
@@ -47,9 +50,19 @@ export const useGetLesson = ({ lessonId }) => {
 
   useEffect(() => {
     setLesson(lessonData?.lesson);
+    LessonsStorage.removeLesson(NEW_LESSON_ID);
   }, [lessonData?.lesson]);
 
   useEffect(() => {
+    if (lessonId === EXAMPLE_LESSON_ID) {
+      const exampleLesson = LessonsStorage.getLesson(EXAMPLE_LESSON_ID);
+      if (!exampleLesson) {
+        history.push(HOME);
+        return;
+      }
+      setLesson(exampleLesson);
+      LessonsStorage.removeLesson(NEW_LESSON_ID);
+    }
     if (lessonId === NEW_LESSON_ID) {
       setLesson({
         id: lessonId,
@@ -61,22 +74,6 @@ export const useGetLesson = ({ lessonId }) => {
         name: t('lesson_list.untitled'),
         status: Statuses.UNSAVED,
         id: NEW_LESSON_ID,
-      });
-      return;
-    }
-
-    if (lessonId === EXAMPLE_LESSON_ID) {
-      const exampleLesson = LessonsStorage.getLesson(EXAMPLE_LESSON_ID);
-      if (!exampleLesson) {
-        history.push(HOME);
-        return;
-      }
-      const { blocks, name } = exampleLesson || {};
-      setLesson({
-        id: lessonId,
-        name,
-        blocks,
-        status: EXAMPLE_LESSON_ID,
       });
     }
   }, [t, lessonId, history]);

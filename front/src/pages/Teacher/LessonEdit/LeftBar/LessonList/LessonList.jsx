@@ -1,13 +1,15 @@
+import { Tooltip } from 'antd';
 import T from 'prop-types';
 import { useCallback, useContext, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
+import { CopyOutlined, DeleteOutlined } from '@ant-design/icons';
 
 import MobileContext from '@sb-ui/contexts/MobileContext';
 import { NEW_LESSON_ID } from '@sb-ui/pages/Teacher/LessonEdit/constants';
 import { LESSONS_EDIT } from '@sb-ui/utils/paths';
 
-import { useLessonRemove } from './useLessonRemove';
+import { useLessonActions } from './useLessonActions';
 import * as S from './LessonList.styled';
 
 const LessonList = ({ lessons, handleHideLeftBar }) => {
@@ -29,11 +31,11 @@ const LessonList = ({ lessons, handleHideLeftBar }) => {
 
   const {
     selectedLesson,
-    handleCancelDelete,
-    handleConfirmDelete,
-    handleLessonRemove,
+    handleCopyLink,
+    handleDeleteLesson,
+    handleSelectLesson,
     handleVisibleChange,
-  } = useLessonRemove({ handleLessonClick });
+  } = useLessonActions({ handleLessonClick });
 
   useEffect(() => {
     selectedLessonRef.current?.scrollIntoViewIfNeeded?.();
@@ -51,23 +53,37 @@ const LessonList = ({ lessons, handleHideLeftBar }) => {
             status={status}
             onClick={() => handleLessonClick(id)}
           >
-            <S.Badge status={status} />
+            <Tooltip arrowPointAtCenter title={status} placement="topLeft">
+              <S.Badge status={status} />
+            </Tooltip>
             <S.Text>{name}</S.Text>
-            <S.PopConfirm
-              title={t('lesson_list.confirm_title')}
-              onConfirm={(e) => handleConfirmDelete(e, id)}
-              onCancel={handleCancelDelete}
+            <S.Popover
               onVisibleChange={handleVisibleChange}
               okText={t('lesson_list.confirm_ok')}
               cancelText={t('lesson_list.confirm_cancel')}
+              content={
+                <S.ButtonsWrapper>
+                  <S.PopoverStyles />
+                  <S.Button onClick={(e) => handleCopyLink(e, id)}>
+                    <CopyOutlined />
+                    <S.ButtonText>{t('lesson_list.copy_link')}</S.ButtonText>
+                  </S.Button>
+                  <S.Button onClick={(e) => handleDeleteLesson(e, id)}>
+                    <DeleteOutlined />
+                    <S.ButtonText>
+                      {t('lesson_list.delete_lesson')}
+                    </S.ButtonText>
+                  </S.Button>
+                </S.ButtonsWrapper>
+              }
             >
               {id !== NEW_LESSON_ID && (
-                <S.Close
+                <S.More
                   selected={id === selectedLesson}
-                  onClick={(e) => handleLessonRemove(e, id)}
+                  onClick={(e) => handleSelectLesson(e, id)}
                 />
               )}
-            </S.PopConfirm>
+            </S.Popover>
           </S.Lesson>
         ))}
       </S.LessonsList>

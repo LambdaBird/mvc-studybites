@@ -253,5 +253,6 @@ export default {
     confirm_title: 'Вы уверены?',
     confirm_ok: 'Да',
     confirm_cancel: 'Нет',
+    link_copy_successfully: 'Ссылка успешно скопирована',
   },
 };

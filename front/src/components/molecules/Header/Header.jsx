@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import useMobile from '@sb-ui/hooks/useMobile';
 import logo from '@sb-ui/resources/img/logo.svg';
-import { LESSONS_NEW } from '@sb-ui/utils/paths';
+import { HOME } from '@sb-ui/utils/paths';
 import {
   ChildrenType,
   ClassNameType,
@@ -59,7 +59,7 @@ const Header = ({ isFixed, className, hideOnScroll, bottom, handleHide }) => {
   }, [handleHide, scroll]);
 
   const handleHomeClick = useCallback(() => {
-    history.push(LESSONS_NEW);
+    history.push(HOME);
   }, [history]);
 
   return (

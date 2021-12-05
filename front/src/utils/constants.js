@@ -1,3 +1,5 @@
+export const HOST = process.env.REACT_APP_SELF_HOST || 'https://studybites.app';
+
 export const allowedImageTypes = ['image/png', 'image/jpeg'];
 
 export const allowedTypes = [

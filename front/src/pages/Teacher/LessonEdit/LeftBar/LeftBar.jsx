@@ -9,7 +9,7 @@ import MobileContext from '@sb-ui/contexts/MobileContext';
 import logo from '@sb-ui/resources/img/logo.svg';
 import { AMPLITUDE_EVENTS, amplitudeLogEvent } from '@sb-ui/utils/amplitude';
 import { LessonsStorage } from '@sb-ui/utils/LessonsStorage';
-import { LESSONS_NEW } from '@sb-ui/utils/paths';
+import { HOME, LESSONS_NEW } from '@sb-ui/utils/paths';
 
 import LessonList from './LessonList';
 import * as S from './LeftBar.styled';
@@ -26,6 +26,10 @@ const LeftBar = ({ isOpen, handleHideLeftBar, handleShowLeftBar }) => {
       handleHideLeftBar();
     }
   }, [handleHideLeftBar, history, isMobile]);
+
+  const handleHomeClick = () => {
+    history.push(HOME);
+  };
 
   const handleHideClick = useCallback(
     (e) => {
@@ -48,7 +52,7 @@ const LeftBar = ({ isOpen, handleHideLeftBar, handleShowLeftBar }) => {
   return (
     <>
       <S.Wrapper opened={isOpen}>
-        <S.LogoLink onClick={handleNewLessonClick}>
+        <S.LogoLink onClick={handleHomeClick}>
           <S.Logo src={logo} alt="Logo" />
           <S.HideWrapper onClick={handleHideClick}>
             <DoubleLeftOutlined />

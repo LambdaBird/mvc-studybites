@@ -14,6 +14,9 @@ export const Question = styled(Text)`
 
 export const BlockWrapperWhite = styled(BlockElementWrapperWhite)`
   align-items: center;
+  @media (max-width: 767px) {
+    margin-top: auto;
+  }
 `;
 
 export const Textarea = styled.textarea.attrs({

@@ -7,7 +7,6 @@ import { useHistory, useParams } from 'react-router-dom';
 import * as Sentry from '@sentry/browser';
 
 import { useBars } from '@sb-ui/pages/Teacher/LessonEdit/useBars';
-import { useGetLesson } from '@sb-ui/pages/Teacher/LessonEdit/useGetLesson';
 import { useInput } from '@sb-ui/pages/Teacher/LessonEdit/useInput';
 import {
   getConfig,
@@ -22,6 +21,7 @@ import { LESSONS_EDIT } from '@sb-ui/utils/paths';
 import { TEACHER_LESSON_BASE_KEY } from '@sb-ui/utils/queries';
 
 import { EXAMPLE_LESSON_ID, NEW_LESSON_ID } from './constants';
+import { isLessonIdCorrect, useGetLesson } from './useGetLesson';
 
 export const useLessonEdit = () => {
   const { id: lessonId } = useParams();
@@ -30,7 +30,7 @@ export const useLessonEdit = () => {
   const { language } = i18n;
 
   const isCurrentlyEditing = useMemo(
-    () => lessonId !== NEW_LESSON_ID && lessonId !== EXAMPLE_LESSON_ID,
+    () => isLessonIdCorrect(lessonId),
     [lessonId],
   );
 
