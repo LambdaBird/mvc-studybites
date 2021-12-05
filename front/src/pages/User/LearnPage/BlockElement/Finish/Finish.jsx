@@ -12,14 +12,8 @@ const Finish = ({ isSolved }) => {
   const { t } = useTranslation('user');
   const { handleInteractiveClick, id } = useContext(LearnContext);
 
-  const callbackRef = (node) => node?.scrollIntoView({ behavior: 'smooth' });
-
   if (isSolved) {
-    return (
-      <>
-        <Results callbackRef={callbackRef} />
-      </>
-    );
+    return <Results />;
   }
 
   return (

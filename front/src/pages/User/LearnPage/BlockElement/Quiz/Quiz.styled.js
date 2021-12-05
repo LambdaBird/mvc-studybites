@@ -24,7 +24,9 @@ export const Question = styled(Text)`
 
 export const BlockWrapperWhite = styled(BlockElementWrapperWhite)`
   flex-direction: column;
-  margin-top: auto;
+  @media (max-width: 767px) {
+    margin-top: auto;
+  }
 `;
 
 export const LessonButtonSend = styled(Button).attrs({

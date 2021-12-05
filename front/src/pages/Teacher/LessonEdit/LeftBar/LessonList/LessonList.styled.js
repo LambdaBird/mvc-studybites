@@ -1,16 +1,21 @@
-import {
-  Badge as BadgeAntd,
-  Popconfirm as PopConfirmAntd,
-  Typography,
-} from 'antd';
-import styled, { css } from 'styled-components';
-import { CloseOutlined } from '@ant-design/icons';
+import { Badge as BadgeAntd, Popover as PopoverAntd, Typography } from 'antd';
+import styled, { createGlobalStyle, css } from 'styled-components';
+import { MoreOutlined } from '@ant-design/icons';
 
+import LessonButton from '@sb-ui/components/atoms/Button';
 import { HEADER_HEIGHT } from '@sb-ui/components/molecules/Header/Header.styled';
 import variables from '@sb-ui/theme/variables';
 import { Statuses } from '@sb-ui/utils/constants';
 
 const { Text: TextAntd } = Typography;
+
+const PopoverClassName = 'lesson-list-popover';
+
+export const PopoverStyles = createGlobalStyle`
+  .${PopoverClassName}  .ant-popover-inner-content{
+    padding: 0.5rem 0.25rem;
+  }
+`;
 
 export const Lessons = styled.div`
   height: calc(100%);
@@ -70,7 +75,7 @@ export const Lesson = styled.div`
 
 const CloseStyle = css`
   background-color: ${variables['gray-5']};
-  border-radius: 1rem;
+  border-radius: 0.25rem;
 `;
 
 const CloseSelectedStyle = css`
@@ -78,21 +83,23 @@ const CloseSelectedStyle = css`
   ${CloseStyle};
 `;
 
-export const Close = styled(CloseOutlined).attrs({
+export const More = styled(MoreOutlined).attrs({
   className: 'close',
 })`
   color: ${variables['secondary-text-color']};
-  font-size: 1rem;
+  font-size: 1.3rem;
   display: none;
-  padding: 0.1rem;
+  transform: rotateZ(90deg);
   ${(props) => props.selected && CloseSelectedStyle};
   &:hover {
     ${CloseStyle};
   }
 `;
 
-export const PopConfirm = styled(PopConfirmAntd).attrs({
-  placement: 'bottom',
+export const Popover = styled(PopoverAntd).attrs({
+  trigger: 'focus',
+  placement: 'rightTop',
+  overlayClassName: PopoverClassName,
 })``;
 
 const getStatus = (status) => {
@@ -119,4 +126,21 @@ export const Text = styled(TextAntd).attrs({
   width: 90%;
   color: ${variables['neutral-8']};
   overflow-x: hidden;
+`;
+
+export const ButtonsWrapper = styled.div`
+  color: ${variables['secondary-text-color']};
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+`;
+
+export const Button = styled(LessonButton)`
+  width: 100%;
+  justify-content: flex-start;
+`;
+
+export const ButtonText = styled.span`
+  padding-left: 0.5rem;
 `;

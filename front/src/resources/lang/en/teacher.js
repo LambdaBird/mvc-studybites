@@ -253,5 +253,8 @@ export default {
     confirm_title: 'Are you sure?',
     confirm_ok: 'Yes',
     confirm_cancel: 'No',
+    link_copy_successfully: 'Link copied successfully',
+    copy_link: 'Copy link',
+    delete_lesson: 'Delete',
   },
 };

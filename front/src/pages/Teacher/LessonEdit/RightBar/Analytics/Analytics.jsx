@@ -4,6 +4,7 @@ import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 
 import { FunnelContainer } from '@sb-ui/components/molecules/FunnelContainer';
+import { isLessonIdCorrect } from '@sb-ui/pages/Teacher/LessonEdit/useGetLesson';
 import { getTeacherLessonStudents } from '@sb-ui/utils/api/v1/teacher';
 import { TEACHER_LESSON_STUDENTS_BASE_KEY } from '@sb-ui/utils/queries';
 
@@ -17,7 +18,7 @@ const Analytics = ({ opened }) => {
     [TEACHER_LESSON_STUDENTS_BASE_KEY, { lessonId }],
     getTeacherLessonStudents,
     {
-      enabled: lessonId !== 'new',
+      enabled: isLessonIdCorrect(lessonId),
     },
   );
 

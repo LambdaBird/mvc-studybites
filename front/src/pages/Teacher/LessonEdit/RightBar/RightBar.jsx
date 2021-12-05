@@ -55,11 +55,7 @@ const RightBar = ({
           ),
         })}
       </Button>
-      <Button
-        iconComponent={<EyeOutlined />}
-        disabled={!isCurrentlyEditing}
-        onClick={handlePreview}
-      >
+      <Button iconComponent={<EyeOutlined />} onClick={handlePreview}>
         {t('lesson_edit.buttons.preview')}
       </Button>
       <Button

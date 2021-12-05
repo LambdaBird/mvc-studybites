@@ -9,6 +9,8 @@ import { useLessonEdit } from '@sb-ui/pages/Teacher/LessonEdit/useLessonEdit';
 import { sbPostfix } from '@sb-ui/utils/constants';
 import EditorJs from '@sb-ui/utils/editorjs/EditorJsContainer';
 
+import RouteLeavingGuard from './RouteLeavingGuard';
+import { useReloadModal } from './useReloadModal';
 import * as S from './LessonEdit.styled';
 
 const LessonEdit = () => {
@@ -34,7 +36,11 @@ const LessonEdit = () => {
     setIsShowShare,
     studentsCount,
     editorJsPropsRef,
+    isNavigationAllowed,
+    setIsNavigationAllowed,
   } = useLessonEdit();
+
+  useReloadModal({ isNavigationAllowed });
 
   const isMobile = useContext(MobileContext);
 
@@ -48,7 +54,11 @@ const LessonEdit = () => {
           {sbPostfix}
         </title>
       </Helmet>
-
+      <RouteLeavingGuard
+        when={!isNavigationAllowed}
+        setAllowed={setIsNavigationAllowed}
+        shouldBlockNavigation={() => !isNavigationAllowed}
+      />
       <LeftBar
         handleShowLeftBar={handleShowLeftBar}
         handleHideLeftBar={handleHideLeftBar}

@@ -1,5 +1,6 @@
 import { verifyAnswers as verifyBricksAnswers } from '@sb-ui/pages/User/LearnPage/BlockElement/Bricks/verifyAnswers';
 import { verifyAnswers as verifyClosedQuestionAnswers } from '@sb-ui/pages/User/LearnPage/BlockElement/ClosedQuestion/Result/verifyAnswers';
+import { CORRECT_ALL } from '@sb-ui/pages/User/LearnPage/BlockElement/FillTheGap/constants';
 import { verifyAnswers as verifyFillTheGapAnswers } from '@sb-ui/pages/User/LearnPage/BlockElement/FillTheGap/verifyAnswers';
 import { verifyAnswers as verifyMatchAnswers } from '@sb-ui/pages/User/LearnPage/BlockElement/Match/verifyAnswers';
 import { verifyAnswers as verifyQuizAnswers } from '@sb-ui/pages/User/LearnPage/BlockElement/Quiz/verifyAnswers';
@@ -16,7 +17,7 @@ export const calculateClosedQuestion = ({ reply, answer }) =>
 
 export const calculateFillTheGap = ({ reply, answer }) => {
   const { correct } = verifyFillTheGapAnswers(answer.results, reply.response);
-  return correct;
+  return correct === CORRECT_ALL;
 };
 
 export const calculateBricks = ({ reply, answer }) => {
