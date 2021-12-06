@@ -73,6 +73,5 @@ export const useSimpleImage = ({ tool, loaded, error, src, setSrc }) => {
     handleInputLinkKeyDown,
     handleInputCaptionKeyDown,
     handleLinkInput,
-    linkSrc: linkInputRef.current?.innerText,
   };
 };

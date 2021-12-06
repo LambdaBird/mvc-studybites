@@ -20,7 +20,6 @@ export const Input = styled.div.attrs({
   className: 'cdx-input',
   contentEditable: true,
 })`
-  ${(props) => (props.isShow ? '' : visibilityHidden)}
   ${(props) => (props.isError ? `border: 1px solid red;` : '')}
 `;
 
