@@ -13,4 +13,6 @@ export const Quote = styled(Paragraph)`
 export const QuoteAuthor = styled.div`
   display: flex;
   justify-content: ${(props) => props.alignment};
+  margin-left: 0.8rem;
+  font-size: 0.75rem;
 `;

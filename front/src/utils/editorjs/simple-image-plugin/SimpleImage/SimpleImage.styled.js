@@ -8,12 +8,8 @@ const visibilityHidden = `
 
 export const Image = styled.img`
   ${(props) => (props.error ? visibilityHidden : '')}
-  width: 100%;
+  width: 70%;
   object-fit: cover;
-
-  @media (min-width: 768px) {
-    width: 70%;
-  }
 `;
 
 export const Input = styled.div.attrs({

@@ -28,7 +28,7 @@ export const MatchColumn = styled(FlipMove)`
 
 export const ArrowConnectWrapper = styled.div`
   display: flex;
-  padding-top: 2rem;
+  padding-top: 1rem;
   align-items: flex-start;
   height: ${(props) => `${props.height + 16}px`};
 `;
@@ -70,6 +70,5 @@ export const MatchBlockWrapper = styled.div`
   width: 100%;
   display: flex;
   align-items: flex-start;
-  padding: 1rem;
   height: ${(props) => `${props.height + 16}px`};
 `;
