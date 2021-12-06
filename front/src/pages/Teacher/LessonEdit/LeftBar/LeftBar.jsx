@@ -1,7 +1,7 @@
 import T from 'prop-types';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { DoubleLeftOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 
 import Button from '@sb-ui/components/atoms/Button';
@@ -27,10 +27,6 @@ const LeftBar = ({ isOpen, handleHideLeftBar, handleShowLeftBar }) => {
     }
   }, [handleHideLeftBar, history, isMobile]);
 
-  const handleHomeClick = () => {
-    history.push(HOME);
-  };
-
   const handleHideClick = useCallback(
     (e) => {
       e.stopPropagation();
@@ -52,8 +48,10 @@ const LeftBar = ({ isOpen, handleHideLeftBar, handleShowLeftBar }) => {
   return (
     <>
       <S.Wrapper opened={isOpen}>
-        <S.LogoLink onClick={handleHomeClick}>
-          <S.Logo src={logo} alt="Logo" />
+        <S.LogoLink>
+          <Link to={HOME}>
+            <S.Logo src={logo} alt="Logo" />
+          </Link>
           <S.HideWrapper onClick={handleHideClick}>
             <DoubleLeftOutlined />
           </S.HideWrapper>

@@ -50,7 +50,3 @@ export const Logo = styled.img`
   height: 1.75rem;
   cursor: pointer;
 `;
-
-export const LogoLink = styled.div`
-  cursor: pointer;
-`;
