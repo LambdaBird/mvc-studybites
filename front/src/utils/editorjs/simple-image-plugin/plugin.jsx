@@ -29,7 +29,7 @@ export default class Image {
   }
 
   save = () => {
-    const location = this.linkInputRef?.current?.innerText;
+    const location = this.linkInputRef?.current?.value;
     const caption = this.captionInputRef?.current?.innerHTML;
 
     if (location?.length > 0 && !this.error) {

@@ -23,7 +23,9 @@ export const Input = styled.div.attrs({
   ${(props) => (props.isError ? `border: 1px solid red;` : '')}
 `;
 
-export const InputLink = styled(Input)`
+export const InputLink = styled.input.attrs({
+  className: 'cdx-input',
+})`
   margin-bottom: 1rem;
 `;
 
