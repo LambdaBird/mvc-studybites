@@ -5,19 +5,7 @@ import { ParagraphContentType } from '../types';
 const Paragraph = ({ content }) => {
   const htmlInput = content?.data?.text;
 
-  const handleParagraphClick = (event) => {
-    const { target } = event;
-    if (target.nodeName === 'A') {
-      event.preventDefault();
-      window.open(target.href, '_blank');
-    }
-  };
-
-  return (
-    <p aria-hidden onClick={handleParagraphClick}>
-      {htmlToReact(htmlInput)}
-    </p>
-  );
+  return <p>{htmlToReact(htmlInput)}</p>;
 };
 
 Paragraph.propTypes = {

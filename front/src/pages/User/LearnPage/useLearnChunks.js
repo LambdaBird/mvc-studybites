@@ -185,6 +185,14 @@ export const useLearnChunks = ({
     }
   }, [isFinalChunk, isFinishedLesson, passedBlocks, lesson]);
 
+  const handleElementClick = useCallback((event) => {
+    const { target } = event;
+    if (target.nodeName === 'A') {
+      event.preventDefault();
+      window.open(target.href, '_blank');
+    }
+  }, []);
+
   return {
     isFinishedLesson,
     handleInteractiveClick,
@@ -194,5 +202,6 @@ export const useLearnChunks = ({
     isLoading,
     learnProgress,
     progressStatus,
+    handleElementClick,
   };
 };
