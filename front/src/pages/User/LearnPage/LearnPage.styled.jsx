@@ -55,8 +55,8 @@ export const ChunkWrapper = styled.div`
   width: 100%;
   margin-bottom: 2rem;
   background-color: ${variables['learn-chunk-background']};
-  border-radius: 8px;
-  padding: 1rem;
+  border-radius: 1rem;
+  padding: 1.5rem;
 
   // TODO: check if any problem will appear
   display: grid;

@@ -212,6 +212,7 @@ export default class Quote extends PluginBase {
     });
 
     quote.dataset.placeholder = this.quotePlaceholder;
+    caption.dataset.placeholder = this.captionPlaceholder;
 
     quote.addEventListener('keydown', this.handleQuoteKeydown.bind(this));
     caption.addEventListener('keydown', this.handleCaptionKeydown.bind(this));
