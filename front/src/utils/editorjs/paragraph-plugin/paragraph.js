@@ -21,6 +21,7 @@ class Paragraph {
 
     if (!this.readOnly) {
       this.onKeyUp = this.onKeyUp.bind(this);
+      this.onKeyDown = this.onKeyDown.bind(this);
     }
 
     this._placeholder = config.placeholder
@@ -45,6 +46,14 @@ class Paragraph {
     }
   }
 
+  onKeyDown(e) {
+    if (e.key === 'Enter') {
+      setImmediate(() => {
+        this.data = { text: this.spanElement.innerHTML };
+      });
+    }
+  }
+
   drawView() {
     const div = document.createElement('DIV');
 
@@ -60,8 +69,8 @@ class Paragraph {
     div.appendChild(span);
 
     if (!this.readOnly) {
-      // div.contentEditable = true;
       div.addEventListener('keyup', this.onKeyUp);
+      div.addEventListener('keydown', this.onKeyDown);
     }
 
     return div;
