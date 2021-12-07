@@ -146,12 +146,6 @@ export default class Undo {
           ? null
           : activeElement.outerHTML,
     });
-    if (this.redoStack.length === 0 && this.undoStack.length === 2) {
-      this.undoStack[0].caretPosition =
-        Cursor.getCurrentCursorPosition(activeElement);
-      this.undoStack[0].activeElementHTML = activeElement.outerHTML;
-      this.undoStack[0].index = index;
-    }
 
     if (this.undoStack.length >= this.maxLength) {
       this.truncate(this.undoStack, this.maxLength);
@@ -240,8 +234,8 @@ export default class Undo {
    * Renders data in the editor by index with state
    */
   async updateBlocks() {
-    const { index, state, activeElementHTML, caretPosition } =
-      this.undoStack.slice(-1)?.[0] || {};
+    const undoElement = this.undoStack.slice(-1)?.[0] || {};
+    const { state, caretPosition } = undoElement;
 
     if (!state) {
       return;
@@ -263,7 +257,10 @@ export default class Undo {
       data: block.data === null ? {} : block.data,
     }));
     this.editor.blocks.render({ blocks: newState }).then(() => {
-      this.afterRenderNewBlocks({ index, activeElementHTML, caretPosition });
+      const lastRedoElement = this.redoStack.slice(-1)?.[0] || {};
+      const elementToRender =
+        !caretPosition && caretPosition !== 0 ? lastRedoElement : undoElement;
+      this.afterRenderNewBlocks(elementToRender);
     });
   }
 
