@@ -70,6 +70,19 @@ export const ChunkWrapper = styled.div`
   p:last-child {
     margin-bottom: 0;
   }
+
+  animation: slide-top 0.5s cubic-bezier(0.55, 0.055, 0.675, 0.19) both;
+
+  @keyframes slide-top {
+    0% {
+      transform: translateY(50px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
 `;
 
 export const LessonButton = styled(Button).attrs({

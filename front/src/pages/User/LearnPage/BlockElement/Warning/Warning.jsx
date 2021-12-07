@@ -1,4 +1,5 @@
 import { WarningContentType } from '@sb-ui/pages/User/LearnPage/BlockElement/types';
+import { htmlToReact } from '@sb-ui/pages/User/LearnPage/utils';
 
 import * as S from './Warning.styled';
 
@@ -7,9 +8,9 @@ const Warning = ({ content }) => {
   return (
     <S.Wrapper>
       <S.IconTitle>
-        <S.Title>{title}</S.Title>
+        <S.Title>{htmlToReact(title)}</S.Title>
       </S.IconTitle>
-      <S.Message>{message}</S.Message>
+      <S.Message>{htmlToReact(message)}</S.Message>
     </S.Wrapper>
   );
 };

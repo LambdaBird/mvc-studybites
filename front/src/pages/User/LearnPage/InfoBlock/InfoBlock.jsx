@@ -12,7 +12,7 @@ const InfoBlock = ({ isLoading, lesson, total }) => {
   return (
     <S.BlockWrapper justify="start" align="top">
       {isLoading ? (
-        <Skeleton loading={isLoading} paragraph={{ rows: 2 }} active />
+        <Skeleton loading={isLoading} paragraph={{ rows: 1 }} active />
       ) : (
         <>
           <S.TitleEllipsis>{lesson.name}</S.TitleEllipsis>

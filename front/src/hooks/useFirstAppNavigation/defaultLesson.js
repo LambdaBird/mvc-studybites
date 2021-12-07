@@ -3,12 +3,25 @@ export const defaultLesson = {
   blocks: [
     {
       type: 'paragraph',
-      revision: 'fab2d384a3c05822e7b5243b77f3ec87321623d8',
+      revision: 'b408be4c30e0c6fb96459781576261b6afc76647',
       content: {
         id: '52GKif8e4_',
         type: 'paragraph',
         data: {
-          text: "👋 Welcome to Studybites — <b>a tool for creating interactive lessons.</b><br><br>I'm Tim — one of creators of this app. This is an early version, so there may be bugs.",
+          text: "Hi, I'm Tim&nbsp;👋<br>Welcome to Studybites — <b>a tool for creating interactive lessons.</b><br>",
+        },
+      },
+      answer: {},
+    },
+    {
+      type: 'warning',
+      revision: '950d0d4c480804a0e35c305b5aa0b8f6998766ef',
+      content: {
+        id: 'nhZZi51vDU',
+        type: 'warning',
+        data: {
+          title: '❗️',
+          message: 'This is an early version, so there may be bugs.',
         },
       },
       answer: {},
@@ -28,7 +41,7 @@ export const defaultLesson = {
     },
     {
       type: 'list',
-      revision: 'e418aaf28b5f17edb81dd4a4fc4f146c98258c60',
+      revision: '55f31ce1ee8887a5162785c60323857658eb0e92',
       content: {
         id: 'gdedGxia4H',
         type: 'list',
@@ -40,6 +53,7 @@ export const defaultLesson = {
             'Highlight any text, and use the menu that shows up to <i>style</i> your <b>writing</b> as <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">you</a> <mark class="cdx-marker">like</mark>.',
             'See the :: to the right of this block? Click to see menu with block options (preferences, delete, move, etc). Also you can drag it to move this block.',
             'Click the "+ New Lesson" at the bottom of sidebar to add a new lesson.',
+            '<b>Lessons are only saved locally. To use the lesson on multiple devices, save the link url. Also, anyone who has a link to the lesson can edit the lesson. </b>',
           ],
         },
       },
@@ -83,24 +97,24 @@ export const defaultLesson = {
     },
     {
       type: 'paragraph',
-      revision: '40bf2acf5dcd2f82046aa7567d921d60107ae09e',
+      revision: '2f516fa03321e3343b51875dcf863b8a7a6660c1',
       content: {
         id: 'ixctc415Vz',
         type: 'paragraph',
         data: {
-          text: 'Content is better absorbed when cut into small bites.<br><b></b>The easiest way to do this is with the "Next" block, that you see upper.',
+          text: 'Content is better absorbed when cut into small bites.<br><b></b>The easiest way to do this is with the "Next" block, that you saw upper.',
         },
       },
       answer: {},
     },
     {
       type: 'paragraph',
-      revision: '5673d539c46e8bba8137332e90369c1bf2f550b3',
+      revision: '23e950b6725142cd71714b2061333fdf3357009e',
       content: {
         id: 'tBAtS5yC6c',
         type: 'paragraph',
         data: {
-          text: 'All interactive blocks work in the same way as Next - they break the lesson into steps. <br><br>Click "Preview" at the top left and check how it works.',
+          text: 'All interactive blocks work in the same way as "Next" - they break the lesson into steps. <br><br>Click "Preview" at the top left and check how it works.',
         },
       },
       answer: {},
@@ -159,11 +173,11 @@ export const defaultLesson = {
             },
             {
               left: 'The Lord of the Rings',
-              right: 'George Lucas',
+              right: 'The Wachowskis',
             },
             {
               left: 'Indiana Jones',
-              right: 'The Wachowskis',
+              right: 'George Lucas',
             },
           ],
         },
@@ -279,6 +293,20 @@ export const defaultLesson = {
       answer: {},
     },
     {
+      type: 'image',
+      revision: 'a5c7e6b5f736266df79e12361d77909bb8bfed3c',
+      content: {
+        id: '4uwSTcfUvS',
+        type: 'image',
+        data: {
+          location:
+            'https://i.ibb.co/QQwpqVq/Screenshot-2021-12-06-at-20-47-34.png',
+          caption: '',
+        },
+      },
+      answer: {},
+    },
+    {
       type: 'next',
       revision: '60ea37e4e28354df587b458222d20970d1988a6a',
       content: {
@@ -303,22 +331,36 @@ export const defaultLesson = {
     },
     {
       type: 'paragraph',
-      revision: '9893f176b8a540dc398e7882d7e32502e8acd0c1',
+      revision: '978bf88c628b53497b76f396ac9fe7967af801b5',
       content: {
         id: 'LsoBGV3Q9D',
         type: 'paragraph',
         data: {
-          text: 'Once users start taking a lesson, you can see their results. You can see how users go through each bite (next or interactive block) and find tricky parts. ',
+          text: 'Once users start taking a lesson, you can review their results. You can see how users go through each bite (next or interactive block) and find tricky moments.  ',
         },
       },
       answer: {},
     },
     {
-      type: 'delimiter',
-      revision: '1ae7e4684a12ef442bbd2dbcece354b7c5a49ac3',
+      type: 'image',
+      revision: 'cb51376355d3be56637d09dc43083e8e10737224',
       content: {
-        id: 'BXMq-pfg1y',
-        type: 'delimiter',
+        id: 'KEp_c1CQnT',
+        type: 'image',
+        data: {
+          location:
+            'https://i.ibb.co/HXzT6Xq/Screenshot-2021-12-06-at-20-50-25.png',
+          caption: '',
+        },
+      },
+      answer: {},
+    },
+    {
+      type: 'next',
+      revision: '0e6afc1ce3a3e03611e59777920296e04ed46c59',
+      content: {
+        id: '3pHT8ABmb1',
+        type: 'next',
         data: {},
       },
       answer: {},
@@ -336,15 +378,49 @@ export const defaultLesson = {
       answer: {},
     },
     {
+      type: 'paragraph',
+      revision: '5e4a78938d0ef20e44dcd00e60f1644004bf1c9b',
+      content: {
+        id: 'lGMsYhsWTD',
+        type: 'paragraph',
+        data: {
+          text: 'Or you can contact me at <a href="mailto:studybites@lambdabird.com">studybites@lambdabird.com</a>.',
+        },
+      },
+      answer: {},
+    },
+    {
+      type: 'paragraph',
+      revision: 'a6b73323209f4aaf4ce817cd185b7bfa1ac05862',
+      content: {
+        id: 'u7XwlyTtQu',
+        type: 'paragraph',
+        data: {
+          text: '<b>Thanks!</b>',
+        },
+      },
+      answer: {},
+    },
+    {
+      type: 'delimiter',
+      revision: 'db09634acca9725c6b14f7b35377c0422f061a0d',
+      content: {
+        id: 'vSQXDXRSLZ',
+        type: 'delimiter',
+        data: {},
+      },
+      answer: {},
+    },
+    {
       type: 'quote',
-      revision: 'db7394f3c5cce10b0cca9cd60cadecd71aa36ba0',
+      revision: '95a80663991d6a9e168817f30181c7f5837bcc31',
       content: {
         id: 'wlwf4-3QlI',
         type: 'quote',
         data: {
           text: 'There is only one way to eat an elephant: a bite at a time.',
           caption: 'Desmond Tutu',
-          alignment: 'left',
+          alignment: 'center',
         },
       },
       answer: {},

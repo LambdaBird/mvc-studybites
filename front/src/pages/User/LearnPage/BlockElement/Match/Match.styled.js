@@ -28,6 +28,7 @@ export const AnswerWrapper = styled.div`
 
 export const AnswerWrapperWrong = styled(AnswerWrapper)`
   flex-direction: column;
+  margin-bottom: 2rem;
 `;
 
 export const AnswerWrapperWrongTitle = styled(AnswerWrapperWrong)`

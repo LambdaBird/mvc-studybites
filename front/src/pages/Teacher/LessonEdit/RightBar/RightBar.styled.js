@@ -2,7 +2,6 @@ import { Spin as SpinAntd } from 'antd';
 import styled from 'styled-components';
 
 import { HEADER_HEIGHT } from '@sb-ui/components/molecules/Header/Header.styled';
-import { LEFT_BAR_WIDTH } from '@sb-ui/pages/Teacher/LessonEdit/constants';
 import variables from '@sb-ui/theme/variables';
 
 export const Wrapper = styled.div`
@@ -35,7 +34,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Spin = styled(SpinAntd)`
-  margin-top: 0.5rem;
-  margin-left: calc(${LEFT_BAR_WIDTH}px + 1rem);
-  margin-right: auto;
+  display: flex;
+  align-items: center;
+  margin-right: 8px;
 `;

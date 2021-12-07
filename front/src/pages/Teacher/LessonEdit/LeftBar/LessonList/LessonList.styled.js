@@ -69,7 +69,7 @@ export const Lesson = styled.div`
   }
 
   &:hover .close {
-    display: block;
+    visibility: visible;
   }
 `;
 
@@ -88,7 +88,11 @@ export const More = styled(MoreOutlined).attrs({
 })`
   color: ${variables['secondary-text-color']};
   font-size: 1.3rem;
-  display: none;
+
+  @media (min-width: 768px) {
+    visibility: hidden;
+  }
+
   transform: rotateZ(90deg);
   ${(props) => props.selected && CloseSelectedStyle};
   &:hover {
@@ -116,7 +120,9 @@ const getStatus = (status) => {
 
 export const Badge = styled(BadgeAntd).attrs(({ status }) => ({
   status: getStatus(status),
-}))``;
+}))`
+  display: flex;
+`;
 
 export const Text = styled(TextAntd).attrs({
   ellipsis: {
