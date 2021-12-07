@@ -26,6 +26,7 @@ const LessonPreview = () => {
     total,
     learnProgress,
     isFinishedLesson,
+    handleElementClick,
   } = useLearnChunks({
     lessonId,
     getEnrolledLesson: getLessonByIdPreview,
@@ -52,7 +53,7 @@ const LessonPreview = () => {
                 id: lessonId,
               }}
             >
-              <S.LearnWrapper>
+              <S.LearnWrapper onClick={handleElementClick}>
                 <InfoBlock
                   isLoading={isLoading}
                   total={total}

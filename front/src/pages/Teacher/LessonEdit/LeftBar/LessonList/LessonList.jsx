@@ -30,6 +30,7 @@ const LessonList = ({ lessons, handleHideLeftBar }) => {
   );
 
   const {
+    visible,
     selectedLesson,
     handleCopyLink,
     handleDeleteLesson,
@@ -58,6 +59,7 @@ const LessonList = ({ lessons, handleHideLeftBar }) => {
             </Tooltip>
             <S.Text>{name}</S.Text>
             <S.Popover
+              visible={id === selectedLesson && visible}
               onVisibleChange={handleVisibleChange}
               okText={t('lesson_list.confirm_ok')}
               cancelText={t('lesson_list.confirm_cancel')}

@@ -11,6 +11,7 @@ import { fallbackCopyTextToClipboard } from '@sb-ui/utils/utils';
 export const useLessonActions = ({ handleLessonClick }) => {
   const { t } = useTranslation('teacher');
 
+  const [visible, setVisible] = useState(false);
   const { mutate: shareLesson } = useMutation(postShareLesson);
   const [selectedLesson, setSelectedLesson] = useState(null);
 
@@ -18,6 +19,7 @@ export const useLessonActions = ({ handleLessonClick }) => {
     if (!newVisible) {
       setSelectedLesson(null);
     }
+    setVisible(newVisible);
   };
 
   const handleSelectLesson = (event, id) => {
@@ -33,6 +35,7 @@ export const useLessonActions = ({ handleLessonClick }) => {
       content: t('lesson_list.link_copy_successfully'),
       duration: 2,
     });
+    setSelectedLesson(null);
   };
 
   const handleDeleteLesson = (event, id) => {
@@ -53,6 +56,7 @@ export const useLessonActions = ({ handleLessonClick }) => {
     });
 
     LessonsStorage.removeLesson(id);
+    setSelectedLesson(null);
   };
 
   return {
@@ -61,5 +65,6 @@ export const useLessonActions = ({ handleLessonClick }) => {
     handleDeleteLesson,
     handleVisibleChange,
     selectedLesson,
+    visible,
   };
 };

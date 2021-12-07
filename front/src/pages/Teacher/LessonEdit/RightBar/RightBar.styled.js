@@ -1,6 +1,7 @@
 import { Spin as SpinAntd } from 'antd';
 import styled from 'styled-components';
 
+import { HEADER_HEIGHT } from '@sb-ui/components/molecules/Header/Header.styled';
 import variables from '@sb-ui/theme/variables';
 
 export const Wrapper = styled.div`
@@ -17,6 +18,7 @@ export const Wrapper = styled.div`
   justify-items: end;
   background-color: white;
   color: ${variables['neutral-8']};
+  height: ${HEADER_HEIGHT}px;
 
   @media (max-width: 767px) {
     justify-content: flex-end;

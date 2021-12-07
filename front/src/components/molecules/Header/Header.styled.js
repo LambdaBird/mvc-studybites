@@ -39,10 +39,7 @@ export const RowMain = styled(Row).attrs({
   align: 'middle',
   justify: 'space-between',
 })`
-  padding: 0 2rem;
-  @media (max-width: 767px) {
-    padding: 0 1rem;
-  }
+  padding: 0 1rem;
   height: ${HEADER_HEIGHT}px;
 `;
 

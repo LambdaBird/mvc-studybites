@@ -32,6 +32,7 @@ const LearnPage = () => {
     learnProgress,
     progressStatus,
     isFinishedLesson,
+    handleElementClick,
   } = useLearnChunks({
     lessonId,
     getEnrolledLesson,
@@ -90,7 +91,7 @@ const LearnPage = () => {
                 id: lessonId,
               }}
             >
-              <S.LearnWrapper>
+              <S.LearnWrapper onClick={handleElementClick}>
                 <InfoBlock
                   isLoading={isLoading}
                   total={total}

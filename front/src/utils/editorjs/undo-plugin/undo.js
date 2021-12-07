@@ -1,10 +1,10 @@
 import equal from 'fast-deep-equal';
 
 import { BLOCKS_TYPE } from '@sb-ui/pages/User/LearnPage/BlockElement/types';
-import { moveCaret } from '@sb-ui/utils/editorjs/quiz-plugin/utils';
+import { isSameElementAsCreated } from '@sb-ui/utils/editorjs/undo-plugin/domUtils';
 import { createElementFromHTML } from '@sb-ui/utils/editorjs/utils';
 
-import { isSameElementAsCreated } from './domUtils';
+import { Cursor } from './Cursor';
 import Observer from './observer';
 
 const BODY_TAG_NAME = 'BODY';
@@ -140,15 +140,12 @@ export default class Undo {
     this.undoStack.push({
       index,
       state,
+      caretPosition: Cursor.getCurrentCursorPosition(activeElement),
       activeElementHTML:
         activeElement.tagName === BODY_TAG_NAME
           ? null
           : activeElement.outerHTML,
     });
-    if (this.redoStack.length === 0 && this.undoStack.length === 2) {
-      this.undoStack[0].activeElementHTML = activeElement.outerHTML;
-      this.undoStack[0].index = index;
-    }
 
     if (this.undoStack.length >= this.maxLength) {
       this.truncate(this.undoStack, this.maxLength);
@@ -208,7 +205,7 @@ export default class Undo {
     );
   }
 
-  afterRenderNewBlocks({ index, activeElementHTML }) {
+  afterRenderNewBlocks({ index, activeElementHTML, caretPosition }) {
     if (index < 0) {
       return;
     }
@@ -216,12 +213,16 @@ export default class Undo {
     if (activeElementHTML) {
       const realElement = this.getRealElement({ holder, activeElementHTML });
       if (realElement?.isContentEditable) {
-        moveCaret(realElement);
+        const realPosition =
+          caretPosition > realElement.innerText.length || caretPosition < 0
+            ? realElement.innerText.length
+            : caretPosition;
+        Cursor.setCurrentCursorPosition(realPosition, realElement);
       } else if (realElement?.tagName === INPUT_TAG_NAME) {
         realElement?.focus();
       }
       realElement?.scrollIntoViewIfNeeded?.(true);
-      this.handleFocus();
+      this.handleFocus({ forceBlock: realElement });
     } else {
       this.editor.caret.setToBlock(correctIndex, 'start');
       holder?.scrollIntoViewIfNeeded?.(true);
@@ -233,8 +234,8 @@ export default class Undo {
    * Renders data in the editor by index with state
    */
   async updateBlocks() {
-    const { index, state, activeElementHTML } =
-      this.undoStack.slice(-1)?.[0] || {};
+    const undoElement = this.undoStack.slice(-1)?.[0] || {};
+    const { state, caretPosition } = undoElement;
 
     if (!state) {
       return;
@@ -256,7 +257,10 @@ export default class Undo {
       data: block.data === null ? {} : block.data,
     }));
     this.editor.blocks.render({ blocks: newState }).then(() => {
-      this.afterRenderNewBlocks({ index, activeElementHTML });
+      const lastRedoElement = this.redoStack.slice(-1)?.[0] || {};
+      const elementToRender =
+        !caretPosition && caretPosition !== 0 ? lastRedoElement : undoElement;
+      this.afterRenderNewBlocks(elementToRender);
     });
   }
 

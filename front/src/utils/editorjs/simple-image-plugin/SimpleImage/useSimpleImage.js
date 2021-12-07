@@ -1,7 +1,12 @@
 import { useCallback, useEffect, useRef } from 'react';
 
 import { moveCaretToEnd } from '../../toolsHelper';
-import { isDivInputEmpty, setPropsInTool, stopRepeating } from '../../utils';
+import {
+  isDivInputEmpty,
+  isRealInputEmpty,
+  setPropsInTool,
+  stopRepeating,
+} from '../../utils';
 
 export const useSimpleImage = ({ tool, loaded, error, src, setSrc }) => {
   const linkInputRef = useRef(null);
@@ -9,7 +14,7 @@ export const useSimpleImage = ({ tool, loaded, error, src, setSrc }) => {
 
   const handleInputLinkKeyDown = useCallback(
     (event) => {
-      if (isDivInputEmpty(event, linkInputRef.current)) {
+      if (isRealInputEmpty(event, linkInputRef.current)) {
         if (stopRepeating(event)) {
           return;
         }
@@ -31,7 +36,7 @@ export const useSimpleImage = ({ tool, loaded, error, src, setSrc }) => {
   }, []);
 
   const handleLinkInput = useCallback(() => {
-    setSrc(linkInputRef.current?.innerText);
+    setSrc(linkInputRef.current?.value);
   }, [setSrc]);
 
   useEffect(() => {
@@ -57,7 +62,7 @@ export const useSimpleImage = ({ tool, loaded, error, src, setSrc }) => {
     });
     if (tool.data.location) {
       setSrc(tool.data.location);
-      linkInputRef.current.innerText = tool.data.location;
+      linkInputRef.current.value = tool.data.location;
     }
   }, [setSrc, tool]);
 
@@ -73,6 +78,5 @@ export const useSimpleImage = ({ tool, loaded, error, src, setSrc }) => {
     handleInputLinkKeyDown,
     handleInputCaptionKeyDown,
     handleLinkInput,
-    linkSrc: linkInputRef.current?.innerText,
   };
 };

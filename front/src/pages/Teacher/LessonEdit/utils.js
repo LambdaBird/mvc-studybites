@@ -74,6 +74,12 @@ export const prepareEditorData = (blocks) =>
           ...content,
           data: {
             ...content?.data,
+            words: [
+              ...answer?.words,
+              ...content.data.words.filter(
+                (word) => !answer.words.includes(word),
+              ),
+            ],
             answers: answer?.words,
           },
         };

@@ -22,32 +22,3 @@ export function make(tagName, classNames = null, attributes = {}) {
 
   return el;
 }
-
-/**
- * Moves caret to the end of contentEditable element
- *
- * @param {Element} element - contentEditable element
- * @param {boolean} toStart - pass true to move caret to start. Otherwise will it be moved to the end
- * @param {number} offset - range start offset.
- *                          If element is Text, offset is a chars count.
- *                          If element is an Element, offset is a childNode index
- *                          {@see https://developer.mozilla.org/en-US/docs/Web/API/Range/setStart}
- *
- * @returns {void}
- */
-export function moveCaret(element, toStart = false, offset = undefined) {
-  const range = document.createRange();
-  const selection = window.getSelection();
-
-  range.selectNodeContents(element);
-
-  if (offset !== undefined) {
-    range.setStart(element, offset);
-    range.setEnd(element, offset);
-  }
-
-  range.collapse(toStart);
-
-  selection.removeAllRanges();
-  selection.addRange(range);
-}
