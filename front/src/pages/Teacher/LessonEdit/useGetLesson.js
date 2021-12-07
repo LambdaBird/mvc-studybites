@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useQuery } from 'react-query';
 import { useHistory } from 'react-router-dom';
 
+import { defaultLesson } from '@sb-ui/hooks/useFirstAppNavigation/defaultLesson';
 import {
   CLIENT_ERROR_STARTS,
   EXAMPLE_LESSON_ID,
@@ -13,7 +14,7 @@ import { AMPLITUDE_EVENTS, amplitudeLogEvent } from '@sb-ui/utils/amplitude';
 import { getLesson } from '@sb-ui/utils/api/v1/teacher';
 import { Statuses } from '@sb-ui/utils/constants';
 import { LessonsStorage } from '@sb-ui/utils/LessonsStorage';
-import { HOME, LESSONS_NEW } from '@sb-ui/utils/paths';
+import { HOME } from '@sb-ui/utils/paths';
 import { TEACHER_LESSON_BASE_KEY } from '@sb-ui/utils/queries';
 
 export const isLessonIdCorrect = (lessonId) =>
@@ -42,7 +43,7 @@ export const useGetLesson = ({ lessonId }) => {
             duration: 2,
           });
           LessonsStorage.clearNonexistentLessons(lessonId);
-          history.push(LESSONS_NEW);
+          history.push(HOME);
         }
       },
     },
@@ -55,10 +56,16 @@ export const useGetLesson = ({ lessonId }) => {
 
   useEffect(() => {
     if (lessonId === EXAMPLE_LESSON_ID) {
-      const exampleLesson = LessonsStorage.getLesson(EXAMPLE_LESSON_ID);
-      if (!exampleLesson) {
-        history.push(HOME);
-        return;
+      const defaultLessonStorage = {
+        id: EXAMPLE_LESSON_ID,
+        status: Statuses.UNSAVED,
+        ...defaultLesson,
+      };
+      const exampleLessonFromStorage =
+        LessonsStorage.getLesson(EXAMPLE_LESSON_ID);
+      const exampleLesson = exampleLessonFromStorage || defaultLessonStorage;
+      if (!exampleLessonFromStorage) {
+        LessonsStorage.setLesson(defaultLessonStorage);
       }
       setLesson(exampleLesson);
       LessonsStorage.removeLesson(NEW_LESSON_ID);

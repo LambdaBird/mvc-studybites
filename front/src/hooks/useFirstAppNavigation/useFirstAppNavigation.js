@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useRef } from 'react';
 
 import { EXAMPLE_LESSON_ID } from '@sb-ui/pages/Teacher/LessonEdit/constants';
 import { Statuses } from '@sb-ui/utils/constants';
@@ -10,8 +10,8 @@ const IS_VISITED = 'isVisited';
 
 export const createFirstLesson = () => {
   const firstNavigationSite = localStorage.getItem(IS_VISITED);
-  localStorage.setItem(IS_VISITED, true);
   if (!firstNavigationSite) {
+    localStorage.setItem(IS_VISITED, 'true');
     LessonsStorage.setLesson({
       id: EXAMPLE_LESSON_ID,
       status: Statuses.UNSAVED,
@@ -21,7 +21,10 @@ export const createFirstLesson = () => {
 };
 
 export const useFirstAppNavigation = () => {
-  useEffect(() => {
+  const mountedRef = useRef(null);
+
+  if (!mountedRef.current) {
+    mountedRef.current = true;
     createFirstLesson();
-  }, []);
+  }
 };
