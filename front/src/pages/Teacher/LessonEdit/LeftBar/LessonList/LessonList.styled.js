@@ -101,7 +101,7 @@ export const More = styled(MoreOutlined).attrs({
 `;
 
 export const Popover = styled(PopoverAntd).attrs({
-  trigger: 'focus',
+  trigger: 'click',
   placement: 'rightTop',
   overlayClassName: PopoverClassName,
 })``;
