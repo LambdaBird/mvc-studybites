@@ -79,7 +79,7 @@ const CloseStyle = css`
 `;
 
 const CloseSelectedStyle = css`
-  display: block;
+  visibility: visible;
   ${CloseStyle};
 `;
 
@@ -88,9 +88,9 @@ export const More = styled(MoreOutlined).attrs({
 })`
   color: ${variables['secondary-text-color']};
   font-size: 1.3rem;
-
-  @media (min-width: 768px) {
-    visibility: hidden;
+  visibility: hidden;
+  @media (max-width: 767px) {
+    visibility: visible;
   }
 
   transform: rotateZ(90deg);
@@ -101,7 +101,7 @@ export const More = styled(MoreOutlined).attrs({
 `;
 
 export const Popover = styled(PopoverAntd).attrs({
-  trigger: 'focus',
+  trigger: 'click',
   placement: 'rightTop',
   overlayClassName: PopoverClassName,
 })``;
