@@ -2,6 +2,8 @@
 /**
  * Build styles
  */
+import { stopRepeating } from '@sb-ui/utils/editorjs/utils';
+
 import PluginBase from '../PluginBase';
 
 import { ToolboxIcon } from './resources';
@@ -55,6 +57,7 @@ export default class Delimiter extends PluginBase {
 
     this._CSS = {
       wrapper: 'ce-delimiter',
+      input: 'delimiter-tool__input',
     };
 
     this._data = {};
@@ -76,6 +79,12 @@ export default class Delimiter extends PluginBase {
     return div;
   }
 
+  handleKeyDown(event) {
+    if (event.key === 'Backspace' && !stopRepeating(event)) {
+      this.api.blocks.delete();
+    }
+  }
+
   /**
    * Return Tool's view
    * @returns {HTMLDivElement}
@@ -84,6 +93,10 @@ export default class Delimiter extends PluginBase {
   render() {
     const container = document.createElement('div');
     container.appendChild(this.titleWrapper);
+    const input = document.createElement('input');
+    input.classList.add(this._CSS.input);
+    input.addEventListener('keydown', this.handleKeyDown.bind(this));
+    container.appendChild(input);
     container.appendChild(this._element);
     return container;
   }

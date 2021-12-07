@@ -12,3 +12,9 @@
   height: 30px;
   letter-spacing: 0.2em;
 }
+
+.delimiter-tool__input{
+  height: 0;
+  border: 0;
+  padding: 0;
+}
