@@ -7,7 +7,7 @@ export const BlockWrapper = styled(Row)`
   width: 100%;
   padding: 2rem;
   background-color: rgba(245, 245, 245, 1);
-  border-radius: 8px;
+  border-radius: 1rem;
   margin-bottom: 2rem;
 `;
 

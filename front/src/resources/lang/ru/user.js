@@ -78,7 +78,7 @@ export default {
       placeholder: 'пример',
     },
     by: 'От',
-    blocks: 'блоков',
+    blocks: 'уровней',
     start: 'Начать',
     next: 'Дальше',
     send: 'Отправить',

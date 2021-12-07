@@ -71,11 +71,11 @@ export const ChunkWrapper = styled.div`
     margin-bottom: 0;
   }
 
-  animation: slide-top 0.5s cubic-bezier(0.55, 0.055, 0.675, 0.19) both;
+  animation: slide-top 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19) both;
 
   @keyframes slide-top {
     0% {
-      transform: translateY(50px);
+      transform: translateX(50px);
       opacity: 0;
     }
     100% {

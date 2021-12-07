@@ -8,12 +8,20 @@ import { FINISH_TYPE } from '@sb-ui/pages/User/LearnPage/utils';
 
 import { NextPropType } from '../types';
 
+import ThumbUp from './ThumbUp';
+import { Wrapper } from './Finish.styled';
+
 const Finish = ({ isSolved }) => {
   const { t } = useTranslation('user');
   const { handleInteractiveClick, id } = useContext(LearnContext);
 
   if (isSolved) {
-    return <Results />;
+    return (
+      <Wrapper>
+        <Results />
+        <ThumbUp />
+      </Wrapper>
+    );
   }
 
   return (
