@@ -16,7 +16,7 @@ export const calculateClosedQuestion = ({ reply, answer }) =>
   verifyClosedQuestionAnswers(answer.results, reply.value);
 
 export const calculateFillTheGap = ({ reply, answer }) => {
-  const { correct } = verifyFillTheGapAnswers(answer.results, reply.response);
+  const { correct } = verifyFillTheGapAnswers(answer?.results, reply?.response);
   return correct === CORRECT_ALL;
 };
 

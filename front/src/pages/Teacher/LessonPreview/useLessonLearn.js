@@ -10,17 +10,17 @@ export const useLessonLearn = () => {
   const getLessonByIdPreview = async ({ queryKey }) => {
     const data = await getLesson({ queryKey });
     setLessonData(data);
-
+    const interactiveTotal = data.lesson.blocks.filter((block) =>
+      apiInteractiveBlocks.includes(block.type),
+    ).length;
     return {
       lesson: {
         ...data.lesson,
         blocks: [],
         interactivePassed: 0,
-        interactiveTotal: data.lesson.blocks.filter((block) =>
-          apiInteractiveBlocks.includes(block.type),
-        ).length,
+        interactiveTotal,
       },
-      total: data.lesson.blocks.length,
+      total: interactiveTotal,
     };
   };
 
