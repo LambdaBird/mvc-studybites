@@ -32,6 +32,7 @@ services:
     environment:
       PORT: ${API_PORT}
       DEVELOPMENT_MODE: 1
+      DEBUG_MODE: ${DEBUG_MODE}
       DATABASE_URL: ${POSTGRES_URI}
 
 volumes:

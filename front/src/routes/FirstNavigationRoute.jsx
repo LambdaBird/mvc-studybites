@@ -12,9 +12,11 @@ const FirstNavigationRoute = () => {
     if (history.location.pathname === paths.HOME) {
       const firstStoredLesson = LessonsStorage.getLessons()?.[0];
       if (firstStoredLesson) {
-        history.push(paths.LESSONS_EDIT.replace(':id', firstStoredLesson.id));
+        history.replace(
+          paths.LESSONS_EDIT.replace(':id', firstStoredLesson.id),
+        );
       } else {
-        history.push(paths.LESSONS_NEW);
+        history.replace(paths.LESSONS_NEW);
       }
     }
   }, [history]);

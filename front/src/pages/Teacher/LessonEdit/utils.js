@@ -18,7 +18,7 @@ import Quote from '@sb-ui/utils/editorjs/quote-plugin';
 import Image from '@sb-ui/utils/editorjs/simple-image-plugin';
 import Table from '@sb-ui/utils/editorjs/table-plugin';
 import Warning from '@sb-ui/utils/editorjs/warning-plugin';
-import { shuffleArray } from '@sb-ui/utils/utils';
+import { shuffleArray, uuidRegExp } from '@sb-ui/utils/utils';
 
 const MAX_BODY_LENGTH = 4_000_000;
 
@@ -32,7 +32,10 @@ const prepareMatchValues = (values) => {
 };
 
 export const prepareEditorData = (blocks) =>
-  blocks?.map(({ content, answer, type }) => {
+  blocks?.map(({ blockId, content, answer, type }) => {
+    // Replace editor js block id with API blockId(uuid)
+    // eslint-disable-next-line no-param-reassign
+    content.id = blockId;
     switch (type) {
       case BLOCKS_TYPE.QUIZ:
         return {
@@ -168,6 +171,7 @@ export const prepareBlocksForApi = (blocks) =>
       return {
         type,
         revision: hash(block),
+        blockId: uuidRegExp.test(id) ? id : null,
         content: {
           id,
           type,

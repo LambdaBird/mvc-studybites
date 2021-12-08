@@ -1,6 +1,8 @@
 import { DEFAULT_CODE } from '@sb-ui/i18n';
 
 const escapeRegExp = (string) => string.replace(/[-.*+?^${}()|[\]\\]/g, '\\$&');
+export const uuidRegExp =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 export const sleep = (ms) =>
   new Promise((resolve) => {
