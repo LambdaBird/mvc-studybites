@@ -210,6 +210,7 @@ export default class Undo {
       return;
     }
     const { holder, correctIndex } = this.getHolderWithCorrectIndex(index);
+    this.editor.configuration.onChange(this.editor);
     if (activeElementHTML) {
       const realElement = this.getRealElement({ holder, activeElementHTML });
       if (realElement?.isContentEditable) {
