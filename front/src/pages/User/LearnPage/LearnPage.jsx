@@ -8,11 +8,12 @@ import LearnFooter from '@sb-ui/components/atoms/LearnFooter';
 import Header from '@sb-ui/components/molecules/Header';
 import LearnContext from '@sb-ui/contexts/LearnContext';
 import { BLOCKS_TYPE } from '@sb-ui/pages/User/LearnPage/BlockElement/types';
+import { UUID_LENGTH } from '@sb-ui/pages/User/LearnPage/constants';
 import InfoBlock from '@sb-ui/pages/User/LearnPage/InfoBlock';
 import { AMPLITUDE_EVENTS, amplitudeLogEvent } from '@sb-ui/utils/amplitude';
 import { getEnrolledLesson, postLessonById } from '@sb-ui/utils/api/v1/student';
 import { sbPostfix } from '@sb-ui/utils/constants';
-import { HOME } from '@sb-ui/utils/paths';
+import { HOME, LEARN_PAGE } from '@sb-ui/utils/paths';
 
 import LearnChunk from './LearnChunk';
 import { useLearnChunks } from './useLearnChunks';
@@ -23,6 +24,7 @@ const HISTORY_BACK = 'POP';
 const LearnPage = () => {
   const { t } = useTranslation('user');
   const { id: lessonId } = useParams();
+  const realLessonId = lessonId?.slice(-UUID_LENGTH);
   const {
     handleInteractiveClick,
     chunks,
@@ -34,7 +36,7 @@ const LearnPage = () => {
     isFinishedLesson,
     handleElementClick,
   } = useLearnChunks({
-    lessonId,
+    lessonId: realLessonId,
     getEnrolledLesson,
     postLessonById,
   });
@@ -68,6 +70,13 @@ const LearnPage = () => {
     [handleInteractiveClick],
   );
 
+  useEffect(() => {
+    if (lesson?.name) {
+      const url = `${lesson.name.replaceAll(' ', '_')}-${realLessonId}`;
+      history.replace(LEARN_PAGE.replace(':id', url));
+    }
+  }, [history, lesson?.name, realLessonId]);
+
   return (
     <>
       <Helmet>
@@ -88,7 +97,7 @@ const LearnPage = () => {
               value={{
                 handleInteractiveClick: handleInteractiveClickWrapper,
                 chunks,
-                id: lessonId,
+                id: realLessonId,
               }}
             >
               <S.LearnWrapper onClick={handleElementClick}>
