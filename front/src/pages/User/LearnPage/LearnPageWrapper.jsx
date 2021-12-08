@@ -10,6 +10,8 @@ import { postCreateAccount } from '@sb-ui/utils/api/v1/user';
 import { getJWTAccessToken, setJWT } from '@sb-ui/utils/jwt';
 import { HOME } from '@sb-ui/utils/paths';
 
+import { UUID_LENGTH } from './constants';
+
 const LearnPageWrapper = () => {
   const { id: lessonId } = useParams();
   const history = useHistory();
@@ -33,7 +35,7 @@ const LearnPageWrapper = () => {
     if (!isLoggedIn) {
       createAccount();
     } else {
-      enrollToLesson(lessonId);
+      enrollToLesson(lessonId.slice(-UUID_LENGTH));
     }
   }, [enrollToLesson, lessonId, isLoggedIn, createAccount]);
 

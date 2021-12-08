@@ -24,6 +24,9 @@ const ShareModal = ({ publicId, opened, setOpened }) => {
   const handleOverlayClick = useCallback(() => {
     setOpened(false);
   }, [setOpened]);
+  const [lessonName, setLessonName] = useState(
+    LessonsStorage.getLesson(lessonId)?.name || '',
+  );
 
   const { mutate: shareLesson } = useMutation(postShareLesson, {
     onSuccess: () => {
@@ -47,8 +50,8 @@ const ShareModal = ({ publicId, opened, setOpened }) => {
   };
 
   const fullLink = useMemo(
-    () => (publicId ? `${HOST}/learn/${publicId}` : ''),
-    [publicId],
+    () => (publicId ? `${HOST}/learn/${lessonName || ''}-${publicId}` : ''),
+    [lessonName, publicId],
   );
 
   const handleCopyClick = useCallback(() => {
@@ -67,6 +70,21 @@ const ShareModal = ({ publicId, opened, setOpened }) => {
       setIsShareAnyone(true);
     }
   }, [publicId]);
+
+  useEffect(() => {
+    const handleChangeLessons = (newLessons) => {
+      newLessons.forEach((lesson) => {
+        if (lesson.id === lessonId) {
+          setLessonName(lesson.name.replaceAll(' ', '_'));
+        }
+      });
+    };
+    LessonsStorage.addChangeHandler(handleChangeLessons);
+
+    return () => {
+      LessonsStorage.removeChangeHandler(handleChangeLessons);
+    };
+  }, [lessonId]);
 
   return (
     <>
