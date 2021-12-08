@@ -208,6 +208,7 @@ export const useLessonEdit = () => {
         return;
       }
       currentBlocksRef.current.blocks = params.blocks;
+      toolbarRef.current?.hideToolbar?.();
       if (isCurrentlyEditing) updateLessonMutation.mutate(params);
       else createLessonMutation.mutate(params);
     } catch (e) {
