@@ -65,18 +65,20 @@ export const useToolbar = ({ editor, toolbarRef: toolbarTool }) => {
     [editor],
   );
 
+  const hideToolbar = useCallback(() => {
+    toolbarWrapper.classList.add(DISPLAY_NONE);
+  }, []);
+
   useEffect(() => {
+    // eslint-disable-next-line no-param-reassign
+    toolbarTool.current.hideToolbar = hideToolbar;
     // eslint-disable-next-line no-param-reassign
     toolbarTool.current.handleFocus = handleFocus;
     // eslint-disable-next-line no-param-reassign
     toolbarTool.current.removeHideTitle = () => {
       removeStartTitle(editorElementRef.current);
     };
-  }, [handleFocus, toolbarTool]);
-
-  const hideToolbar = useCallback(() => {
-    toolbarWrapper.classList.add(DISPLAY_NONE);
-  }, []);
+  }, [handleFocus, hideToolbar, toolbarTool]);
 
   const editorMouseDown = useCallback(() => {
     setImmediate(() => {

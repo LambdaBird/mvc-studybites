@@ -67,7 +67,7 @@ export default class Quiz extends PluginBase {
   }
 
   save() {
-    const answers = [...this.itemsWrapper.childNodes]
+    const answers = [...this.itemsWrapper?.childNodes]
       .map((answerItem) => ({
         value: this.getItemInput(answerItem).innerHTML,
         correct: this.getItemChecked(answerItem),
