@@ -1,7 +1,7 @@
 import objection from 'objection';
 import path from 'path';
 
-import { v4 } from 'uuid';
+import { v4, validate } from 'uuid';
 import { BadRequestError, NotFoundError } from '../validation/errors';
 import {
   lessonServiceErrors as errors,
@@ -179,6 +179,10 @@ class Lesson extends BaseModel {
   }
 
   static findByPublicId({ lessonPublicId }) {
+    const notFoundError = new NotFoundError(errors.LESSON_ERR_LESSON_NOT_FOUND);
+    if (!validate(lessonPublicId)) {
+      throw notFoundError;
+    }
     return this.query()
       .first()
       .where({
@@ -186,18 +190,22 @@ class Lesson extends BaseModel {
         status: 'Public',
       })
       .throwIfNotFound({
-        error: new NotFoundError(errors.LESSON_ERR_LESSON_NOT_FOUND),
+        error: notFoundError,
       });
   }
 
   static findByEditId({ lessonEditId }) {
+    const notFoundError = new NotFoundError(errors.LESSON_ERR_LESSON_NOT_FOUND);
+    if (!validate(lessonEditId)) {
+      throw notFoundError;
+    }
     return this.query()
       .first()
       .where({
         edit_id: lessonEditId,
       })
       .throwIfNotFound({
-        error: new NotFoundError(errors.LESSON_ERR_LESSON_NOT_FOUND),
+        error: notFoundError,
       });
   }
 
