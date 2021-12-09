@@ -1,14 +1,21 @@
-import { Button as ButtonAntd } from 'antd';
+import { Button as ButtonAntd, Input, Typography } from 'antd';
 import styled from 'styled-components';
-import { CloseOutlined, QuestionOutlined } from '@ant-design/icons';
+import {
+  CloseOutlined,
+  MailOutlined,
+  QuestionOutlined,
+  SendOutlined,
+} from '@ant-design/icons';
 
 import variables from '@sb-ui/theme/variables';
+
+const { Link } = Typography;
 
 export const Main = styled.div`
   position: fixed;
   z-index: 2;
-  bottom: 2rem;
-  right: 2rem;
+  bottom: 1rem;
+  right: 1rem;
   @keyframes slide-top {
     0% {
       transform: translateY(20px);
@@ -45,7 +52,7 @@ export const Button = styled(ButtonAntd).attrs({
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: x-large;
+  font-size: large;
   width: 50px;
   height: 50px;
 `;
@@ -54,7 +61,7 @@ export const Modal = styled.div`
   position: absolute;
   padding: 1rem;
   bottom: 4rem;
-  right: 4rem;
+  right: 0;
   width: 330px;
   background: white;
   display: ${(props) => (props.open ? 'block' : 'none')};
@@ -80,20 +87,22 @@ export const ModalBody = styled.div`
 
 export const ModalBodyTitle = styled.div`
   font-weight: 500;
-  font-size: 24px;
+  font-size: 1.5rem;
   line-height: 32px;
   text-align: center;
+  font-family: Futura;
 `;
 
 export const ModalBodyContent = styled.div`
   display: grid;
-  padding: 0.5rem 1rem;
+  padding: 1rem 1rem;
   gap: 1rem;
   grid-template-areas:
     'a a b'
     'c c c'
     'd d d'
-    'e e e';
+    'e e e'
+    'f f f';
   height: 100%;
 `;
 
@@ -101,6 +110,7 @@ export const Info = styled.div`
   grid-area: a;
   display: flex;
   align-items: center;
+  font-family: Futura;
 `;
 
 export const Creator = styled.div`
@@ -111,6 +121,7 @@ export const Creator = styled.div`
 
 export const CreatorText = styled.div`
   color: ${variables['gray-6']};
+  font-size: 0.75rem;
 `;
 
 export const Links = styled.div`
@@ -118,6 +129,10 @@ export const Links = styled.div`
   display: flex;
   margin-left: auto;
   flex-direction: column;
+  font-family: Futura;
+  font-size: 0.75rem;
+  justify-content: center;
+  text-decoration: underline;
 `;
 
 export const ModalClose = styled(CloseOutlined)`
@@ -133,3 +148,41 @@ export const CloseIcon = styled(CloseOutlined).attrs({
 export const QuestionIcon = styled(QuestionOutlined).attrs({
   className: 'button-animation',
 })``;
+
+export const MailIcon = styled(MailOutlined)`
+  color: ${variables['primary-color']};
+  margin-right: 0.5rem;
+`;
+
+export const SendIcon = styled(SendOutlined)`
+  color: ${variables['primary-color']};
+  margin-right: 0.5rem;
+`;
+
+export const SubscribeButton = styled(ButtonAntd).attrs({
+  type: 'primary',
+})`
+  grid-area: f;
+  font-family: Futura;
+  border-radius: 0.5rem;
+`;
+
+export const MessageBlock = styled.div`
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: ${variables['primary-background']};
+  grid-area: ${(props) => props.gridArea};
+  display: flex;
+  flex-direction: column;
+`;
+
+export const MessageLink = styled(Link)`
+  margin-top: 0.5rem;
+  text-decoration: underline !important;
+  font-family: Futura;
+`;
+
+export const EmailField = styled(Input)`
+  border-radius: 1rem;
+  margin-top: 1rem;
+`;
