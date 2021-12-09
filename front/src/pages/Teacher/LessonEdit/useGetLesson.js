@@ -91,7 +91,7 @@ export const useGetLesson = ({ lessonId }) => {
       lessonId !== EXAMPLE_LESSON_ID &&
       lessonData
     ) {
-      amplitudeLogEvent(AMPLITUDE_EVENTS.OPEN_LESSON, lessonId);
+      amplitudeLogEvent(AMPLITUDE_EVENTS.OPEN_LESSON, { lessonId });
     }
   }, [lessonId, lessonData]);
 
