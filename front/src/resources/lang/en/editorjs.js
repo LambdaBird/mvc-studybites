@@ -158,5 +158,8 @@ export default {
       empty_words: 'No words',
       empty_additional: 'No additional words',
     },
+    finish: {
+      title: 'Finish',
+    },
   },
 };

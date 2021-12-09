@@ -1,3 +1,4 @@
+import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 import variables from '@sb-ui/theme/variables';
@@ -15,7 +16,7 @@ export const Footer = styled.div`
   }
 `;
 
-export const Link = styled.a`
+export const Link = styled(RouterLink)`
   color: ${variables['blue-6']};
   cursor: pointer;
   text-decoration: underline;

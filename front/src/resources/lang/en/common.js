@@ -10,7 +10,7 @@ export default {
     unauthorized: 'Wrong credentials',
     no_internet: 'Oops no internet connection',
     internal_server: 'Oops, something went wrong',
-    parse_block: 'Parse block error',
+    parse_block: 'The block can not be displayed correctly 😰',
   },
   errors_page: {
     boundary_title: 'Oops',

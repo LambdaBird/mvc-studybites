@@ -13,7 +13,7 @@ export const calculateQuiz = ({ reply, answer, content }) => {
 };
 
 export const calculateClosedQuestion = ({ reply, answer }) =>
-  verifyClosedQuestionAnswers(answer.results, reply.value);
+  verifyClosedQuestionAnswers(answer?.results, reply?.value);
 
 export const calculateFillTheGap = ({ reply, answer }) => {
   const { correct } = verifyFillTheGapAnswers(answer?.results, reply?.response);
@@ -21,8 +21,8 @@ export const calculateFillTheGap = ({ reply, answer }) => {
 };
 
 export const calculateBricks = ({ reply, answer }) => {
-  const { words: answerResults } = answer;
-  const { words: userWords } = reply;
+  const { words: answerResults } = answer || {};
+  const { words: userWords } = reply || {};
   return verifyBricksAnswers(userWords, answerResults);
 };
 
