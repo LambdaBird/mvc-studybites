@@ -245,12 +245,13 @@ class LessonBlockStructure extends BaseModel {
   }
 
   static async countBlocks({ lessonId }) {
-    const { count: countInteractive } = await this.query()
-      .first()
-      .count()
+    const interactiveBlocks = await this.query()
+      .select('*')
       .join('blocks', 'blocks.block_id', '=', 'lesson_block_structure.block_id')
+      .distinctOn('lesson_block_structure.id')
       .where({ lesson_id: lessonId })
       .whereIn('blocks.type', blockConstants.INTERACTIVE_BLOCKS);
+    const countInteractive = interactiveBlocks.length;
 
     if (!+countInteractive) {
       const { count: countAll } = await this.query()
