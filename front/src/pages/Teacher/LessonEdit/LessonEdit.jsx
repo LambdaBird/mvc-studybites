@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 
@@ -43,6 +43,8 @@ const LessonEdit = () => {
   useReloadModal({ isNavigationAllowed });
 
   const isMobile = useContext(MobileContext);
+
+  const [open, setOpen] = useState(false);
 
   return (
     <>
@@ -96,6 +98,7 @@ const LessonEdit = () => {
             readOnly={false}
           />
         )}
+        <S.Support open={open} setOpen={setOpen} />
       </S.Page>
     </>
   );

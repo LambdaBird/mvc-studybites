@@ -32,6 +32,7 @@ const variables = {
   'blue-6': '#1890FF',
   'blue-7': '#096dd9',
   'geekblue-1': '#f0f5ff',
+  'blue-1': '#e6f7ff',
 };
 
 module.exports = variables;
