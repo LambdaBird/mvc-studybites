@@ -171,7 +171,7 @@ export const prepareBlocksForApi = (blocks) =>
       return {
         type,
         revision: hash(block),
-        blockId: uuidRegExp.test(id) ? id : null,
+        blockId: uuidRegExp.test(id) ? id : undefined,
         content: {
           id,
           type,
