@@ -1,21 +1,28 @@
-import { Typography } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-import { BlockIdType } from '../types';
+import { getTranslationKey } from '@sb-ui/utils/editorjs/EditorJsContainer/useToolbox/toolboxItemsHelpers';
 
-const { Text } = Typography;
+import { BlockType } from '../types';
 
-const Error = ({ blockId }) => {
-  const { t } = useTranslation();
+import { SadFace } from './SadFace';
+import * as S from './Error.styled';
+
+const Error = ({ blockType }) => {
+  const { t } = useTranslation('editorjs');
+  const blockKey = getTranslationKey(blockType);
   return (
-    <Text key={blockId} type="danger">
-      {t('errors.parse_block')}
-    </Text>
+    <S.Main className="ce-block__content">
+      <SadFace />
+      <S.Message>
+        <S.Title>{t(`tools.${blockKey}.title`)}</S.Title>
+        <div> {t('common:errors.parse_block')}</div>
+      </S.Message>
+    </S.Main>
   );
 };
 
 Error.propTypes = {
-  blockId: BlockIdType,
+  blockType: BlockType,
 };
 
 export default Error;

@@ -2,6 +2,7 @@ import * as T from 'prop-types';
 
 import BlockElement from '@sb-ui/pages/User/LearnPage/BlockElement';
 
+import ErrorBoundary from './BlockElement/ErrorBoundary';
 import * as S from './LearnPage.styled';
 
 const LearnChunk = ({ chunk }) => {
@@ -13,12 +14,15 @@ const LearnChunk = ({ chunk }) => {
       {staticBlocks?.length > 0 && (
         <S.ChunkWrapper>
           {staticBlocks.map((block) => (
-            <BlockElement key={block.blockId} element={block} />
+            <ErrorBoundary key={block.blockId}>
+              <BlockElement element={block} />
+            </ErrorBoundary>
           ))}
         </S.ChunkWrapper>
       )}
-
-      <BlockElement element={interactiveBlock} />
+      <ErrorBoundary>
+        <BlockElement element={interactiveBlock} />
+      </ErrorBoundary>
     </>
   );
 };

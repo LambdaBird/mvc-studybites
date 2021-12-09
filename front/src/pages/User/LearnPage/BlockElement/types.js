@@ -24,6 +24,8 @@ export const BLOCKS_TYPE = {
   BRICKS: 'bricks',
 };
 
+export const BlockType = PropTypes.string;
+
 export const BlockContentType = PropTypes.shape({
   type: PropTypes.oneOf(Object.values(BLOCKS_TYPE)),
 });
@@ -113,7 +115,7 @@ export const EmbedContentType = PropTypes.shape({
   data: PropTypes.shape({
     caption: PropTypes.string,
     embed: PropTypes.string,
-    height: PropTypes.string,
+    height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   }),
 });
 

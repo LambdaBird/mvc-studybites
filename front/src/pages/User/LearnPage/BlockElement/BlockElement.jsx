@@ -24,7 +24,10 @@ import {
   BlockContentType,
   BlockIdType,
   BLOCKS_TYPE,
+  BricksBlockAnswerType,
   ClosedQuestionBlockAnswerType,
+  FillTheGapBlockAnswerType,
+  MatchBlockAnswerType,
   QuizBlockAnswerType,
 } from './types';
 import Warning from './Warning';
@@ -83,6 +86,9 @@ BlockElement.propTypes = {
     answer: PropTypes.oneOfType([
       QuizBlockAnswerType,
       ClosedQuestionBlockAnswerType,
+      BricksBlockAnswerType,
+      FillTheGapBlockAnswerType,
+      MatchBlockAnswerType,
     ]),
   }),
 };

@@ -10,7 +10,7 @@ export default {
     unauthorized: 'Неправильные данные',
     no_internet: 'Упс, нет интернет соединения',
     internal_server: 'Упс, что то пошло не так',
-    parse_block: 'Ошибка распознания блока',
+    parse_block: 'Этот блок не может быть отображен корректно',
   },
   errors_page: {
     boundary_title: 'Упс',
