@@ -42,6 +42,9 @@ export const Main = styled.div`
   .button-animation {
     animation: show 0.3s cubic-bezier(0.55, 0.055, 0.675, 0.19) both;
   }
+  @media (max-width: 767px) {
+    z-index: 3;
+  }
 `;
 
 export const Button = styled(ButtonAntd).attrs({
@@ -73,6 +76,13 @@ export const Modal = styled.div`
 
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   border-radius: 8px;
+
+  @media (max-width: 767px) {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+  }
 `;
 
 export const ModalHeader = styled.div`

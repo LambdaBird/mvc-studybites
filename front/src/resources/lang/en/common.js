@@ -31,4 +31,31 @@ export default {
   filter_author: {
     placeholder: 'Select author',
   },
+  support_modal: {
+    email_not_valid: 'Please provide correct email',
+    success_subscribe: 'Successfully subscribed to an early access!',
+    header: 'Welcome to Studybites',
+    creator: {
+      name: 'Tim',
+      description: 'Creator',
+    },
+    links: {
+      email: 'Email',
+      telegram: 'Telegram',
+    },
+    actions_book: {
+      description:
+        'I would love to hear your feedback and experience using the app.',
+      action: 'Book a call.',
+    },
+    actions_report: {
+      description: 'You’re viewing an early version, so there will be bugs.',
+      action: 'Report a bug.',
+    },
+    actions_subscribe: {
+      description: 'Subscribe to get an early access to full-featured version',
+      email_placeholder: 'your@mail.com',
+      action: 'Subscribe',
+    },
+  },
 };

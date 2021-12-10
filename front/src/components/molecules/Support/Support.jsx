@@ -1,17 +1,57 @@
-import { Avatar } from 'antd';
+import { Avatar, message } from 'antd';
 import T from 'prop-types';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { useTranslation } from 'react-i18next';
+import { useMutation } from 'react-query';
+import { useHistory } from 'react-router-dom';
 
 import ava from '@sb-ui/resources/img/ava_tim.jpg';
+import { AMPLITUDE_EVENTS, amplitudeLogEvent } from '@sb-ui/utils/amplitude';
+import { postSubscribe } from '@sb-ui/utils/api/v1/user';
 
 import * as S from './Support.styled';
 
+const TELEGRAM_USER = 'tmaniac';
+const MAIL = 'studybites@lambdabird.com';
+const MAIL_REPORT = `mailto:${MAIL}?subject=Bug%20Report&body=Issue%20description%3A%0A%0A%0ASteps%20to%20reproduce%20the%20issue%3A%0A1.%0A2.%0A%0A%0AWhat's%20the%20expected%20result%3F%0A%0A%0AWhat's%20the%20actual%20result%3F%0A%0A%0AAdditional%20details%20%2F%20screenshot`;
+
 const Support = ({ open, setOpen }) => {
+  const { t } = useTranslation();
+  const history = useHistory();
   const ref = useRef(null);
+  const emailRef = useRef(null);
+  const buttonRef = useRef(null);
+
+  const [subscribed, setSubscribed] = useState(false);
+  const [email, setEmail] = useState('');
+
+  const invalidEmail = () => {
+    message.warn({
+      content: t('support_modal.email_not_valid'),
+      duration: 2,
+    });
+    emailRef.current?.focus();
+  };
+
+  const { mutate: subscribe } = useMutation(postSubscribe, {
+    onSuccess: (_, params) => {
+      amplitudeLogEvent(AMPLITUDE_EVENTS.SUBSCRIBE, params);
+      setSubscribed(true);
+      message.success({
+        content: t('support_modal.success_subscribe'),
+        duration: 2,
+      });
+    },
+    onError: invalidEmail,
+  });
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (ref.current && !ref.current.contains(event.target)) {
+      if (
+        !ref.current?.contains?.(event.target) &&
+        !buttonRef.current?.contains?.(event.target)
+      ) {
         setOpen(false);
       }
     };
@@ -20,71 +60,95 @@ const Support = ({ open, setOpen }) => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [setOpen]);
 
-  const handleSubscribe = (mail) => {
-    // eslint-disable-next-line no-console
-    console.log(mail);
+  const handleSubscribe = () => {
+    if (!email?.trim()?.length) {
+      invalidEmail();
+      return;
+    }
+    subscribe({
+      email,
+      pathname: history.location.pathname,
+    });
   };
 
-  return (
+  const handleEmailKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleSubscribe();
+    }
+  };
+
+  return createPortal(
     <S.Main>
       <S.Modal open={open} ref={ref}>
         <S.ModalHeader>
           <S.ModalClose onClick={() => setOpen(false)} />
         </S.ModalHeader>
         <S.ModalBody>
-          <S.ModalBodyTitle>Welcome to Studybites</S.ModalBodyTitle>
+          <S.ModalBodyTitle>{t('support_modal.header')}</S.ModalBodyTitle>
           <S.ModalBodyContent>
             <S.Info>
               <Avatar src={ava} />
               <S.Creator>
-                <div>Tim</div>
-                <S.CreatorText>Creator</S.CreatorText>
+                <div>{t('support_modal.creator.name')}</div>
+                <S.CreatorText>
+                  {t('support_modal.creator.description')}
+                </S.CreatorText>
               </S.Creator>
             </S.Info>
             <S.Links>
               <div>
                 <S.MailIcon />
-                <a href="mailto:studybites@lambdabird.com">Email</a>
+                <a href={`mailto:${MAIL}`}>{t('support_modal.links.email')}</a>
               </div>
               <div>
                 <S.SendIcon />
-                <a href="tg://user?tmaniac">Telegram</a>
+                <a href={`tg://resolve?domain=${TELEGRAM_USER}`}>
+                  {t('support_modal.links.telegram')}
+                </a>
               </div>
             </S.Links>
             <S.MessageBlock gridArea="c">
-              <div>
-                I would love to hear your feedback and experience using the app.
-              </div>
+              <div>{t('support_modal.actions_book.description')}</div>
               <S.MessageLink
                 href="https://calendly.com/tim-reznich/tim-sb-interview"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Book a call.
+                {t('support_modal.actions_book.action')}
               </S.MessageLink>
             </S.MessageBlock>
             <S.MessageBlock gridArea="d">
-              <div>You’re viewing an early version, so there will be bugs.</div>
-              <S.MessageLink href="mailto:studybites@lambdabird.com?subject=Bug%20Report&body=Issue%20description%3A%0A%0A%0ASteps%20to%20reproduce%20the%20issue%3A%0A1.%0A2.%0A%0A%0AWhat's%20the%20expected%20result%3F%0A%0A%0AWhat's%20the%20actual%20result%3F%0A%0A%0AAdditional%20details%20%2F%20screenshot">
-                Report a bug.
+              <div>{t('support_modal.actions_report.description')}</div>
+              <S.MessageLink href={`mailto:${MAIL_REPORT}`}>
+                {t('support_modal.actions_report.action')}
               </S.MessageLink>
             </S.MessageBlock>
             <S.MessageBlock gridArea="e">
-              <div>
-                Subscribe to get an early access to full-featured version
-              </div>
-              <S.EmailField placeholder="your@mail.com" />
+              <div>{t('support_modal.actions_subscribe.description')}</div>
+              <S.EmailField
+                ref={emailRef}
+                value={email}
+                disabled={subscribed}
+                onChange={(e) => setEmail(e.target.value)}
+                onKeyDown={handleEmailKeyDown}
+                placeholder={t(
+                  'support_modal.actions_subscribe.email_placeholder',
+                )}
+              />
             </S.MessageBlock>
-            <S.SubscribeButton onClick={handleSubscribe}>
-              Subscribe
-            </S.SubscribeButton>
+            {!subscribed && (
+              <S.SubscribeButton onClick={handleSubscribe}>
+                {t('support_modal.actions_subscribe.action')}
+              </S.SubscribeButton>
+            )}
           </S.ModalBodyContent>
         </S.ModalBody>
       </S.Modal>
-      <S.Button onClick={() => setOpen((prev) => !prev)}>
+      <S.Button ref={buttonRef} onClick={() => setOpen((prev) => !prev)}>
         {open ? <S.CloseIcon /> : <S.QuestionIcon />}
       </S.Button>
-    </S.Main>
+    </S.Main>,
+    document.body,
   );
 };
 

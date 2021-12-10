@@ -17,6 +17,7 @@ import Keyword from './models/Keyword';
 import ResourceKeyword from './models/ResourceKeyword';
 import File from './models/File';
 import ResourceFile from './models/ResourceFile';
+import Subscribe from './models/Subscribe';
 
 import userService from './services/user';
 import lessonsService from './services/lessons';
@@ -68,6 +69,7 @@ export default (options = {}) => {
       ResourceKeyword,
       File,
       ResourceFile,
+      Subscribe,
     ],
   });
 

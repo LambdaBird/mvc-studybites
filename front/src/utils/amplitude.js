@@ -18,6 +18,7 @@ export const AMPLITUDE_EVENTS = {
   START_LESSON: 'Start Lesson',
   ANSWER_INTERACTIVE: 'Answer Interactive',
   COMPLETE_LESSON: 'Complete Lesson',
+  SUBSCRIBE: 'Subscribe',
 };
 
 export const amplitudeLogEvent = (event, eventProperties) => {

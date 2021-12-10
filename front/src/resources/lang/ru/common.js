@@ -31,4 +31,29 @@ export default {
   filter_author: {
     placeholder: 'Выберите автора',
   },
+  support_modal: {
+    header: 'Добро пожаловать в Studybites',
+    creator: {
+      name: 'Tim',
+      description: 'Создатель',
+    },
+    links: {
+      email: 'Email',
+      telegram: 'Telegram',
+    },
+    actions_book: {
+      description:
+        'Я хотел бы услышать ваши отзывы и впечатления от использования приложения.',
+      action: 'Заказать звонок.',
+    },
+    actions_report: {
+      description: 'Вы просматриваете раннюю версию, поэтому ошибки будут.',
+      action: 'Сообщить об ошибке.',
+    },
+    actions_subscribe: {
+      description:
+        'Подпишитесь, чтобы получить ранний доступ к полнофункциональной версии',
+      action: 'Подписаться',
+    },
+  },
 };
