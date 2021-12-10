@@ -1,4 +1,4 @@
-import { Avatar, message } from 'antd';
+import { message } from 'antd';
 import T from 'prop-types';
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -79,6 +79,7 @@ const Support = ({ open, setOpen }) => {
 
   return createPortal(
     <S.Main>
+      <S.GlobalStyleOverflow isOpen={open} />
       <S.Modal open={open} ref={ref}>
         <S.ModalHeader>
           <S.ModalClose onClick={() => setOpen(false)} />
@@ -87,9 +88,9 @@ const Support = ({ open, setOpen }) => {
           <S.ModalBodyTitle>{t('support_modal.header')}</S.ModalBodyTitle>
           <S.ModalBodyContent>
             <S.Info>
-              <Avatar src={ava} />
+              <S.Avatar src={ava} />
               <S.Creator>
-                <div>{t('support_modal.creator.name')}</div>
+                <S.CreatorName>{t('support_modal.creator.name')}</S.CreatorName>
                 <S.CreatorText>
                   {t('support_modal.creator.description')}
                 </S.CreatorText>

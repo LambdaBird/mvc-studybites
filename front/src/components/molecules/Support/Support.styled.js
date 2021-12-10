@@ -1,5 +1,10 @@
-import { Button as ButtonAntd, Input, Typography } from 'antd';
-import styled from 'styled-components';
+import {
+  Avatar as AvatarAntd,
+  Button as ButtonAntd,
+  Input,
+  Typography,
+} from 'antd';
+import styled, { createGlobalStyle } from 'styled-components';
 import {
   CloseOutlined,
   MailOutlined,
@@ -10,6 +15,14 @@ import {
 import variables from '@sb-ui/theme/variables';
 
 const { Link } = Typography;
+
+export const GlobalStyleOverflow = createGlobalStyle`
+  @media (max-width: 767px) {
+    body {
+      overflow: ${({ isOpen }) => (isOpen ? 'hidden' : 'auto')};
+    }
+  }
+`;
 
 export const Main = styled.div`
   position: fixed;
@@ -140,7 +153,7 @@ export const Links = styled.div`
   margin-left: auto;
   flex-direction: column;
   font-family: Futura;
-  font-size: 0.75rem;
+  font-size: 0.9rem;
   justify-content: center;
   text-decoration: underline;
 `;
@@ -195,4 +208,13 @@ export const MessageLink = styled(Link)`
 export const EmailField = styled(Input)`
   border-radius: 1rem;
   margin-top: 1rem;
+`;
+
+export const Avatar = styled(AvatarAntd)`
+  height: 36px;
+  width: 36px;
+`;
+
+export const CreatorName = styled.div`
+  font-size: 0.9rem;
 `;
