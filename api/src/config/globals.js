@@ -1,5 +1,5 @@
 export const EMAIL_SETTINGS = {
-  fromName: 'StudyBites',
+  fromName: 'Studybites',
   host: 'smtp.gmail.com',
 };
 

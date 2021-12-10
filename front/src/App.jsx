@@ -17,7 +17,7 @@ const App = () => {
   return (
     <>
       <Helmet>
-        <title>StudyBites</title>
+        <title>Studybites</title>
       </Helmet>
       <ErrorBoundary>
         <QueryClientProvider client={queryClient}>
