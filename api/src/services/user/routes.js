@@ -12,7 +12,7 @@ import deleteUser from './controllers/deleteUser';
 import addTeacherRole from './controllers/addTeacherRole';
 import removeTeacherRole from './controllers/removeTeacherRole';
 import updateUserLanguage from './controllers/updateUserLanguage';
-import subscribeUser from './controllers/subscribeUser';
+import createSubscription from './controllers/createSubscription';
 
 export default async function router(instance) {
   instance.post('/signup', signUp.options, signUp.handler);
@@ -40,7 +40,11 @@ export default async function router(instance) {
 
   instance.delete('/:userId', deleteUser.options, deleteUser.handler);
 
-  instance.post('/subscribe', subscribeUser.options, subscribeUser.handler);
+  instance.post(
+    '/subscribe',
+    createSubscription.options,
+    createSubscription.handler,
+  );
 
   instance.post(
     '/appoint_teacher',

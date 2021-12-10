@@ -21,11 +21,11 @@ const options = {
 
 async function handler({ body, socket, headers }) {
   const {
-    models: { Subscribe },
+    models: { Subscription },
   } = this;
   const userIp = socket.remoteAddress || headers['x-forwarded-for'];
 
-  await Subscribe.createSubscribe({
+  await Subscription.createSubscription({
     email: body.email,
     pathname: body.pathname,
     ip: userIp,

@@ -1,8 +1,8 @@
 import BaseModel from './BaseModel';
 
-export default class Subscribe extends BaseModel {
+export default class Subscription extends BaseModel {
   static get tableName() {
-    return 'subscribes';
+    return 'subscriptions';
   }
 
   static get jsonSchema() {
@@ -19,7 +19,7 @@ export default class Subscribe extends BaseModel {
     };
   }
 
-  static createSubscribe(subscribe) {
-    return this.query().insert(subscribe).returning('*');
+  static createSubscription(subscription) {
+    return this.query().insert(subscription).returning('*');
   }
 }
