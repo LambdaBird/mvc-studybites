@@ -15,8 +15,8 @@ export const Progress = styled(AntdProgress).attrs({
 `;
 
 export const GlobalStylesLearnPage = createGlobalStyle`
-  body{
-    background-color: white; 
+  body {
+    background: no-repeat fixed ${(props) => props.theme.bodyBackground};
   }
 `;
 
@@ -49,12 +49,16 @@ export const Row = styled(AntdRow)`
   padding: 2rem 0;
   justify-content: center;
   flex: 1 1 auto;
+
+  @media (max-width: 767px) {
+    padding-bottom: 0;
+  }
 `;
 
 export const ChunkWrapper = styled.div`
   width: 100%;
   margin-bottom: 2rem;
-  background-color: ${variables['learn-chunk-background']};
+  background-color: ${(props) => props.theme.chunkWrapperBackground};
   border-radius: 1rem;
   padding: 1.5rem;
 
@@ -88,6 +92,7 @@ export const ChunkWrapper = styled.div`
 export const LessonButton = styled(Button).attrs({
   size: 'large',
 })`
+  background-color: ${(props) => props.theme.lessonButtonBackground};
   @media (max-width: 767px) {
     margin-top: auto;
   }
