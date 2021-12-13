@@ -38,7 +38,6 @@ const LessonEdit = () => {
     editorJsPropsRef,
     isNavigationAllowed,
     setIsNavigationAllowed,
-    supportModal,
   } = useLessonEdit();
 
   useReloadModal({ isNavigationAllowed });
@@ -97,7 +96,7 @@ const LessonEdit = () => {
             readOnly={false}
           />
         )}
-        <S.Support {...supportModal} />
+        <S.Support />
       </S.Page>
     </>
   );

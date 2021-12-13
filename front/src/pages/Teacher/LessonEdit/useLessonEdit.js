@@ -8,7 +8,6 @@ import * as Sentry from '@sentry/browser';
 
 import { useBars } from '@sb-ui/pages/Teacher/LessonEdit/useBars';
 import { useInput } from '@sb-ui/pages/Teacher/LessonEdit/useInput';
-import { useSupportModal } from '@sb-ui/pages/Teacher/LessonEdit/useSupportModal';
 import {
   getConfig,
   prepareBlocksForApi,
@@ -21,7 +20,7 @@ import { LessonsStorage } from '@sb-ui/utils/LessonsStorage';
 import { LESSONS_EDIT } from '@sb-ui/utils/paths';
 import { TEACHER_LESSON_BASE_KEY } from '@sb-ui/utils/queries';
 
-import { EXAMPLE_LESSON_ID, IS_SHOW_SUPPORT, NEW_LESSON_ID } from './constants';
+import { EXAMPLE_LESSON_ID, NEW_LESSON_ID } from './constants';
 import { isLessonIdCorrect, useGetLesson } from './useGetLesson';
 
 export const useLessonEdit = () => {
@@ -41,8 +40,6 @@ export const useLessonEdit = () => {
   const currentBlocksRef = useRef({ blocks: null });
   const [blocksTrigger, setBlocksTrigger] = useState(null);
   const [isNavigationAllowed, setIsNavigationAllowed] = useState(false);
-
-  const supportModal = useSupportModal();
 
   const {
     lesson,
@@ -169,12 +166,6 @@ export const useLessonEdit = () => {
         content: t('editor_js.message.success_updated'),
         duration: 2,
       });
-
-      const isShowSupport = localStorage.getItem(IS_SHOW_SUPPORT);
-      if (!isShowSupport) {
-        localStorage.setItem(IS_SHOW_SUPPORT, 'true');
-        supportModal.openSupportModal();
-      }
     },
     onError: () => {
       message.error({
@@ -259,10 +250,6 @@ export const useLessonEdit = () => {
       handlePreview,
       handleShare,
       handleAnalytics,
-    },
-    supportModal: {
-      open: supportModal.open,
-      setOpen: supportModal.setOpen,
     },
     handleHideLeftBar,
     handleShowLeftBar,

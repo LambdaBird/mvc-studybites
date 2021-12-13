@@ -8,5 +8,3 @@ export const MAX_NAME_LENGTH = 255;
 export const CLIENT_ERROR_STARTS = '4';
 export const NEW_LESSON_ID = 'new';
 export const EXAMPLE_LESSON_ID = 'getting-started';
-
-export const IS_SHOW_SUPPORT = 'isShowSupport';

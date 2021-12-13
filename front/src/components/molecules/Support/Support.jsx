@@ -1,6 +1,5 @@
 import { Form, message } from 'antd';
-import T from 'prop-types';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from 'react-query';
@@ -12,13 +11,16 @@ import {
   MAIL_REPORT,
   TELEGRAM_USER,
 } from '@sb-ui/components/molecules/Support/constants';
+import SupportContext from '@sb-ui/contexts/SupportContext';
 import ava from '@sb-ui/resources/img/ava_tim.jpg';
 import { AMPLITUDE_EVENTS, amplitudeLogEvent } from '@sb-ui/utils/amplitude';
 import { postSubscribe } from '@sb-ui/utils/api/v1/user';
 
 import * as S from './Support.styled';
 
-const Support = ({ open, setOpen }) => {
+const Support = () => {
+  const isSupportTriggered = useContext(SupportContext);
+  const [open, setOpen] = useState(false);
   const { t } = useTranslation();
   const history = useHistory();
   const [form] = Form.useForm();
@@ -45,6 +47,12 @@ const Support = ({ open, setOpen }) => {
       });
     },
   });
+
+  useEffect(() => {
+    if (isSupportTriggered) {
+      setOpen(true);
+    }
+  }, [isSupportTriggered]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -156,11 +164,6 @@ const Support = ({ open, setOpen }) => {
     </S.Main>,
     document.body,
   );
-};
-
-Support.propTypes = {
-  open: T.bool,
-  setOpen: T.func,
 };
 
 export default Support;

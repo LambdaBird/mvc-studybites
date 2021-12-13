@@ -5,6 +5,7 @@ import { ThemeProvider } from 'styled-components';
 
 import ErrorBoundary from '@sb-ui/components/ErrorBoundary';
 import MobileContext from '@sb-ui/contexts/MobileContext';
+import SupportContext from '@sb-ui/contexts/SupportContext';
 import ThemeContext from '@sb-ui/contexts/ThemeContext';
 import { useFirstAppNavigation } from '@sb-ui/hooks/useFirstAppNavigation/useFirstAppNavigation';
 import useMobile from '@sb-ui/hooks/useMobile';
@@ -18,7 +19,7 @@ const App = () => {
   const isMobile = useMobile();
   const theme = useTheme();
 
-  useFirstAppNavigation();
+  const { isSupportTriggered } = useFirstAppNavigation();
   return (
     <>
       <Helmet>
@@ -27,13 +28,15 @@ const App = () => {
       <ErrorBoundary>
         <QueryClientProvider client={queryClient}>
           <MobileContext.Provider value={isMobile}>
-            <ThemeContext.Provider value={theme}>
-              <ThemeProvider theme={theme.theme}>
-                <GlobalStyles />
-                <Routes />
-                <ReactQueryDevtools initialIsOpen={false} />
-              </ThemeProvider>
-            </ThemeContext.Provider>
+            <SupportContext.Provider value={isSupportTriggered}>
+              <ThemeContext.Provider value={theme}>
+                <ThemeProvider theme={theme.theme}>
+                  <GlobalStyles />
+                  <Routes />
+                  <ReactQueryDevtools initialIsOpen={false} />
+                </ThemeProvider>
+              </ThemeContext.Provider>
+            </SupportContext.Provider>
           </MobileContext.Provider>
         </QueryClientProvider>
       </ErrorBoundary>
