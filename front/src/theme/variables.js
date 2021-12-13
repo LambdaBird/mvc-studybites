@@ -34,6 +34,8 @@ const variables = {
   'blue-7': '#096dd9',
   'geekblue-1': '#f0f5ff',
   'blue-1': '#e6f7ff',
+  'white-opacity-0.5': 'rgba(255,255,255,0.5)',
+  'white-opacity-0.7': 'rgba(255,255,255,0.9)',
 };
 
 module.exports = variables;

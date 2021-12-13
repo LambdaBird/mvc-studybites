@@ -1,10 +1,10 @@
-import { Row } from 'antd';
+import { Row, Select as SelectAntd } from 'antd';
 import styled from 'styled-components';
 
 export const HEADER_HEIGHT = 56;
 
 export const Container = styled.header`
-  background: white;
+  background: ${(props) => props.theme.headerBackground};
   height: ${HEADER_HEIGHT}px;
   z-index: 4;
   ${(props) =>
@@ -46,4 +46,8 @@ export const RowMain = styled(Row).attrs({
 export const Logo = styled.img`
   height: 1.75rem;
   cursor: pointer;
+`;
+
+export const Select = styled(SelectAntd)`
+  width: 200px;
 `;

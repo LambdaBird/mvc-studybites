@@ -13,7 +13,10 @@ import {
   RevisionType,
   SolvedType,
 } from '@sb-ui/pages/User/LearnPage/BlockElement/types';
-import { ChunkWrapper } from '@sb-ui/pages/User/LearnPage/LearnPage.styled';
+import {
+  ChunkWrapper,
+  LessonButton,
+} from '@sb-ui/pages/User/LearnPage/LearnPage.styled';
 import { RESPONSE_TYPE } from '@sb-ui/pages/User/LearnPage/utils';
 
 import { verifyAnswers } from './verifyAnswers';
@@ -64,9 +67,9 @@ const Match = ({ blockId, revision, answer, content, reply, isSolved }) => {
           />
         </ChunkWrapper>
         <S.ButtonWrapper>
-          <S.LessonButtonSend onClick={handleSendClick}>
+          <LessonButton onClick={handleSendClick}>
             {t('lesson.send')}
-          </S.LessonButtonSend>
+          </LessonButton>
         </S.ButtonWrapper>
       </>
     );

@@ -6,7 +6,7 @@ import variables from '@sb-ui/theme/variables';
 
 export const BlockElementWrapperWhite = styled(Row)`
   width: 100%;
-  background-color: white;
+  background-color: ${(props) => props.theme.blockElementBackground};
   box-shadow: 0 0 10px 8px rgba(231, 231, 231, 0.5);
   border-radius: 8px;
   max-width: 614px;
