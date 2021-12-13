@@ -32,6 +32,9 @@ export default {
     placeholder: 'Выберите автора',
   },
   support_modal: {
+    email_not_valid: 'Пожалуйста, укажите правильный адрес электронной почты',
+    fail_subscribe: 'Не удалось подписаться! Попробуйте снова',
+    success_subscribe: 'Вы успешно подписались на ранний доступ!',
     header: 'Добро пожаловать в Studybites',
     creator: {
       name: 'Tim',

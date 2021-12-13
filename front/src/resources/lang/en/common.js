@@ -33,6 +33,7 @@ export default {
   },
   support_modal: {
     email_not_valid: 'Please provide correct email',
+    fail_subscribe: 'Failed subscribed! Try again',
     success_subscribe: 'Successfully subscribed to an early access!',
     header: 'Welcome to Studybites',
     creator: {
