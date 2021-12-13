@@ -63,7 +63,6 @@ export const LogoLink = styled.div`
   display: flex;
   align-items: center;
   padding: 1rem;
-  cursor: pointer;
   height: ${HEADER_HEIGHT}px;
   align-self: flex-start;
   width: 100%;

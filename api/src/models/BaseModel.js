@@ -57,7 +57,7 @@ export default class BaseModel extends objection.Model {
         }
       });
 
-    if (+process.env.DEVELOPMENT_MODE) {
+    if (+process.env.DEBUG_MODE) {
       query.debug();
     }
 

@@ -156,5 +156,8 @@ export default {
       empty_words: 'Нет слов',
       empty_additional: 'Нет дополнительных слов',
     },
+    finish: {
+      title: 'Финиш',
+    },
   },
 };

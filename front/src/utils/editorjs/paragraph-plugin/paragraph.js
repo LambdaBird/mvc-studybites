@@ -1,5 +1,7 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-underscore-dangle */
+import { moveCaret } from '@sb-ui/utils/editorjs/utils';
+
 import { ToolboxIcon } from './resources';
 
 import './paragraph.css';
@@ -21,17 +23,16 @@ class Paragraph {
 
     if (!this.readOnly) {
       this.onKeyUp = this.onKeyUp.bind(this);
+      this.onKeyDown = this.onKeyDown.bind(this);
     }
 
     this._placeholder = config.placeholder
       ? config.placeholder
       : Paragraph.DEFAULT_PLACEHOLDER;
-    this._data = {};
+    this.data = data;
     this._element = this.drawView();
     this._preserveBlank =
       config.preserveBlank !== undefined ? config.preserveBlank : false;
-
-    this.data = data;
   }
 
   onKeyUp(e) {
@@ -45,6 +46,14 @@ class Paragraph {
     }
   }
 
+  onKeyDown(e) {
+    if (e.key === 'Enter') {
+      setImmediate(() => {
+        this.data = { text: this.spanElement.innerHTML };
+      });
+    }
+  }
+
   drawView() {
     const div = document.createElement('DIV');
 
@@ -53,6 +62,7 @@ class Paragraph {
     div.title = this.api.i18n.t('title');
     const span = document.createElement('span');
     span.classList.add(this._CSS.span);
+    span.innerHTML = this.data?.text || '';
     if (!this.readOnly) {
       span.contentEditable = true;
     }
@@ -60,8 +70,8 @@ class Paragraph {
     div.appendChild(span);
 
     if (!this.readOnly) {
-      // div.contentEditable = true;
       div.addEventListener('keyup', this.onKeyUp);
+      div.addEventListener('keydown', this.onKeyDown);
     }
 
     return div;
@@ -72,9 +82,16 @@ class Paragraph {
   }
 
   merge(data) {
+    const textBefore = this.spanElement.innerHTML || '';
+    const textAfter = data?.text || '';
     this.data = {
-      text: (this._data?.text || '') + (data?.text || ''),
+      text: textBefore + textAfter,
     };
+    this.spanElement.innerHTML = this.data.text;
+    setImmediate(() => {
+      this.spanElement.focus();
+      moveCaret(window, textBefore.length);
+    });
   }
 
   validate(savedData) {
@@ -114,21 +131,6 @@ class Paragraph {
 
   static get isReadOnlySupported() {
     return true;
-  }
-
-  get data() {
-    const { text } = this; // this._element.innerHTML;
-
-    this._data.text = text;
-
-    return this._data;
-  }
-
-  set data(data) {
-    this._data = data || {};
-
-    this.spanElement.innerHTML = this._data.text || '';
-    // this._element.innerHTML = this._data.text || '';
   }
 
   static get pasteConfig() {

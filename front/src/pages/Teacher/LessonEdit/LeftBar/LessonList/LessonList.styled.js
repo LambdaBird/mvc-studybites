@@ -69,7 +69,7 @@ export const Lesson = styled.div`
   }
 
   &:hover .close {
-    display: block;
+    visibility: visible;
   }
 `;
 
@@ -79,7 +79,7 @@ const CloseStyle = css`
 `;
 
 const CloseSelectedStyle = css`
-  display: block;
+  visibility: visible;
   ${CloseStyle};
 `;
 
@@ -88,7 +88,11 @@ export const More = styled(MoreOutlined).attrs({
 })`
   color: ${variables['secondary-text-color']};
   font-size: 1.3rem;
-  display: none;
+  visibility: hidden;
+  @media (max-width: 767px) {
+    visibility: visible;
+  }
+
   transform: rotateZ(90deg);
   ${(props) => props.selected && CloseSelectedStyle};
   &:hover {
@@ -97,7 +101,7 @@ export const More = styled(MoreOutlined).attrs({
 `;
 
 export const Popover = styled(PopoverAntd).attrs({
-  trigger: 'focus',
+  trigger: 'click',
   placement: 'rightTop',
   overlayClassName: PopoverClassName,
 })``;
@@ -116,7 +120,9 @@ const getStatus = (status) => {
 
 export const Badge = styled(BadgeAntd).attrs(({ status }) => ({
   status: getStatus(status),
-}))``;
+}))`
+  display: flex;
+`;
 
 export const Text = styled(TextAntd).attrs({
   ellipsis: {

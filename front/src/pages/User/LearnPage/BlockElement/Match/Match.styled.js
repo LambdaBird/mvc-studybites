@@ -1,14 +1,6 @@
-import { Button } from 'antd';
 import styled from 'styled-components';
 
 import { ChunkWrapper } from '@sb-ui/pages/User/LearnPage/LearnPage.styled';
-
-export const LessonButtonSend = styled(Button).attrs({
-  size: 'large',
-})`
-  width: 100%;
-  margin-bottom: 1rem;
-`;
 
 export const ButtonWrapper = styled.div`
   width: 100%;
@@ -28,6 +20,7 @@ export const AnswerWrapper = styled.div`
 
 export const AnswerWrapperWrong = styled(AnswerWrapper)`
   flex-direction: column;
+  margin-bottom: 2rem;
 `;
 
 export const AnswerWrapperWrongTitle = styled(AnswerWrapperWrong)`
@@ -39,4 +32,5 @@ export const MatchWrapper = styled(ChunkWrapper)`
   display: flex;
   flex-direction: column;
   padding: 0;
+  background-color: transparent;
 `;

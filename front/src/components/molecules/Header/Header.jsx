@@ -1,8 +1,10 @@
-import { Col } from 'antd';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Col, Select } from 'antd';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 
+import ThemeContext from '@sb-ui/contexts/ThemeContext';
 import useMobile from '@sb-ui/hooks/useMobile';
+import { THEMES_NAME } from '@sb-ui/hooks/useTheme/useTheme';
 import logo from '@sb-ui/resources/img/logo.svg';
 import { HOME } from '@sb-ui/utils/paths';
 import {
@@ -16,12 +18,14 @@ import {
 import * as S from './Header.styled';
 import { HEADER_HEIGHT } from './Header.styled';
 
+const { Option } = Select;
+
 const Header = ({ isFixed, className, hideOnScroll, bottom, handleHide }) => {
   const isMobile = useMobile();
-  const history = useHistory();
   const headerRef = useRef(null);
   const [scroll, setScroll] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
+  const { themeName, setThemeName } = useContext(ThemeContext);
 
   useEffect(() => {
     if (hideOnScroll !== true || !headerRef) {
@@ -58,9 +62,9 @@ const Header = ({ isFixed, className, hideOnScroll, bottom, handleHide }) => {
     }
   }, [handleHide, scroll]);
 
-  const handleHomeClick = useCallback(() => {
-    history.push(HOME);
-  }, [history]);
+  const handleThemeChange = (option) => {
+    setThemeName(option);
+  };
 
   return (
     <>
@@ -74,10 +78,21 @@ const Header = ({ isFixed, className, hideOnScroll, bottom, handleHide }) => {
       >
         <S.RowMain>
           <Col>
-            <S.LogoLink onClick={handleHomeClick}>
+            <Link to={HOME}>
               <S.Logo src={logo} alt="Logo" />
-            </S.LogoLink>
+            </Link>
           </Col>
+          {process.env.NODE_ENV === 'development' && (
+            <Col>
+              <S.Select defaultValue={themeName} onChange={handleThemeChange}>
+                {Object.values(THEMES_NAME).map((name) => (
+                  <Option key={name} value={name}>
+                    {name}
+                  </Option>
+                ))}
+              </S.Select>
+            </Col>
+          )}
         </S.RowMain>
         {bottom}
       </S.Container>

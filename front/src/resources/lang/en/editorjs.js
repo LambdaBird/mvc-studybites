@@ -1,5 +1,5 @@
 export default {
-  start_title: 'Press Enter to continue with the empty page',
+  start_title: 'Press Enter to continue from an empty page',
   toolbar: {
     toolbox: {
       add: 'Add',
@@ -25,7 +25,7 @@ export default {
     basic_blocks: 'Basic blocks',
     interactive_blocks: 'Interactive blocks',
     stub: {
-      title: 'The block can not be displayed correctly',
+      title: 'The block can not be displayed correctly 😰',
     },
     attach: {
       title: 'File',
@@ -37,37 +37,37 @@ export default {
     },
     paragraph: {
       title: 'Text',
-      description: 'Just start writing with plain text',
+      description: 'Just start writing with a plain text',
     },
     image: {
       title: 'Image',
-      description: 'Embed with a link',
-      input: 'Input link',
-      caption: 'Input caption',
+      description: 'Embed image with a link',
+      input: 'Enter a link',
+      caption: 'Enter a caption (optional)',
       select: 'Select a file to upload',
       error: 'Failed to upload the image',
     },
     next: {
       title: 'Next',
-      description: 'Splits lesson into blocks',
+      description: 'Splits lesson into bites',
     },
     quiz: {
       title: 'Quiz',
       description: 'Create a simple test',
       question: 'Question',
-      answer: 'Input answer',
+      answer: 'Enter answer',
       add_answer: 'Add answer',
     },
     embed: {
       title: 'Video',
-      description: 'Embed from Youtube, Vimeo ...',
-      input: 'Input link',
-      caption: 'Input caption',
+      description: 'Embed video from Youtube, Vimeo ...',
+      input: 'Enter a link',
+      caption: 'Enter a caption (optional)',
     },
     header: {
       title: 'Header',
       description: 'Create a header',
-      input: 'Input header',
+      input: 'Enter a header',
     },
     list: {
       title: 'List',
@@ -76,8 +76,8 @@ export default {
     quote: {
       title: 'Quote',
       description: 'Capture a quote',
-      input: 'Input quote',
-      caption: 'Input caption',
+      input: 'Enter a quote',
+      caption: 'Enter a caption (optional)',
     },
     delimiter: {
       title: 'Delimiter',
@@ -96,9 +96,9 @@ export default {
     closed_question: {
       title: 'Closed Question',
       description: 'Question with predefined answers',
-      question: 'Input question',
-      answer: 'Input answer',
-      explanation: 'Input answer explanation (optional)',
+      question: 'Enter question',
+      answer: 'Enter answer',
+      explanation: 'Enter answer explanation (optional)',
       tag_title: 'Answers: ',
       example: 'Example',
       none: 'none',
@@ -120,9 +120,9 @@ export default {
     match: {
       title: 'Match',
       description: 'Connect blocks',
-      input_left_placeholder: 'Input your left value',
-      input_right_placeholder: 'Input your right value',
-      hint: '* Words will be shuffled for students after save',
+      input_left_placeholder: 'Enter the left value',
+      input_right_placeholder: 'Enter the right value',
+      hint: '* Items shall be shuffled for students',
       add_line: 'Add line',
     },
     warning: {
@@ -150,13 +150,16 @@ export default {
     },
     bricks: {
       title: 'Bricks',
-      description: 'Compose correct sentence',
+      description: 'Make the right sentence',
       question: '❓ Question',
-      answer: 'Enter words and press enter',
+      answer: 'Enter words and hit enter',
       additional: 'Additional words',
-      hint: '* Words will be shuffled for students after save',
+      hint: '* Words shall be shuffled for students',
       empty_words: 'No words',
       empty_additional: 'No additional words',
+    },
+    finish: {
+      title: 'Finish',
     },
   },
 };

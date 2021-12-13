@@ -19,7 +19,7 @@ export const allowedTypes = [
   'application/pdf',
 ];
 
-export const sbPostfix = ' · StudyBites';
+export const sbPostfix = ' · Studybites';
 
 export const Statuses = {
   PUBLIC: 'Public',

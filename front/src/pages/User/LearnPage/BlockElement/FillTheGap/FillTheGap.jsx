@@ -12,14 +12,16 @@ import {
   RevisionType,
   SolvedType,
 } from '@sb-ui/pages/User/LearnPage/BlockElement/types';
-import { ChunkWrapper } from '@sb-ui/pages/User/LearnPage/LearnPage.styled';
+import {
+  ChunkWrapper,
+  LessonButton,
+} from '@sb-ui/pages/User/LearnPage/LearnPage.styled';
 import {
   interactiveEnter,
   RESPONSE_TYPE,
 } from '@sb-ui/pages/User/LearnPage/utils';
 
 import GapsInput from './GapsInput';
-import * as S from './FillTheGap.styled';
 
 const FillTheGap = ({
   blockId,
@@ -82,13 +84,13 @@ const FillTheGap = ({
           <Result correct={correct} result={result} gaps={gapsInput} />
         </ChunkWrapper>
       ) : (
-        <S.LessonButton
+        <LessonButton
           ref={sendButtonRef}
           onClick={handleSendClick}
           onKeyDown={handleKeyDown}
         >
           {t('lesson.send')}
-        </S.LessonButton>
+        </LessonButton>
       )}
     </>
   );

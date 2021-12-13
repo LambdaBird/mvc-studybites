@@ -127,11 +127,10 @@ async function handler({
         }
 
         if (blocksToInsert.length) {
-          const blocksData = await Block.createBlocks({
+          await Block.createBlocks({
             trx,
             blocks: blocksToInsert,
           });
-          lessonData.blocks = blocksData;
         }
 
         await LessonBlockStructure.query(trx)
@@ -143,7 +142,7 @@ async function handler({
           lessonId: lessonData.id,
         });
       }
-
+      lessonData.blocks = blocks;
       return lessonData;
     });
 

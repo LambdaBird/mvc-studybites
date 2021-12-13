@@ -2,11 +2,11 @@ export default {
   title: 'Reset password',
   email: {
     placeholder: 'Email',
-    error: 'Please input your E-mail',
-    validation: 'The input is not valid E-mail',
+    error: 'Please enter your email',
+    validation: 'Your email is invalid',
   },
-  reset_button: 'Get reset link',
+  reset_button: 'Get a reset link',
   back_sign_in: 'Back to sign in',
   error_reset_frequently:
-    'You try to reset your password too frequently, try in {{timeout}} seconds',
+    'You have tried to reset your password too many times, try in {{timeout}} seconds',
 };

@@ -10,7 +10,7 @@ export default {
     unauthorized: 'Неправильные данные',
     no_internet: 'Упс, нет интернет соединения',
     internal_server: 'Упс, что то пошло не так',
-    parse_block: 'Ошибка распознания блока',
+    parse_block: 'Этот блок не может быть отображен корректно',
   },
   errors_page: {
     boundary_title: 'Упс',
@@ -30,5 +30,33 @@ export default {
   },
   filter_author: {
     placeholder: 'Выберите автора',
+  },
+  support_modal: {
+    email_not_valid: 'Пожалуйста, укажите правильный адрес электронной почты',
+    fail_subscribe: 'Не удалось подписаться! Попробуйте снова',
+    success_subscribe: 'Вы успешно подписались на ранний доступ!',
+    header: 'Добро пожаловать в Studybites',
+    creator: {
+      name: 'Tim',
+      description: 'Создатель',
+    },
+    links: {
+      email: 'Email',
+      telegram: 'Telegram',
+    },
+    actions_book: {
+      description:
+        'Я хотел бы услышать ваши отзывы и впечатления от использования приложения.',
+      action: 'Заказать звонок.',
+    },
+    actions_report: {
+      description: 'Вы просматриваете раннюю версию, поэтому ошибки будут.',
+      action: 'Сообщить об ошибке.',
+    },
+    actions_subscribe: {
+      description:
+        'Подпишитесь, чтобы получить ранний доступ к полнофункциональной версии',
+      action: 'Подписаться',
+    },
   },
 };

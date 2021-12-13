@@ -9,7 +9,7 @@ Available commands:
   down-dev            Remove development containers
   help                Print help information and quit
   migrate             Make a migration
-  psql-dev            Connect to the StudyBites development database console
+  psql-dev            Connect to the Studybites development database console
   start-dev           Start an instance in the development mode
   start-headless      Start an instance in the headless mode
   test                Run unit and integration tests"
@@ -25,7 +25,7 @@ down-dev() {
 }
 
 migrate() {
-  if docker exec -it mvc-studybites-api-1 yarn migrate; then
+  if docker exec -it mvc-studybites_api_1 yarn migrate; then
     exit 0
   fi
   exit 1

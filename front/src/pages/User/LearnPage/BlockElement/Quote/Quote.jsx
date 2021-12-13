@@ -9,11 +9,11 @@ import * as S from './Quote.styled';
 const { Text } = Typography;
 
 const Quote = ({ content }) => {
-  const { alignment, caption, text } = content.data;
+  const { /* alignment */ caption, text } = content.data;
   return (
     <S.Quote>
       <blockquote>{htmlToReact(text)}</blockquote>
-      <S.QuoteAuthor alignment={alignment}>
+      <S.QuoteAuthor>
         <Text>{htmlToReact(caption)}</Text>
       </S.QuoteAuthor>
     </S.Quote>

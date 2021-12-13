@@ -96,6 +96,7 @@ const LessonEdit = () => {
             readOnly={false}
           />
         )}
+        <S.Support />
       </S.Page>
     </>
   );

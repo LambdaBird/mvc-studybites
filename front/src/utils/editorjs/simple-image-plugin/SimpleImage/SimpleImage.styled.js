@@ -8,7 +8,7 @@ const visibilityHidden = `
 
 export const Image = styled.img`
   ${(props) => (props.error ? visibilityHidden : '')}
-  width: 100%;
+  width: 70%;
   object-fit: cover;
 `;
 
@@ -16,11 +16,12 @@ export const Input = styled.div.attrs({
   className: 'cdx-input',
   contentEditable: true,
 })`
-  ${(props) => (props.isShow ? '' : visibilityHidden)}
   ${(props) => (props.isError ? `border: 1px solid red;` : '')}
 `;
 
-export const InputLink = styled(Input)`
+export const InputLink = styled.input.attrs({
+  className: 'cdx-input',
+})`
   margin-bottom: 1rem;
 `;
 

@@ -6,8 +6,8 @@ const { Title } = Typography;
 export const BlockWrapper = styled(Row)`
   width: 100%;
   padding: 2rem;
-  background-color: rgba(245, 245, 245, 1);
-  border-radius: 8px;
+  background-color: ${(props) => props.theme.infoBlockBackground};
+  border-radius: 1rem;
   margin-bottom: 2rem;
 `;
 

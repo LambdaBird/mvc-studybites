@@ -1,5 +1,6 @@
 const variables = {
   'primary-color': '#098C8C',
+  'primary-background': '#0b8c8c21',
   'text-table-header': 'rgba(0, 0, 0, 0.45)',
   'text-color': 'rgba(0, 0, 0, 0.85)',
   'progress-trail-color': 'white',
@@ -32,6 +33,9 @@ const variables = {
   'blue-6': '#1890FF',
   'blue-7': '#096dd9',
   'geekblue-1': '#f0f5ff',
+  'blue-1': '#e6f7ff',
+  'white-opacity-0.5': 'rgba(255,255,255,0.5)',
+  'white-opacity-0.7': 'rgba(255,255,255,0.9)',
 };
 
 module.exports = variables;

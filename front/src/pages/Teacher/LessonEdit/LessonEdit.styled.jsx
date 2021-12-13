@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import SupportComponent from '@sb-ui/components/molecules/Support';
 import {
   LEFT_BAR_WIDTH,
   LEFT_PADDING,
@@ -51,3 +52,5 @@ export const InputTitle = styled.input`
   }
   width: 100%;
 `;
+
+export const Support = styled(SupportComponent)``;

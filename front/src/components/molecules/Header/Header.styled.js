@@ -1,10 +1,10 @@
-import { Row } from 'antd';
+import { Row, Select as SelectAntd } from 'antd';
 import styled from 'styled-components';
 
 export const HEADER_HEIGHT = 56;
 
 export const Container = styled.header`
-  background: white;
+  background: ${(props) => props.theme.headerBackground};
   height: ${HEADER_HEIGHT}px;
   z-index: 4;
   ${(props) =>
@@ -39,10 +39,7 @@ export const RowMain = styled(Row).attrs({
   align: 'middle',
   justify: 'space-between',
 })`
-  padding: 0 2rem;
-  @media (max-width: 767px) {
-    padding: 0 1rem;
-  }
+  padding: 0 1rem;
   height: ${HEADER_HEIGHT}px;
 `;
 
@@ -51,6 +48,6 @@ export const Logo = styled.img`
   cursor: pointer;
 `;
 
-export const LogoLink = styled.div`
-  cursor: pointer;
+export const Select = styled(SelectAntd)`
+  width: 200px;
 `;

@@ -78,7 +78,7 @@ export default {
       placeholder: 'example',
     },
     by: 'By',
-    blocks: 'blocks',
+    blocks: 'steps',
     start: 'Start',
     next: 'Next',
     send: 'Send',

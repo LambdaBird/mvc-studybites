@@ -107,11 +107,12 @@ export const useLessonEdit = () => {
     }
   }, [lesson, setIsRenderEditor, setLessonIdKey, setName]);
 
-  const isBlocksChanged = useCallback((lessonBlocks) => {
+  const areBlocksChanged = useCallback((lessonBlocks) => {
     const oldBlocks = prepareEditorData(lessonBlocks);
     if (!currentBlocksRef.current?.blocks || !oldBlocks) {
       return false;
     }
+
     return !equal(oldBlocks, currentBlocksRef.current.blocks);
   }, []);
 
@@ -208,6 +209,7 @@ export const useLessonEdit = () => {
         return;
       }
       currentBlocksRef.current.blocks = params.blocks;
+      toolbarRef.current?.hideToolbar?.();
       if (isCurrentlyEditing) updateLessonMutation.mutate(params);
       else createLessonMutation.mutate(params);
     } catch (e) {
@@ -227,12 +229,12 @@ export const useLessonEdit = () => {
   ]);
 
   useEffect(() => {
-    if (isBlocksChanged(lesson?.blocks)) {
+    if (areBlocksChanged(lesson?.blocks)) {
       setIsNavigationAllowed(false);
     } else {
       setIsNavigationAllowed(true);
     }
-  }, [blocksTrigger, isBlocksChanged, lesson?.blocks]);
+  }, [blocksTrigger, areBlocksChanged, lesson?.blocks]);
 
   return {
     isCurrentlyEditing,

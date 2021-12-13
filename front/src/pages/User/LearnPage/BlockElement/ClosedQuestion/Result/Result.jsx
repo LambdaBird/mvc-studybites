@@ -12,9 +12,9 @@ import AnswerResult from './AnswerResult';
 import { verifyAnswers } from './verifyAnswers';
 
 const Result = ({ answer, data, reply }) => {
-  const { question } = data;
-  const { results, explanation } = answer;
-  const { value: userValue } = reply;
+  const { question } = data || {};
+  const { results, explanation } = answer || {};
+  const { value: userValue } = reply || {};
 
   const isCorrect = useMemo(
     () => verifyAnswers(results, userValue),

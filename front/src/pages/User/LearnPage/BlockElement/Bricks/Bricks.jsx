@@ -8,7 +8,10 @@ import {
   RevisionType,
   SolvedType,
 } from '@sb-ui/pages/User/LearnPage/BlockElement/types';
-import { ChunkWrapper } from '@sb-ui/pages/User/LearnPage/LearnPage.styled';
+import {
+  ChunkWrapper,
+  LessonButton,
+} from '@sb-ui/pages/User/LearnPage/LearnPage.styled';
 import { htmlToReact } from '@sb-ui/pages/User/LearnPage/utils';
 
 import AnswerResult from './Result/Result';
@@ -56,9 +59,9 @@ const Bricks = ({
         </ChunkWrapper>
       ) : (
         <S.ButtonWrapper>
-          <S.LessonButton onClick={handleSendClick}>
+          <LessonButton onClick={handleSendClick}>
             {t('lesson.send')}
-          </S.LessonButton>
+          </LessonButton>
         </S.ButtonWrapper>
       )}
     </>
