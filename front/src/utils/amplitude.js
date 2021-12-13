@@ -24,6 +24,7 @@ export const AMPLITUDE_EVENTS = {
   SUBSCRIBE: 'Subscribe',
   START_SESSION: 'Start Session',
   LAUNCH_FIRST_TIME: 'Launch First Time',
+  GETTING_STARTED: 'Getting Started',
 };
 
 export const amplitudeLogEvent = (event, eventProperties) => {

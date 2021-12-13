@@ -69,6 +69,7 @@ export const useGetLesson = ({ lessonId }) => {
       }
       setLesson(exampleLesson);
       LessonsStorage.removeLesson(NEW_LESSON_ID);
+      amplitudeLogEvent(AMPLITUDE_EVENTS.GETTING_STARTED);
     }
     if (lessonId === NEW_LESSON_ID) {
       setLesson({
