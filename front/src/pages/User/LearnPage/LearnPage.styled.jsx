@@ -75,7 +75,7 @@ export const ChunkWrapper = styled.div`
     margin-bottom: 0;
   }
 
-  animation: slide-top 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19) both;
+  animation: slide-top 0.1s cubic-bezier(0.55, 0.055, 0.675, 0.19) both;
 
   @keyframes slide-top {
     0% {
@@ -98,4 +98,5 @@ export const LessonButton = styled(Button).attrs({
   }
   width: 100%;
   margin-bottom: 1rem;
+  border-radius: 0.5rem;
 `;

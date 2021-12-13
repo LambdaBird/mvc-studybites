@@ -53,7 +53,7 @@ export const Main = styled.div`
   }
 
   .button-animation {
-    animation: show 0.3s cubic-bezier(0.55, 0.055, 0.675, 0.19) both;
+    animation: show 0.1s cubic-bezier(0.55, 0.055, 0.675, 0.19) both;
   }
   @media (max-width: 767px) {
     z-index: 3;
@@ -84,7 +84,7 @@ export const Modal = styled.div`
   ${(props) =>
     props.open &&
     `
-     animation: slide-top 0.3s cubic-bezier(0.55, 0.055, 0.675, 0.19) both;
+     animation: slide-top 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19) both;
   `}
 
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
@@ -197,6 +197,10 @@ export const MessageBlock = styled.div`
   grid-area: ${(props) => props.gridArea};
   display: flex;
   flex-direction: column;
+
+  .ant-form-item {
+    margin: 0;
+  }
 `;
 
 export const MessageLink = styled(Link)`
@@ -206,7 +210,7 @@ export const MessageLink = styled(Link)`
 `;
 
 export const EmailField = styled(Input)`
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   margin-top: 1rem;
 `;
 

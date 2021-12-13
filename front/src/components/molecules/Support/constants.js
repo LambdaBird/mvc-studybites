@@ -4,10 +4,10 @@ export const MAIL_REPORT = `mailto:${MAIL}?subject=Bug%20Report&body=Issue%20des
 export const emailRules = [
   {
     type: 'email',
-    message: 'The input is not valid E-mail!',
+    message: 'Your email is invalid.',
   },
   {
     required: true,
-    message: 'Please input your E-mail!',
+    message: 'Please enter your email.',
   },
 ];

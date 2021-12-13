@@ -26,7 +26,7 @@ export default {
     label: 'Email',
     placeholder: 'Enter email',
     error: 'Email must have at least 1 symbol',
-    validation: 'The input is not valid E-mail',
+    validation: 'Your email is invalid',
   },
   description: {
     label: 'Description',
@@ -46,5 +46,5 @@ export default {
   reset_password_button: 'Reset password',
   reset_button: 'Reset Form',
   error_save_frequently:
-    'You try to reset your password too frequently, try in {{timeout}} seconds',
+    'You have tried to reset your password too many times, try in {{timeout}} seconds',
 };

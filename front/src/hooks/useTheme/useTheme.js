@@ -40,8 +40,8 @@ export const THEMES = {
 };
 
 const useTheme = () => {
-  const [theme, setTheme] = useState(THEMES[THEMES_NAME.THEME_1]);
-  const [themeName, setThemeName] = useState(THEMES_NAME.THEME_1);
+  const [theme, setTheme] = useState(THEMES[THEMES_NAME.DEFAULT_THEME]);
+  const [themeName, setThemeName] = useState(THEMES_NAME.DEFAULT_THEME);
 
   useEffect(() => {
     setTheme(THEMES[themeName]);

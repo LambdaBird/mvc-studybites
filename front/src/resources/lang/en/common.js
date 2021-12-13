@@ -32,9 +32,9 @@ export default {
     placeholder: 'Select author',
   },
   support_modal: {
-    email_not_valid: 'Please provide correct email',
-    fail_subscribe: 'Failed subscribed! Try again',
-    success_subscribe: 'Successfully subscribed to an early access!',
+    email_not_valid: 'Please enter a valid email address',
+    fail_subscribe: 'Subscription failed. Please try again',
+    success_subscribe: 'Subscribed to early access',
     header: 'Welcome to Studybites',
     creator: {
       name: 'Tim',
