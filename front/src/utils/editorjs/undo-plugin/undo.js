@@ -112,6 +112,7 @@ export default class Undo {
     if (!this.readOnly) {
       if (this.editor && this.editor.save && this.shouldSaveHistory) {
         this.editor.save().then((savedData) => {
+          this.editor.configuration.onChange(this.editor, savedData);
           if (this.editorDidUpdate(savedData.blocks))
             this.save(savedData.blocks);
         });
@@ -210,7 +211,6 @@ export default class Undo {
       return;
     }
     const { holder, correctIndex } = this.getHolderWithCorrectIndex(index);
-    this.editor.configuration.onChange(this.editor);
     if (activeElementHTML) {
       const realElement = this.getRealElement({ holder, activeElementHTML });
       if (realElement?.isContentEditable) {

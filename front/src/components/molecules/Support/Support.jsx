@@ -1,4 +1,4 @@
-import { message } from 'antd';
+import { Form, message } from 'antd';
 import T from 'prop-types';
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -6,33 +6,28 @@ import { useTranslation } from 'react-i18next';
 import { useMutation } from 'react-query';
 import { useHistory } from 'react-router-dom';
 
+import {
+  emailRules,
+  MAIL,
+  MAIL_REPORT,
+  TELEGRAM_USER,
+} from '@sb-ui/components/molecules/Support/constants';
 import ava from '@sb-ui/resources/img/ava_tim.jpg';
 import { AMPLITUDE_EVENTS, amplitudeLogEvent } from '@sb-ui/utils/amplitude';
 import { postSubscribe } from '@sb-ui/utils/api/v1/user';
 
 import * as S from './Support.styled';
 
-const TELEGRAM_USER = 'tmaniac';
-const MAIL = 'studybites@lambdabird.com';
-const MAIL_REPORT = `mailto:${MAIL}?subject=Bug%20Report&body=Issue%20description%3A%0A%0A%0ASteps%20to%20reproduce%20the%20issue%3A%0A1.%0A2.%0A%0A%0AWhat's%20the%20expected%20result%3F%0A%0A%0AWhat's%20the%20actual%20result%3F%0A%0A%0AAdditional%20details%20%2F%20screenshot`;
-
 const Support = ({ open, setOpen }) => {
   const { t } = useTranslation();
   const history = useHistory();
+  const [form] = Form.useForm();
   const ref = useRef(null);
   const emailRef = useRef(null);
   const buttonRef = useRef(null);
 
   const [subscribed, setSubscribed] = useState(false);
   const [email, setEmail] = useState('');
-
-  const invalidEmail = () => {
-    message.warn({
-      content: t('support_modal.email_not_valid'),
-      duration: 2,
-    });
-    emailRef.current?.focus();
-  };
 
   const { mutate: subscribe } = useMutation(postSubscribe, {
     onSuccess: (_, params) => {
@@ -43,7 +38,12 @@ const Support = ({ open, setOpen }) => {
         duration: 2,
       });
     },
-    onError: invalidEmail,
+    onError: () => {
+      message.error({
+        content: t('support_modal.fail_subscribe'),
+        duration: 2,
+      });
+    },
   });
 
   useEffect(() => {
@@ -60,15 +60,16 @@ const Support = ({ open, setOpen }) => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [setOpen]);
 
-  const handleSubscribe = () => {
-    if (!email?.trim()?.length) {
-      invalidEmail();
-      return;
+  const handleSubscribe = async () => {
+    try {
+      await form.validateFields();
+      subscribe({
+        email,
+        pathname: history.location.pathname,
+      });
+    } catch (errorInfo) {
+      emailRef.current?.focus();
     }
-    subscribe({
-      email,
-      pathname: history.location.pathname,
-    });
   };
 
   const handleEmailKeyDown = (event) => {
@@ -126,16 +127,20 @@ const Support = ({ open, setOpen }) => {
             </S.MessageBlock>
             <S.MessageBlock gridArea="e">
               <div>{t('support_modal.actions_subscribe.description')}</div>
-              <S.EmailField
-                ref={emailRef}
-                value={email}
-                disabled={subscribed}
-                onChange={(e) => setEmail(e.target.value)}
-                onKeyDown={handleEmailKeyDown}
-                placeholder={t(
-                  'support_modal.actions_subscribe.email_placeholder',
-                )}
-              />
+              <Form form={form}>
+                <Form.Item name="email" rules={emailRules}>
+                  <S.EmailField
+                    ref={emailRef}
+                    value={email}
+                    disabled={subscribed}
+                    onChange={(e) => setEmail(e.target.value)}
+                    onKeyDown={handleEmailKeyDown}
+                    placeholder={t(
+                      'support_modal.actions_subscribe.email_placeholder',
+                    )}
+                  />
+                </Form.Item>
+              </Form>
             </S.MessageBlock>
             {!subscribed && (
               <S.SubscribeButton onClick={handleSubscribe}>
