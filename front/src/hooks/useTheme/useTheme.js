@@ -30,11 +30,11 @@ export const THEMES = {
     footerBackground: variables['geekblue-1'],
   },
   [THEMES_NAME.THEME_1]: {
-    bodyBackground: 'linear-gradient(70deg, blue, pink)',
+    bodyBackground: 'linear-gradient(180deg, #396F86 0%, #86395E 100%);',
     ...NOT_DEFAULT_COLOR_THEME,
   },
   [THEMES_NAME.THEME_2]: {
-    bodyBackground: 'linear-gradient(70deg, red, green)',
+    bodyBackground: 'linear-gradient(180deg, #E7EFFB 0%, #F6F1FC 100%);',
     ...NOT_DEFAULT_COLOR_THEME,
   },
 };

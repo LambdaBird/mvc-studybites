@@ -53,7 +53,7 @@ export const Main = styled.div`
   }
 
   .button-animation {
-    animation: show 0.1s cubic-bezier(0.55, 0.055, 0.675, 0.19) both;
+    animation: show 0.2s linear both;
   }
   @media (max-width: 767px) {
     z-index: 3;
@@ -84,7 +84,7 @@ export const Modal = styled.div`
   ${(props) =>
     props.open &&
     `
-     animation: slide-top 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19) both;
+     animation: slide-top 0.2s linear both;
   `}
 
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);

@@ -82,15 +82,17 @@ const Header = ({ isFixed, className, hideOnScroll, bottom, handleHide }) => {
               <S.Logo src={logo} alt="Logo" />
             </Link>
           </Col>
-          <Col>
-            <S.Select defaultValue={themeName} onChange={handleThemeChange}>
-              {Object.values(THEMES_NAME).map((name) => (
-                <Option key={name} value={name}>
-                  {name}
-                </Option>
-              ))}
-            </S.Select>
-          </Col>
+          {process.env.NODE_ENV === 'development' && (
+            <Col>
+              <S.Select defaultValue={themeName} onChange={handleThemeChange}>
+                {Object.values(THEMES_NAME).map((name) => (
+                  <Option key={name} value={name}>
+                    {name}
+                  </Option>
+                ))}
+              </S.Select>
+            </Col>
+          )}
         </S.RowMain>
         {bottom}
       </S.Container>
