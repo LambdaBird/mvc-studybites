@@ -25,16 +25,16 @@ export const createFirstLesson = () => {
 
 const isSupportShown = localStorage.getItem(IS_SUPPORT_SHOWN);
 
-export const useFirstAppNavigation = () => {
+export const useFirstAppNavigation = ({ isMobile }) => {
   const mountedRef = useRef(null);
 
   const isSupportTriggered = useMemo(() => {
-    if (!isSupportShown) {
+    if (!isSupportShown && !isMobile) {
       localStorage.setItem(IS_SUPPORT_SHOWN, 'true');
       return true;
     }
     return false;
-  }, []);
+  }, [isMobile]);
 
   useEffect(() => {
     amplitudeLogEvent(AMPLITUDE_EVENTS.START_SESSION);

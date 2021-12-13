@@ -19,7 +19,7 @@ const App = () => {
   const isMobile = useMobile();
   const theme = useTheme();
 
-  const { isSupportTriggered } = useFirstAppNavigation();
+  const { isSupportTriggered } = useFirstAppNavigation({ isMobile });
   return (
     <>
       <Helmet>

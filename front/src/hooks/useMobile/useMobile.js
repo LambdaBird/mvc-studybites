@@ -7,7 +7,7 @@ export const getCurrentWidth = () =>
   document.body.clientWidth;
 
 const useMobile = () => {
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(true);
   const [currentWidth, setCurrentWidth] = useState(getCurrentWidth());
 
   useEffect(() => {
