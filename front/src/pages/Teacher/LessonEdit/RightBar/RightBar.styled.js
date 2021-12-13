@@ -23,6 +23,7 @@ export const Wrapper = styled.div`
   @media (max-width: 767px) {
     justify-content: flex-end;
     gap: 1.5rem;
+    height: auto;
   }
   @media (max-width: 480px) {
     gap: 1rem;
