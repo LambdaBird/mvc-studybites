@@ -14,19 +14,6 @@ export const defaultLesson = {
       answer: {},
     },
     {
-      type: 'warning',
-      revision: '950d0d4c480804a0e35c305b5aa0b8f6998766ef',
-      content: {
-        id: 'nhZZi51vDU',
-        type: 'warning',
-        data: {
-          title: '❗️',
-          message: 'This is an early version, so there may be bugs.',
-        },
-      },
-      answer: {},
-    },
-    {
       type: 'header',
       revision: 'f1324170f7db557089eb21db9ef8035dde85ddc6',
       content: {

@@ -1,6 +1,7 @@
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 
 import { EXAMPLE_LESSON_ID } from '@sb-ui/pages/Teacher/LessonEdit/constants';
+import { AMPLITUDE_EVENTS, amplitudeLogEvent } from '@sb-ui/utils/amplitude';
 import { Statuses } from '@sb-ui/utils/constants';
 import { LessonsStorage } from '@sb-ui/utils/LessonsStorage';
 
@@ -18,6 +19,7 @@ export const createFirstLesson = () => {
       status: Statuses.UNSAVED,
       ...defaultLesson,
     });
+    amplitudeLogEvent(AMPLITUDE_EVENTS.LAUNCH_FIRST_TIME);
   }
 };
 
@@ -32,6 +34,10 @@ export const useFirstAppNavigation = () => {
       return true;
     }
     return false;
+  }, []);
+
+  useEffect(() => {
+    amplitudeLogEvent(AMPLITUDE_EVENTS.START_SESSION);
   }, []);
 
   if (!mountedRef.current) {
