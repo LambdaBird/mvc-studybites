@@ -1,3 +1,5 @@
+import { countriesZones } from '@sb-ui/utils/countriesZones';
+
 const getStudentProgress = (results, interactiveTotal) => {
   const interactivePassed = results?.filter(
     (result) => result.action !== 'start' && result.action !== 'finish',
@@ -18,11 +20,25 @@ const getStudentProgress = (results, interactiveTotal) => {
   };
 };
 
+const getCountry = () => {
+  const timeZone = Intl.DateTimeFormat().resolvedOptions()?.timeZone;
+  const countryCode = countriesZones.timezones[timeZone]?.c?.[0] || 'XX';
+  const country = countriesZones.countries[countryCode] || '';
+  return {
+    countryCode,
+    country,
+  };
+};
+
 export const getStudentsWithProgress = (students, totalInteractiveBlocks) =>
   students
     .map((student) => ({
       ...student,
       ...getStudentProgress(student.results, totalInteractiveBlocks),
+    }))
+    .map((student) => ({
+      ...student,
+      ...getCountry(),
     }))
     .sort((a, b) => b.learnProgress - a.learnProgress)
     .sort((a, b) => {
