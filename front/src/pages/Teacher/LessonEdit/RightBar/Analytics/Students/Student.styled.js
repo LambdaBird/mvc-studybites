@@ -1,4 +1,4 @@
-import { Progress as ProgressAntd } from 'antd';
+import { Progress as ProgressAntd, Tooltip as TooltipAntd } from 'antd';
 import styled from 'styled-components';
 
 import variables from '@sb-ui/theme/variables';
@@ -38,3 +38,7 @@ export const Progress = styled(ProgressAntd)`
 export const ProgressPercent = styled.span`
   color: rgba(0, 0, 0, 0.45);
 `;
+
+export const Tooltip = styled(TooltipAntd).attrs({
+  arrowPointAtCenter: true,
+})``;

@@ -45,6 +45,7 @@ const Students = ({ students }) => {
           {
             id,
             countryCode = 'XX',
+            country,
             lastActivity,
             learnProgress,
             progressStatus,
@@ -53,7 +54,9 @@ const Students = ({ students }) => {
         ) => (
           <S.Student key={id}>
             <span>{index + 1}.</span>
-            <span>{getCountryEmoji(countryCode)}</span>
+            <S.Tooltip title={country}>
+              <span>{getCountryEmoji(countryCode)}</span>
+            </S.Tooltip>
             <span>{t('right_bar.anonymous_user')}</span>
             <S.LastActivity>
               {Number.isNaN(lastActivity)
