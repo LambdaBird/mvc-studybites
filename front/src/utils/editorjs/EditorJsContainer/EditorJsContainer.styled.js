@@ -135,7 +135,7 @@ export const GlobalStylesEditorPage = createGlobalStyle`
 
   }
   
-  @media (max-width: 650px){
+  @media (max-width: 800px){
     .editor-plus-toolbar{
       left: 0;
       justify-content: space-between;
@@ -198,7 +198,7 @@ export const GlobalStylesEditorPage = createGlobalStyle`
     }
   }
 
-  @media(min-width: 650px) and (max-width: 750px){
+  @media(min-width: 800px){
     .editor-plus-toolbar{
       margin-left: 5px;
     }
@@ -229,7 +229,7 @@ export const Wrapper = styled.div`
   margin-right: 0.5rem;
   @media (min-width: 651px) {
     pointer-events: all;
-    max-width: 650px;
+    max-width: 800px;
   }
 `;
 

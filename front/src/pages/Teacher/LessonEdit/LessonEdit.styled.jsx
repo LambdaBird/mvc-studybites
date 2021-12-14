@@ -44,7 +44,7 @@ export const InputTitle = styled.input`
   &::placeholder {
     color: ${variables['gray-6']};
   }
-  max-width: 650px;
+  max-width: 800px;
   font-size: 1.5rem;
   padding-left: 0;
   @media (max-width: 1200px) {

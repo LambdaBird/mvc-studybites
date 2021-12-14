@@ -16,7 +16,12 @@ export const GlobalStyles = createGlobalStyle`
   body{
     background-color: ${variables['body-background-color']}; 
   }
+
   div.ant-upload {
     width: 100%;
+  }
+
+  .ce-block__content {
+    max-width: 800px;
   }
 `;
