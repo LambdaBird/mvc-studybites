@@ -36,6 +36,8 @@ export const Title = styled.div`
 `;
 
 export const Content = styled.div`
+  display: flex;
+  flex-direction: column;
   padding-left: 1rem;
   padding-right: 1rem;
   height: calc(100% - 2 * ${HEADER_HEIGHT}px);
@@ -43,7 +45,7 @@ export const Content = styled.div`
 `;
 
 export const RangePicker = styled(RangePickerAntd).attrs({
-  showTime: true,
+  format: 'YYYY/MM/DD',
   allowEmpty: [true, true],
 })`
   margin-top: 1rem;
