@@ -18,6 +18,7 @@ export const BlockElementWrapperWhite = styled(Row)`
     max-width: none;
     overflow-x: hidden;
     width: 100vw;
+    padding: 1rem 2rem 4rem 2rem;
   }
 `;
 

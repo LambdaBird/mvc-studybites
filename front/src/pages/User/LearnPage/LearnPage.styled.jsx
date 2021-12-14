@@ -93,6 +93,7 @@ export const LessonButton = styled(Button).attrs({
   background-color: ${(props) => props.theme.lessonButtonBackground};
   @media (max-width: 767px) {
     margin-top: auto;
+    margin-bottom: 5rem;
   }
   width: 100%;
   margin-bottom: 1rem;

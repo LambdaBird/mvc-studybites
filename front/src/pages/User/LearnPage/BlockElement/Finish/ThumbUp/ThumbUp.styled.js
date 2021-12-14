@@ -69,7 +69,7 @@ export const StyledWrapper = styled.div`
           visibility: hidden;
         }
       }
-      position: absolute;
+      position: fixed;
       width: 250px;
       height: 250px;
       bottom: 50px;
