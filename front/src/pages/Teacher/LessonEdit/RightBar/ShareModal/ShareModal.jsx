@@ -75,7 +75,7 @@ const ShareModal = ({ publicId, opened, setOpened }) => {
     const handleChangeLessons = (newLessons) => {
       newLessons.forEach((lesson) => {
         if (lesson.id === lessonId) {
-          setLessonName(lesson.name.replaceAll(' ', '_'));
+          setLessonName(lesson?.name?.replaceAll(' ', '_'));
         }
       });
     };

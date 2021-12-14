@@ -3,7 +3,6 @@ import T from 'prop-types';
 import { useCallback, useContext, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import { CopyOutlined, DeleteOutlined } from '@ant-design/icons';
 
 import MobileContext from '@sb-ui/contexts/MobileContext';
 import { NEW_LESSON_ID } from '@sb-ui/pages/Teacher/LessonEdit/constants';
@@ -12,7 +11,7 @@ import { LESSONS_EDIT } from '@sb-ui/utils/paths';
 import { useLessonActions } from './useLessonActions';
 import * as S from './LessonList.styled';
 
-const LessonList = ({ lessons, handleHideLeftBar }) => {
+const LessonList = ({ title, lessons, actions = [], handleHideLeftBar }) => {
   const { t } = useTranslation('teacher');
   const history = useHistory();
   const { id: currentId } = useParams();
@@ -32,11 +31,10 @@ const LessonList = ({ lessons, handleHideLeftBar }) => {
   const {
     visible,
     selectedLesson,
-    handleCopyLink,
-    handleDeleteLesson,
     handleSelectLesson,
     handleVisibleChange,
-  } = useLessonActions({ handleLessonClick });
+    getActionHandlerByName,
+  } = useLessonActions();
 
   useEffect(() => {
     selectedLessonRef.current?.scrollIntoViewIfNeeded?.();
@@ -44,7 +42,7 @@ const LessonList = ({ lessons, handleHideLeftBar }) => {
 
   return (
     <S.Wrapper>
-      <S.LessonsTitle>{t('lesson_list.title')}</S.LessonsTitle>
+      <S.LessonsTitle>{title}</S.LessonsTitle>
       <S.LessonsList>
         {lessons.map(({ name, id, status }) => (
           <S.Lesson
@@ -66,16 +64,14 @@ const LessonList = ({ lessons, handleHideLeftBar }) => {
               content={
                 <S.ButtonsWrapper>
                   <S.PopoverStyles />
-                  <S.Button onClick={(e) => handleCopyLink(e, id)}>
-                    <CopyOutlined />
-                    <S.ButtonText>{t('lesson_list.copy_link')}</S.ButtonText>
-                  </S.Button>
-                  <S.Button onClick={(e) => handleDeleteLesson(e, id)}>
-                    <DeleteOutlined />
-                    <S.ButtonText>
-                      {t('lesson_list.delete_lesson')}
-                    </S.ButtonText>
-                  </S.Button>
+                  {actions.map(({ name: actionName, element }) => (
+                    <S.Button
+                      key={actionName}
+                      onClick={(e) => getActionHandlerByName(actionName)(e, id)}
+                    >
+                      {element}
+                    </S.Button>
+                  ))}
                 </S.ButtonsWrapper>
               }
             >
@@ -94,8 +90,15 @@ const LessonList = ({ lessons, handleHideLeftBar }) => {
 };
 
 LessonList.propTypes = {
+  title: T.string,
   handleHideLeftBar: T.func,
   lessons: T.arrayOf(T.shape({})),
+  actions: T.arrayOf(
+    T.shape({
+      name: T.string,
+      element: T.element,
+    }),
+  ),
 };
 
 export default LessonList;

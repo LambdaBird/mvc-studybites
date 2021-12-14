@@ -250,9 +250,13 @@ export default {
   lesson_list: {
     untitled: 'Без названия',
     title: 'УРОКИ',
+    archived_title: 'УДАЛЕННЫЕ УРОКИ',
     confirm_title: 'Вы уверены?',
     confirm_ok: 'Да',
     confirm_cancel: 'Нет',
     link_copy_successfully: 'Ссылка успешно скопирована',
+    copy_link: 'Скопировать ссылку',
+    delete_lesson: 'Удалить',
+    restore_lesson: 'Восстановить',
   },
 };

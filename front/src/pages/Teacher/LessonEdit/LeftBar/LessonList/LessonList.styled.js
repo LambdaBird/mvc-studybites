@@ -3,7 +3,6 @@ import styled, { createGlobalStyle, css } from 'styled-components';
 import { MoreOutlined } from '@ant-design/icons';
 
 import LessonButton from '@sb-ui/components/atoms/Button';
-import { HEADER_HEIGHT } from '@sb-ui/components/molecules/Header/Header.styled';
 import variables from '@sb-ui/theme/variables';
 import { Statuses } from '@sb-ui/utils/constants';
 
@@ -44,10 +43,10 @@ export const LessonsList = styled.div`
 
 export const Wrapper = styled.div`
   display: flex;
-  height: calc(100% - 2 * ${HEADER_HEIGHT}px);
   flex-direction: column;
   padding-left: 1rem;
   padding-right: 1rem;
+  overflow-y: auto;
 `;
 
 export const Lesson = styled.div`
@@ -112,6 +111,8 @@ const getStatus = (status) => {
       return 'success';
     case Statuses.DRAFT:
       return 'warning';
+    case Statuses.ARCHIVED:
+      return 'error';
     case Statuses.UNSAVED:
     default:
       return 'default';
@@ -145,8 +146,4 @@ export const ButtonsWrapper = styled.div`
 export const Button = styled(LessonButton)`
   width: 100%;
   justify-content: flex-start;
-`;
-
-export const ButtonText = styled.span`
-  padding-left: 0.5rem;
 `;
