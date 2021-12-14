@@ -113,7 +113,10 @@ export const useLessonEdit = () => {
       return false;
     }
 
-    return !equal(oldBlocks, currentBlocksRef.current.blocks);
+    return !equal(
+      oldBlocks.map(({ id, ...block }) => block),
+      currentBlocksRef.current.blocks.map(({ id, ...block }) => block),
+    );
   }, []);
 
   const createLessonMutation = useMutation(createLesson, {

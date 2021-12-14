@@ -23,21 +23,6 @@ import { shuffleArray, uuidRegExp } from '@sb-ui/utils/utils';
 
 const MAX_BODY_LENGTH = 4_000_000;
 
-function mulberry32(a) {
-  // eslint-disable-next-line no-param-reassign, no-multi-assign
-  let t = (a += 0x6d2b79f5);
-  t = Math.imul(t ^ (t >>> 15), t | 1);
-  t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-  return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-}
-
-function guidGenerator(seed) {
-  const S4 = () =>
-    // eslint-disable-next-line no-bitwise
-    (((1 + mulberry32(seed)) * 0x10000) | 0).toString(16).substring(1);
-  return `${S4() + S4()}-${S4()}-${S4()}-${S4()}-${S4()}${S4()}${S4()}`;
-}
-
 const prepareMatchValues = (values) => {
   const rightValues = values.map((value) => value.right);
   const shuffledRightValues = shuffleArray(rightValues);
@@ -48,10 +33,10 @@ const prepareMatchValues = (values) => {
 };
 
 export const prepareEditorData = (blocks) =>
-  blocks?.map(({ blockId, content, answer, type }, idx) => {
+  blocks?.map(({ blockId, content, answer, type }) => {
     // Replace editor js block id with API blockId(uuid)
     // eslint-disable-next-line no-param-reassign
-    content.id = blockId || guidGenerator(idx);
+    content.id = blockId;
     switch (type) {
       case BLOCKS_TYPE.QUIZ:
         return {
