@@ -1,9 +1,12 @@
+import { DatePicker } from 'antd';
 import styled from 'styled-components';
 
 import { HEADER_HEIGHT } from '@sb-ui/components/molecules/Header/Header.styled';
 import variables from '@sb-ui/theme/variables';
 
 import { RIGHT_BAR_WIDTH } from '../../constants';
+
+const { RangePicker: RangePickerAntd } = DatePicker;
 
 export const Wrapper = styled.div`
   position: absolute;
@@ -37,6 +40,13 @@ export const Content = styled.div`
   padding-right: 1rem;
   height: calc(100% - 2 * ${HEADER_HEIGHT}px);
   overflow-y: auto;
+`;
+
+export const RangePicker = styled(RangePickerAntd).attrs({
+  showTime: true,
+  allowEmpty: [true, true],
+})`
+  margin-top: 1rem;
 `;
 
 export const FunnelTitle = styled.div`
