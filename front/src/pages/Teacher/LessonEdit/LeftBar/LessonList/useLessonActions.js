@@ -3,12 +3,13 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from 'react-query';
 
+import { LESSONS_ACTIONS } from '@sb-ui/pages/Teacher/LessonEdit/LeftBar/constants';
 import { postShareLesson } from '@sb-ui/utils/api/v1/teacher';
 import { HOST, Statuses } from '@sb-ui/utils/constants';
 import { LessonsStorage } from '@sb-ui/utils/LessonsStorage';
 import { fallbackCopyTextToClipboard } from '@sb-ui/utils/utils';
 
-export const useLessonActions = ({ handleLessonClick }) => {
+export const useLessonActions = () => {
   const { t } = useTranslation('teacher');
 
   const [visible, setVisible] = useState(false);
@@ -38,32 +39,45 @@ export const useLessonActions = ({ handleLessonClick }) => {
     setSelectedLesson(null);
   };
 
-  const handleDeleteLesson = (event, id) => {
+  const changeLessonStatus = async (event, id, status) => {
     event.stopPropagation();
-    const { prevLesson, nextLesson } = LessonsStorage.getNearestLesson(id);
-
-    const state = { force: true };
-    if (prevLesson) {
-      handleLessonClick(prevLesson.id, state);
-    } else if (nextLesson) {
-      handleLessonClick(nextLesson.id, state);
-    } else {
-      handleLessonClick('new', state);
-    }
-    shareLesson({
+    await shareLesson({
       id,
-      status: Statuses.ARCHIVED,
+      status,
     });
-
-    LessonsStorage.removeLesson(id);
+    const lesson = LessonsStorage.getLesson(id);
+    LessonsStorage.setLesson({
+      ...lesson,
+      status,
+    });
     setSelectedLesson(null);
+  };
+
+  const handleDeleteLesson = async (event, id) => {
+    await changeLessonStatus(event, id, Statuses.ARCHIVED);
+  };
+
+  const handleRestoreLesson = async (event, id) => {
+    await changeLessonStatus(event, id, Statuses.DRAFT);
+  };
+
+  const getActionHandlerByName = (actionName) => {
+    switch (actionName) {
+      case LESSONS_ACTIONS.COPY_LINK:
+        return handleCopyLink;
+      case LESSONS_ACTIONS.DELETE_LESSON:
+        return handleDeleteLesson;
+      case LESSONS_ACTIONS.RESTORE_LESSON:
+        return handleRestoreLesson;
+      default:
+        return () => {};
+    }
   };
 
   return {
     handleSelectLesson,
-    handleCopyLink,
-    handleDeleteLesson,
     handleVisibleChange,
+    getActionHandlerByName,
     selectedLesson,
     visible,
   };

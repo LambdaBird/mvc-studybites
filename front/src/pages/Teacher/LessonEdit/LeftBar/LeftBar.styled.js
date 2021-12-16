@@ -93,3 +93,7 @@ export const AddNewLessonWrapper = styled.div`
 export const PlusIcon = styled(PlusOutlined)`
   margin-right: 0.625rem;
 `;
+
+export const ButtonText = styled.span`
+  padding-left: 0.5rem;
+`;

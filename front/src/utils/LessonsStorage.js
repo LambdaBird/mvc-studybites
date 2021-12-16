@@ -1,3 +1,5 @@
+import { Statuses } from '@sb-ui/utils/constants';
+
 export const LessonsStorage = {
   handlers: [],
   getLesson(id) {
@@ -9,6 +11,12 @@ export const LessonsStorage = {
   setLessons(lessons) {
     localStorage.setItem('lessons', JSON.stringify(lessons));
     this.onChangeLessons(lessons);
+  },
+  getArchivedLessons() {
+    return this.getLessons().filter((x) => x.status === Statuses.ARCHIVED);
+  },
+  getNonArchivedLessons() {
+    return this.getLessons().filter((x) => x.status !== Statuses.ARCHIVED);
   },
   setLesson(lesson) {
     const lessons = this.getLessons();
@@ -35,15 +43,6 @@ export const LessonsStorage = {
     );
 
     this.setLessons(newLessons);
-  },
-  getNearestLesson(lessonId) {
-    const lessons = this.getLessons();
-    const index = lessons.findIndex((lesson) => lesson.id === lessonId);
-
-    return {
-      prevLesson: lessons[index - 1] || null,
-      nextLesson: lessons[index + 1] || null,
-    };
   },
   clearNonexistentLessons(lessonId) {
     const lessons = this.getLessons();

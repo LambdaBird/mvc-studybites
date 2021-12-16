@@ -250,11 +250,13 @@ export default {
   lesson_list: {
     untitled: 'Untitled',
     title: 'LESSONS',
+    archived_title: 'ARCHIVED LESSONS',
     confirm_title: 'Are you sure?',
     confirm_ok: 'Yes',
     confirm_cancel: 'No',
     link_copy_successfully: 'Link copied successfully',
     copy_link: 'Copy link',
     delete_lesson: 'Delete',
+    restore_lesson: 'Restore',
   },
 };
