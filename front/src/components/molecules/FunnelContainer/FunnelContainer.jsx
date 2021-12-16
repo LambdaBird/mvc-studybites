@@ -4,14 +4,8 @@ import { useMemo } from 'react';
 import { useQuery } from 'react-query';
 
 import { interactiveTypesBlocks } from '@sb-ui/utils/api/config';
-import {
-  getLesson,
-  getTeacherLessonStudents,
-} from '@sb-ui/utils/api/v1/teacher';
-import {
-  TEACHER_LESSON_BASE_KEY,
-  TEACHER_LESSON_STUDENTS_BASE_KEY,
-} from '@sb-ui/utils/queries';
+import { getLesson } from '@sb-ui/utils/api/v1/teacher';
+import { TEACHER_LESSON_BASE_KEY } from '@sb-ui/utils/queries';
 
 import LessonFunnel from './LessonFunnel';
 import { FunnelContainerWrapper } from './FunnelContainer.styled';
@@ -20,15 +14,7 @@ const isLastFinish = (index, bites, student) =>
   index === bites?.length - 1 &&
   student.results?.[student.results?.length - 1]?.action === 'finish';
 
-const FunnelContainer = ({ lessonId }) => {
-  const { data: students, isLoading: isStudentsLoading } = useQuery(
-    [TEACHER_LESSON_STUDENTS_BASE_KEY, { lessonId }],
-    getTeacherLessonStudents,
-    {
-      keepPreviousData: true,
-    },
-  );
-
+const FunnelContainer = ({ lessonId, students, isStudentsLoading }) => {
   const { data: lessonData, isLoading: isLessonLoading } = useQuery(
     [TEACHER_LESSON_BASE_KEY, { id: lessonId }],
     getLesson,
@@ -42,7 +28,7 @@ const FunnelContainer = ({ lessonId }) => {
       return [];
     }
 
-    const initialLanded = students.total;
+    const initialLanded = students.length;
 
     const chunks = lessonData.lesson.blocks.reduce(
       (list, block) => {
@@ -75,7 +61,7 @@ const FunnelContainer = ({ lessonId }) => {
 
         const interactiveBlock = bite[bite.length - 1];
 
-        const landedStudents = students.students.filter((student) => {
+        const landedStudents = students.filter((student) => {
           const theResult = student.results.find(
             (result) => result?.revision === interactiveBlock?.revision,
           );
@@ -115,7 +101,7 @@ const FunnelContainer = ({ lessonId }) => {
       });
 
     return chunkBites;
-  }, [students, lessonData, isStudentsLoading, isLessonLoading]);
+  }, [isStudentsLoading, isLessonLoading, lessonData, students]);
 
   const isLoading = isStudentsLoading || isLessonLoading;
 
@@ -132,6 +118,12 @@ const FunnelContainer = ({ lessonId }) => {
 
 FunnelContainer.propTypes = {
   lessonId: T.string.isRequired,
+  students: T.arrayOf(
+    T.shape({
+      results: T.arrayOf(T.shape({})),
+    }),
+  ),
+  isStudentsLoading: T.bool,
 };
 
 export default FunnelContainer;
